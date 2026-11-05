@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Sigamos corriendo. La historia de una vida dedicada al atletismo, los recuerdos, las dificultades y una nueva forma de seguir adelante.">
+  <title>Sigamos corriendo | Mi libro de atletismo</title>
+
+  <style>
+    :root {
+      --fondo: #080808;
+      --dorado: #c8ad75;
+      --dorado-claro: #e5d4a8;
+      --texto: #eee9df;
+      --secundario: #b9b2a5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.8;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .barra {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 7%;
+      border-bottom: 1px solid #393022;
+      background: #080808;
+    }
+
+    .marca {
+      color: var(--dorado);
+      font-size: 16px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .barra a {
+      color: var(--dorado-claro);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .portada {
+      min-height: 680px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 85px 7%;
+      text-align: center;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(5,5,5,.42),
+          rgba(5,5,5,.80) 58%,
+          #080808 100%
+        ),
+        url("https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=2000&q=85")
+        center 43% / cover no-repeat;
+    }
+
+    .portada-interior {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .etiqueta {
+      color: var(--dorado-claro);
+      font-size: 12px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 22px 0;
+      color: #e1c78f;
+      font-size: clamp(44px, 8vw, 86px);
+      line-height: 1.12;
+      font-weight: normal;
+      letter-spacing: 3px;
+      text-shadow: 0 3px 18px #000;
+    }
+
+    .subtitulo {
+      max-width: 650px;
+      margin: 0 auto;
+      color: #f1e9d9;
+      font-size: clamp(18px, 3vw, 25px);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .ornamento {
+      width: 100px;
+      height: 1px;
+      margin: 35px auto;
+      background: var(--dorado);
+    }
+
+    .autor {
+      color: #eee5d4;
+      font-size: 15px;
+      letter-spacing: 2px;
+    }
+
+    .boton {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 12px 27px;
+      border: 1px solid var(--dorado);
+      color: var(--dorado-claro);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      transition: background .2s, color .2s;
+    }
+
+    .boton:hover {
+      background: var(--dorado);
+      color: #080808;
+    }
+
+    .seccion {
+      max-width: 1000px;
+      margin: auto;
+      padding: 75px 7%;
+    }
+
+    .seccion h2 {
+      margin: 0 0 15px;
+      color: var(--dorado);
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: normal;
+      text-align: center;
+    }
+
+    .introduccion {
+      max-width: 720px;
+      margin: 25px auto 0;
+      color: var(--secundario);
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .capitulos {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 40px;
+    }
+
+    .capitulo {
+      padding: 24px;
+      border: 1px solid #393022;
+      background: #0e0e0d;
+    }
+
+    .numero {
+      color: var(--dorado);
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    .capitulo h3 {
+      margin: 8px 0;
+      color: #e5d4a8;
+      font-size: 22px;
+      font-weight: normal;
+    }
+
+    .capitulo p {
+      margin-bottom: 0;
+      color: var(--secundario);
+      font-size: 15px;
+    }
+
+    .reflexion {
+      padding: 65px 7%;
+      border-top: 1px solid #393022;
+      border-bottom: 1px solid #393022;
+      background: #0d0c0a;
+      text-align: center;
+    }
+
+    .reflexion blockquote {
+      max-width: 760px;
+      margin: auto;
+      color: var(--dorado-claro);
+      font-size: clamp(22px, 4vw, 32px);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .reflexion p {
+      color: var(--secundario);
+      font-size: 14px;
+    }
+
+    footer {
+      padding: 30px 7%;
+      color: #9c9384;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    footer span {
+      color: var(--dorado);
+    }
+
+    @media (max-width: 650px) {
+      .barra {
+        padding: 16px 5%;
+      }
+
+      .marca {
+        font-size: 12px;
+        letter-spacing: 2px;
+      }
+
+      .portada {
+        min-height: 590px;
+        padding: 65px 6%;
+      }
+
+      .capitulos {
+        grid-template-columns: 1fr;
+      }
+
+      .seccion {
+        padding: 55px 6%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="barra">
+    <div class="marca">Mi libro · Mi trayectoria</div>
+    <a href="#indice">El índice</a>
+  </header>
+
+  <main>
+    <section class="portada">
+      <div class="portada-interior">
+        <div class="etiqueta">Una historia de pasión y superación</div>
+
+        <h1>SIGAMOS<br>CORRIENDO</h1>
+
+        <p class="subtitulo">
+          Mi vida, mi pasión y una nueva forma
+          de seguir adelante.
+        </p>
+
+        <div class="ornamento"></div>
+
+        <div class="autor">MI HISTORIA EN EL ATLETISMO</div>
+
+        <a class="boton" href="#comienzo">
+          ENTRAR EN MI HISTORIA
+        </a>
+      </div>
+    </section>
+
+    <section class="seccion" id="comienzo">
+      <h2>Una vida en movimiento</h2>
+
+      <div class="ornamento"></div>
+
+      <p class="introduccion">
+        Este libro nace de muchos años de atletismo, de kilómetros
+        recorridos, carreras, amistades, alegrías y también de
+        momentos difíciles. Hoy, una lesión de rodilla me obliga
+        a cambiar la manera de practicar deporte, pero no borra
+        todo lo vivido ni las ganas de seguir adelante.
+      </p>
+
+      <p class="introduccion">
+        Estas páginas quieren guardar mis recuerdos y compartir
+        lo que el deporte me ha enseñado. Porque quizá no siempre
+        podamos correr como antes, pero siempre podemos encontrar
+        una nueva manera de avanzar.
+      </p>
+    </section>
+
+    <section class="seccion" id="indice">
+      <h2>Índice de mi vida deportiva</h2>
+
+      <div class="ornamento"></div>
+
+      <div class="capitulos">
+        <article class="capitulo">
+          <div class="numero">PRÓLOGO</div>
+          <h3>Una vida en movimiento</h3>
+          <p>Por qué nace este libro y qué significa el atletismo en mi vida.</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="numero">CAPÍTULO I</div>
+          <h3>Cuando empezó todo</h3>
+          <p>El comienzo de mi historia y el descubrimiento de la pasión por correr.</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="numero">CAPÍTULO II</div>
+          <h3>Los años de las carreras</h3>
+          <p>Competiciones, entrenamientos, recuerdos y momentos inolvidables.</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="numero">CAPÍTULO III</div>
+          <h3>Amistad y compañerismo</h3>
+          <p>Las personas y los valores que hacen grande este deporte.</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="numero">CAPÍTULO IV</div>
+          <h3>Cuando toca parar</h3>
+          <p>La lesión, los cambios y el aprendizaje de escuchar al cuerpo.</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="numero">CAPÍTULO V</div>
+          <h3>Una nueva forma de avanzar</h3>
+          <p>La bicicleta, la elíptica, los paseos y los nuevos objetivos.</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="numero">EPÍLOGO</div>
+          <h3>El corredor que llevo dentro</h3>
+          <p>Lo que permanece cuando cambia nuestra manera de hacer deporte.</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="numero">GALERÍA</div>
+          <h3>Los recuerdos en imágenes</h3>
+          <p>Fotografías de carreras, compañeros, trofeos y etapas de mi trayectoria.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="reflexion">
+      <blockquote>
+        «A veces la vida nos obliga a cambiar de camino,
+        pero nunca tiene por qué apagar nuestra pasión
+        por seguir adelante».
+      </blockquote>
+      <div class="ornamento"></div>
+      <p>Una nueva etapa. La misma ilusión por la vida.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>SIGAMOS CORRIENDO</span>
+    <p>Mi historia, mis recuerdos y mi pasión por el deporte.</p>
+  </footer>
+
+</body>
+</html>
