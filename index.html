@@ -435,14 +435,6 @@ footer {
 
     </section>
 
-</main>
-
-<footer>
-    SIGAMOS CORRIENDO<br>
-    Una vida, una pasión y miles de recuerdos.<br>
-    Antonio Sojo Canovas
-</footer>
-
 <script>
 const videoId = "-yOZEiHLuVU";
 const playlistId = "PLJMxsph_t8wgx0IcyyD_Dt9b6kbjK";
@@ -456,16 +448,16 @@ function toggleMusic() {
     if (!musicPlaying) {
         const iframe = document.createElement("iframe");
 
-        iframe.width = "1";
-        iframe.height = "1";
+        iframe.width = "200";
+        iframe.height = "200";
         iframe.allow = "autoplay; encrypted-media";
-        iframe.title = "Música de fondo de Sigamos corriendo";
+        iframe.title = "Música de fondo";
 
         iframe.src =
-            "https://www.youtube-nocookie.com/embed/" +
+            "https://www.youtube.com/embed/" +
             videoId +
             "?list=" + playlistId +
-            "&autoplay=1&controls=0&loop=1&playlist=" + videoId;
+            "&autoplay=1&playsinline=1";
 
         player.innerHTML = "";
         player.appendChild(iframe);
@@ -480,6 +472,7 @@ function toggleMusic() {
     }
 }
 </script>
+
 
 </body>
 </html>
