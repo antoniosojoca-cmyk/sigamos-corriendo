@@ -13,9 +13,7 @@
     padding: 0;
 }
 
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
     background: #080808;
@@ -26,7 +24,7 @@ body {
 
 header {
     text-align: center;
-    padding: 55px 20px 25px;
+    padding: 45px 20px 30px;
 }
 
 header h1 {
@@ -48,7 +46,7 @@ nav {
     justify-content: center;
     flex-wrap: wrap;
     gap: 25px;
-    padding: 20px;
+    padding: 18px;
     border-top: 1px solid #6e5934;
     border-bottom: 1px solid #6e5934;
 }
@@ -59,21 +57,43 @@ nav a {
     font-size: 15px;
 }
 
-nav a:hover {
-    color: white;
+nav a:hover { color: white; }
+
+.music-control {
+    text-align: center;
+    padding: 22px 10px 5px;
+}
+
+#musicButton {
+    background: transparent;
+    color: #d4b574;
+    border: 1px solid #9b7b42;
+    border-radius: 30px;
+    padding: 11px 25px;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#musicButton:hover {
+    background: #241d10;
+    border-color: #e5c783;
 }
 
 .portada {
-    max-width: 950px;
-    margin: 45px auto;
-    padding: 0 20px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 35px auto;
+    padding: 0 15px;
     text-align: center;
 }
 
 .portada img {
     display: block;
     width: 100%;
-    max-height: 900px;
+    height: auto;
+    max-height: none;
     object-fit: contain;
     margin: auto;
     border: 1px solid #78613a;
@@ -186,20 +206,14 @@ footer {
 }
 
 @media(max-width:600px) {
-    header {
-        padding-top: 35px;
-    }
+    header { padding-top: 35px; }
+    nav { gap: 15px; }
 
-    nav {
-        gap: 15px;
-    }
+    .seccion p { font-size: 16px; }
+    h2 { font-size: 27px; }
 
-    .seccion p {
-        font-size: 16px;
-    }
-
-    h2 {
-        font-size: 27px;
+    .portada {
+        padding: 0 8px;
     }
 }
 </style>
@@ -219,6 +233,16 @@ footer {
     <a href="#indice">Índice</a>
 </nav>
 
+<div class="music-control">
+    <button id="musicButton" onclick="toggleMusic()">
+        ♫ ESCUCHAR MÚSICA
+    </button>
+</div>
+
+<div id="musicPlayer"
+     style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+</div>
+
 <section class="portada" id="portada">
 
     <img
@@ -236,7 +260,6 @@ footer {
     <section class="seccion" id="dedicatoria">
 
         <p class="etiqueta">UNA DEDICATORIA ESPECIAL</p>
-
         <h2>A mi mujer, mi compañera de camino</h2>
 
         <p>Este libro también es tuyo.</p>
@@ -282,9 +305,7 @@ footer {
     <section class="seccion" id="prologo">
 
         <p class="etiqueta">ANTES DE COMENZAR EL CAMINO</p>
-
         <h2>PRÓLOGO</h2>
-
         <h3>Una vida en movimiento</h3>
 
         <p>
@@ -370,7 +391,6 @@ footer {
     <section class="seccion indice" id="indice">
 
         <p class="etiqueta">EL CAMINO QUE VAMOS A RECORRER</p>
-
         <h2>ÍNDICE DEL LIBRO</h2>
 
         <a class="capitulo" href="#prologo">
@@ -420,11 +440,51 @@ footer {
 <footer>
     SIGAMOS CORRIENDO<br>
     Una vida, una pasión y miles de recuerdos.<br>
-    <span>Antonio Sojo Canovas</span>
+    Antonio Sojo Canovas
 </footer>
+
+<script>
+const videoId = "-yOZEiHLuVU";
+const playlistId = "PLJMxsph_t8wgx0IcyyD_Dt9b6kbjK";
+
+let musicPlaying = false;
+
+function toggleMusic() {
+    const player = document.getElementById("musicPlayer");
+    const button = document.getElementById("musicButton");
+
+    if (!musicPlaying) {
+        const iframe = document.createElement("iframe");
+
+        iframe.width = "1";
+        iframe.height = "1";
+        iframe.allow = "autoplay; encrypted-media";
+        iframe.title = "Música de fondo de Sigamos corriendo";
+
+        iframe.src =
+            "https://www.youtube-nocookie.com/embed/" +
+            videoId +
+            "?list=" + playlistId +
+            "&autoplay=1&controls=0&loop=1&playlist=" + videoId;
+
+        player.innerHTML = "";
+        player.appendChild(iframe);
+
+        button.textContent = "Ⅱ PAUSAR MÚSICA";
+        musicPlaying = true;
+
+    } else {
+        player.innerHTML = "";
+        button.textContent = "♫ ESCUCHAR MÚSICA";
+        musicPlaying = false;
+    }
+}
+</script>
 
 </body>
 </html>
+
+
 
 
 
