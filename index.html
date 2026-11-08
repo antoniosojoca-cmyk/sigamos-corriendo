@@ -81,6 +81,16 @@ nav a:hover { color: white; }
     border-color: #e5c783;
 }
 
+/* Reproductor de música */
+#musicPlayer {
+    position: fixed;
+    left: -350px;
+    top: 0;
+    width: 300px;
+    height: 180px;
+    overflow: hidden;
+}
+
 .portada {
     width: 100%;
     max-width: 1000px;
@@ -208,13 +218,9 @@ footer {
 @media(max-width:600px) {
     header { padding-top: 35px; }
     nav { gap: 15px; }
-
     .seccion p { font-size: 16px; }
     h2 { font-size: 27px; }
-
-    .portada {
-        padding: 0 8px;
-    }
+    .portada { padding: 0 8px; }
 }
 </style>
 </head>
@@ -239,10 +245,8 @@ footer {
     </button>
 </div>
 
+<div id="musicPlayer"></div>
 
-    <div id="musicPlayer"
-     style="position:fixed;left:-220px;top:0;width:200px;height:200px;overflow:hidden;">
-</div>
 <section class="portada" id="portada">
 
     <img
@@ -435,6 +439,14 @@ footer {
 
     </section>
 
+</main>
+
+<footer>
+    SIGAMOS CORRIENDO<br>
+    Una vida, una pasión y miles de recuerdos.<br>
+    Antonio Sojo Canovas
+</footer>
+
 <script>
 const videoId = "-yOZEiHLuVU";
 const playlistId = "PLJMxsph_t8wgx0IcyyD_Dt9b6kbjK";
@@ -442,22 +454,28 @@ const playlistId = "PLJMxsph_t8wgx0IcyyD_Dt9b6kbjK";
 let musicPlaying = false;
 
 function toggleMusic() {
+
     const player = document.getElementById("musicPlayer");
     const button = document.getElementById("musicButton");
 
     if (!musicPlaying) {
+
         const iframe = document.createElement("iframe");
 
-        iframe.width = "200";
-        iframe.height = "200";
-        iframe.allow = "autoplay; encrypted-media";
-        iframe.title = "Música de fondo";
+        iframe.width = "300";
+        iframe.height = "180";
+        iframe.title = "Música de fondo de Sigamos corriendo";
+
+        iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+        iframe.referrerPolicy = "strict-origin-when-cross-origin";
 
         iframe.src =
             "https://www.youtube.com/embed/" +
             videoId +
             "?list=" + playlistId +
             "&autoplay=1&playsinline=1";
+
+        iframe.style.border = "0";
 
         player.innerHTML = "";
         player.appendChild(iframe);
@@ -466,16 +484,18 @@ function toggleMusic() {
         musicPlaying = true;
 
     } else {
+
         player.innerHTML = "";
         button.textContent = "♫ ESCUCHAR MÚSICA";
         musicPlaying = false;
+
     }
 }
 </script>
 
-
 </body>
 </html>
+
 
 
 
