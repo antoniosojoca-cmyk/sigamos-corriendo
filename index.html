@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SIGAMOS CORRIENDO | Mi vida como atleta</title>
 
 <style>
@@ -54,14 +55,13 @@ nav {
 nav a {
     color: #d4b574;
     text-decoration: none;
-    font-size: 15px;
 }
 
 nav a:hover { color: white; }
 
 .music-control {
     text-align: center;
-    padding: 22px 10px 5px;
+    padding: 25px 10px;
 }
 
 #musicButton {
@@ -69,26 +69,31 @@ nav a:hover { color: white; }
     color: #d4b574;
     border: 1px solid #9b7b42;
     border-radius: 30px;
-    padding: 11px 25px;
+    padding: 12px 28px;
     font-family: Georgia, serif;
     font-size: 15px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 #musicButton:hover {
     background: #241d10;
-    border-color: #e5c783;
 }
 
-/* Reproductor de música */
 #musicPlayer {
-    position: fixed;
-    left: -350px;
-    top: 0;
-    width: 300px;
-    height: 180px;
-    overflow: hidden;
+    display: none;
+    width: 320px;
+    max-width: 100%;
+    margin: 20px auto 0;
+    border: 1px solid #9b7b42;
+    padding: 5px;
+    background: #111;
+}
+
+#musicPlayer iframe {
+    display: block;
+    width: 100%;
+    height: 200px;
+    border: 0;
 }
 
 .portada {
@@ -240,12 +245,14 @@ footer {
 </nav>
 
 <div class="music-control">
+
     <button id="musicButton" onclick="toggleMusic()">
         ♫ ESCUCHAR MÚSICA
     </button>
-</div>
 
-<div id="musicPlayer"></div>
+    <div id="musicPlayer"></div>
+
+</div>
 
 <section class="portada" id="portada">
 
@@ -264,6 +271,7 @@ footer {
     <section class="seccion" id="dedicatoria">
 
         <p class="etiqueta">UNA DEDICATORIA ESPECIAL</p>
+
         <h2>A mi mujer, mi compañera de camino</h2>
 
         <p>Este libro también es tuyo.</p>
@@ -309,7 +317,9 @@ footer {
     <section class="seccion" id="prologo">
 
         <p class="etiqueta">ANTES DE COMENZAR EL CAMINO</p>
+
         <h2>PRÓLOGO</h2>
+
         <h3>Una vida en movimiento</h3>
 
         <p>
@@ -395,6 +405,7 @@ footer {
     <section class="seccion indice" id="indice">
 
         <p class="etiqueta">EL CAMINO QUE VAMOS A RECORRER</p>
+
         <h2>ÍNDICE DEL LIBRO</h2>
 
         <a class="capitulo" href="#prologo">
@@ -452,49 +463,83 @@ const videoId = "-yOZEiHLuVU";
 const playlistId = "PLJMxsph_t8wgx0IcyyD_Dt9b6kbjK";
 
 let musicPlaying = false;
+let playerCreated = false;
 
 function toggleMusic() {
 
     const player = document.getElementById("musicPlayer");
     const button = document.getElementById("musicButton");
 
-    if (!musicPlaying) {
+    if (!playerCreated) {
+
+        player.style.display = "block";
 
         const iframe = document.createElement("iframe");
 
-        iframe.width = "300";
-        iframe.height = "180";
         iframe.title = "Música de fondo de Sigamos corriendo";
 
         iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+
         iframe.referrerPolicy = "strict-origin-when-cross-origin";
 
         iframe.src =
             "https://www.youtube.com/embed/" +
             videoId +
             "?list=" + playlistId +
-            "&autoplay=1&playsinline=1";
+            "&autoplay=1" +
+            "&playsinline=1" +
+            "&controls=1" +
+            "&enablejsapi=1" +
+            "&origin=" + encodeURIComponent(window.location.origin);
 
-        iframe.style.border = "0";
+        iframe.id = "youtubeMusic";
 
-        player.innerHTML = "";
         player.appendChild(iframe);
 
-        button.textContent = "Ⅱ PAUSAR MÚSICA";
+        playerCreated = true;
         musicPlaying = true;
+
+        button.textContent = "Ⅱ PAUSAR MÚSICA";
+
+    } else if (musicPlaying) {
+
+        const iframe = document.getElementById("youtubeMusic");
+
+        iframe.contentWindow.postMessage(
+            JSON.stringify({
+                event: "command",
+                func: "pauseVideo",
+                args: []
+            }),
+            "https://www.youtube.com"
+        );
+
+        musicPlaying = false;
+        button.textContent = "♫ CONTINUAR MÚSICA";
 
     } else {
 
-        player.innerHTML = "";
-        button.textContent = "♫ ESCUCHAR MÚSICA";
-        musicPlaying = false;
+        const iframe = document.getElementById("youtubeMusic");
 
+        iframe.contentWindow.postMessage(
+            JSON.stringify({
+                event: "command",
+                func: "playVideo",
+                args: []
+            }),
+            "https://www.youtube.com"
+        );
+
+        musicPlaying = true;
+        button.textContent = "Ⅱ PAUSAR MÚSICA";
     }
 }
 </script>
 
 </body>
 </html>
+
+
 
 
 
