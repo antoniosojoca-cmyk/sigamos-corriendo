@@ -81,22 +81,15 @@ nav a:hover { color: white; }
     border-color: #e5c783;
 }
 
-#musicPlayer {
-    display: none;
-    width: 200px;
-    height: 200px;
-    margin: 15px auto 5px;
-}
-
-#musicPlayer.visible {
-    display: block;
-}
-
-#musicPlayer iframe {
-    display: block;
-    width: 200px;
-    height: 200px;
-    border: 1px solid #78613a;
+/* REPRODUCTOR DE MÚSICA OCULTO */
+#musicFrame {
+    position: fixed;
+    width: 1px;
+    height: 1px;
+    left: -100px;
+    top: -100px;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .portada {
@@ -226,9 +219,13 @@ footer {
 @media(max-width:600px) {
     header { padding-top: 35px; }
     nav { gap: 15px; }
+
     .seccion p { font-size: 16px; }
     h2 { font-size: 27px; }
-    .portada { padding: 0 8px; }
+
+    .portada {
+        padding: 0 8px;
+    }
 }
 </style>
 </head>
@@ -248,11 +245,18 @@ footer {
 </nav>
 
 <div class="music-control">
-    <button id="musicButton" type="button" onclick="toggleMusic()">
+    <button id="musicButton" onclick="controlarMusica()">
         ♫ ESCUCHAR MÚSICA
     </button>
-    <div id="musicPlayer"></div>
 </div>
+
+<!-- REPRODUCTOR DE YOUTUBE OCULTO -->
+<iframe
+    id="musicFrame"
+    src="https://www.youtube.com/embed/-yOZEiHLuVU?enablejsapi=1&loop=1&playlist=-yOZEiHLuVU"
+    title="Música de fondo"
+    allow="autoplay">
+</iframe>
 
 <section class="portada" id="portada">
 
@@ -449,54 +453,46 @@ footer {
 </main>
 
 <footer>
-    SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
+    SIGAMOS CORRIENDO
 </footer>
 
 <script>
-const videoId = "-yOZEiHLuVU";
-const playlistId = "PLJMxsph_t8wgx0IcyyD_Dt9b6kbjK";
+const musicFrame = document.getElementById("musicFrame");
+const musicButton = document.getElementById("musicButton");
 
-let musicPlaying = false;
+let musicaActiva = false;
 
-function toggleMusic() {
+function controlarMusica() {
 
-    const player = document.getElementById("musicPlayer");
-    const button = document.getElementById("musicButton");
+    if (!musicaActiva) {
 
-    if (!musicPlaying) {
+        musicFrame.contentWindow.postMessage(
+            '{"event":"command","func":"playVideo","args":""}',
+            "*"
+        );
 
-        const iframe = document.createElement("iframe");
+        musicaActiva = true;
 
-        iframe.src =
-            "https://www.youtube.com/embed/" +
-            videoId +
-            "?list=" + playlistId +
-            "&autoplay=1&playsinline=1&controls=1";
-
-        iframe.title = "Música de fondo de Sigamos corriendo";
-        iframe.allow = "autoplay; encrypted-media; picture-in-picture";
-        iframe.setAttribute("allowfullscreen", "");
-
-        player.innerHTML = "";
-        player.appendChild(iframe);
-        player.classList.add("visible");
-
-        button.textContent = "Ⅱ DETENER MÚSICA";
-        musicPlaying = true;
+        musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
 
     } else {
 
-        player.innerHTML = "";
-        player.classList.remove("visible");
+        musicFrame.contentWindow.postMessage(
+            '{"event":"command","func":"pauseVideo","args":""}',
+            "*"
+        );
 
-        button.textContent = "♫ ESCUCHAR MÚSICA";
-        musicPlaying = false;
+        musicaActiva = false;
+
+        musicButton.textContent = "♫ ESCUCHAR MÚSICA";
     }
 }
 </script>
 
 </body>
 </html>
+
+
 
 
 
