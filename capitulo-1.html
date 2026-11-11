@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -81,12 +80,18 @@ nav a:hover { color: white; }
     border-color: #e5c783;
 }
 
+#musicButton:disabled {
+    opacity: 0.55;
+    cursor: wait;
+}
+
+/* Reproductor oculto */
 #musicFrame {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    left: -100px;
-    top: -100px;
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    left: -1000px;
+    top: 0;
     opacity: 0;
     pointer-events: none;
     border: 0;
@@ -214,21 +219,14 @@ footer {
     <a href="#inicio">Capítulo I</a>
 </nav>
 
-<!-- REPRODUCTOR DE MÚSICA -->
 <div class="music-control">
-
-    <button id="musicButton" type="button" onclick="controlarMusica()">
-        ♫ ESCUCHAR MÚSICA
+    <button id="musicButton" type="button" onclick="controlarMusica()" disabled>
+        PREPARANDO MÚSICA...
     </button>
-
-    <iframe
-        id="musicFrame"
-        src="https://www.youtube.com/embed/-yOZEiHLuVU?enablejsapi=1&amp;origin=https%3A%2F%2Fantoniosojoca-cmyk.github.io&amp;list=PLJMxsph_t8wgx0IcyyD_Dt9b6kbjK&amp;playsinline=1"
-        title="Música de fondo"
-        allow="autoplay; encrypted-media">
-    </iframe>
-
 </div>
+
+<!-- Aquí se crea el reproductor de YouTube, fuera de la vista -->
+<div id="musicFrame"></div>
 
 <main class="contenedor texto" id="inicio">
 
@@ -659,45 +657,71 @@ footer {
 </footer>
 
 <script>
-const musicFrame = document.getElementById("musicFrame");
+let reproductor = null;
+let musicaActiva = false;
+
 const musicButton = document.getElementById("musicButton");
 
-let musicaActiva = false;
+function onYouTubeIframeAPIReady() {
+
+    reproductor = new YT.Player("musicFrame", {
+        width: "200",
+        height: "200",
+
+        videoId: "-yOZEiHLuVU",
+
+        playerVars: {
+            autoplay: 0,
+            controls: 0,
+            playsinline: 1,
+            listType: "playlist",
+            list: "PLJMxsph_t8wgx0IcyyD_Dt9b6kbjK"
+        },
+
+        events: {
+            onReady: function() {
+                musicButton.disabled = false;
+                musicButton.textContent = "♫ ESCUCHAR MÚSICA";
+            },
+
+            onStateChange: function(event) {
+
+                if (event.data === YT.PlayerState.PLAYING) {
+                    musicaActiva = true;
+                    musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
+                }
+
+                if (
+                    event.data === YT.PlayerState.PAUSED ||
+                    event.data === YT.PlayerState.ENDED
+                ) {
+                    musicaActiva = false;
+                    musicButton.textContent = "♫ ESCUCHAR MÚSICA";
+                }
+            }
+        }
+    });
+}
 
 function controlarMusica() {
 
-    if (!musicaActiva) {
+    if (!reproductor || typeof reproductor.playVideo !== "function") {
+        return;
+    }
 
-        musicFrame.contentWindow.postMessage(
-            JSON.stringify({
-                event: "command",
-                func: "playVideo",
-                args: ""
-            }),
-            "*"
-        );
-
-        musicaActiva = true;
-        musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
-
+    if (musicaActiva) {
+        reproductor.pauseVideo();
     } else {
-
-        musicFrame.contentWindow.postMessage(
-            JSON.stringify({
-                event: "command",
-                func: "pauseVideo",
-                args: ""
-            }),
-            "*"
-        );
-
-        musicaActiva = false;
-        musicButton.textContent = "♫ ESCUCHAR MÚSICA";
+        reproductor.playVideo();
     }
 }
 </script>
 
+<script src="https://www.youtube.com/iframe_api"></script>
+
 </body>
 </html>
+
+
 
 
