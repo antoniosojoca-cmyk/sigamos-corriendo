@@ -7,209 +7,160 @@
 <title>Capítulo I | SIGAMOS CORRIENDO</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html { scroll-behavior: smooth; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
 
 body {
-    background: #080808;
-    color: #e8e0d1;
-    font-family: Georgia, "Times New Roman", serif;
-    line-height: 1.9;
+    background:#080808;
+    color:#e8e0d1;
+    font-family:Georgia,"Times New Roman",serif;
+    line-height:1.9;
 }
 
 header {
-    text-align: center;
-    padding: 45px 20px 30px;
+    text-align:center;
+    padding:45px 20px 30px;
 }
-
 header h1 {
-    color: #d4b574;
-    font-size: clamp(32px, 6vw, 52px);
-    letter-spacing: 4px;
-    font-weight: normal;
+    color:#d4b574;
+    font-size:clamp(32px,6vw,52px);
+    letter-spacing:4px;
+    font-weight:normal;
 }
-
 header p {
-    color: #c4b99f;
-    font-style: italic;
-    margin-top: 10px;
+    color:#c4b99f;
+    font-style:italic;
+    margin-top:10px;
 }
 
 nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px;
-    padding: 18px;
-    border-top: 1px solid #6e5934;
-    border-bottom: 1px solid #6e5934;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:25px;
+    padding:18px;
+    border-top:1px solid #6e5934;
+    border-bottom:1px solid #6e5934;
 }
-
 nav a {
-    color: #d4b574;
-    text-decoration: none;
-    font-size: 15px;
+    color:#d4b574;
+    text-decoration:none;
+    font-size:15px;
 }
-
-nav a:hover { color: white; }
+nav a:hover { color:white; }
 
 .music-control {
-    text-align: center;
-    padding: 22px 10px 5px;
+    text-align:center;
+    padding:22px 10px 5px;
 }
-
 #musicButton {
-    background: transparent;
-    color: #d4b574;
-    border: 1px solid #9b7b42;
-    border-radius: 30px;
-    padding: 11px 25px;
-    font-family: Georgia, serif;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
+    background:transparent;
+    color:#d4b574;
+    border:1px solid #9b7b42;
+    border-radius:30px;
+    padding:11px 25px;
+    font-family:Georgia,serif;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
 }
-
 #musicButton:hover {
-    background: #241d10;
-    border-color: #e5c783;
-}
-
-#musicButton:disabled {
-    opacity: 0.55;
-    cursor: wait;
-}
-
-/* REPRODUCTOR VISIBLE TEMPORALMENTE */
-#musicFrame {
-    position: fixed;
-    width: 220px;
-    height: 124px;
-    right: 15px;
-    bottom: 15px;
-    opacity: 1;
-    pointer-events: auto;
-    z-index: 9999;
-    border: 1px solid #d4b574;
-    background: #000;
+    background:#241d10;
+    border-color:#e5c783;
 }
 
 .contenedor {
-    max-width: 900px;
-    margin: 65px auto;
-    padding: 0 25px;
+    max-width:900px;
+    margin:65px auto;
+    padding:0 25px;
 }
-
 .etiqueta {
-    text-align: center;
-    color: #a88a50;
-    letter-spacing: 4px;
-    font-size: 12px;
-    margin-bottom: 12px;
+    text-align:center;
+    color:#a88a50;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:12px;
 }
-
 h2 {
-    text-align: center;
-    color: #d4b574;
-    font-size: clamp(27px, 4vw, 35px);
-    font-weight: normal;
-    margin-bottom: 15px;
+    text-align:center;
+    color:#d4b574;
+    font-size:clamp(27px,4vw,35px);
+    font-weight:normal;
+    margin-bottom:15px;
 }
-
 h3 {
-    text-align: center;
-    color: #d4b574;
-    font-size: 23px;
-    font-weight: normal;
-    font-style: italic;
-    margin: 55px 0 25px;
+    text-align:center;
+    color:#d4b574;
+    font-size:23px;
+    font-weight:normal;
+    font-style:italic;
+    margin:55px 0 25px;
 }
-
 .texto p {
-    font-size: 18px;
-    margin-bottom: 22px;
-    text-align: justify;
+    font-size:18px;
+    margin-bottom:22px;
+    text-align:justify;
 }
-
 .foto {
-    max-width: 760px;
-    margin: 45px auto 55px;
-    text-align: center;
+    max-width:760px;
+    margin:45px auto 55px;
+    text-align:center;
 }
-
 .foto img {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 650px;
-    object-fit: contain;
-    margin: auto;
+    display:block;
+    width:100%;
+    height:auto;
+    max-height:650px;
+    object-fit:contain;
+    margin:auto;
 }
-
 .foto figcaption {
-    color: #b8a47e;
-    font-size: 14px;
-    font-style: italic;
-    margin-top: 13px;
+    color:#b8a47e;
+    font-size:14px;
+    font-style:italic;
+    margin-top:13px;
 }
-
 .separador {
-    width: 90px;
-    height: 1px;
-    background: #9b7b42;
-    margin: 60px auto;
+    width:90px;
+    height:1px;
+    background:#9b7b42;
+    margin:60px auto;
 }
-
 .destacado {
-    color: #d4b574;
-    text-align: center !important;
-    font-size: 21px !important;
-    font-style: italic;
-    margin: 35px 0;
+    color:#d4b574;
+    text-align:center !important;
+    font-size:21px !important;
+    font-style:italic;
+    margin:35px 0;
 }
-
 .volver {
-    display: inline-block;
-    color: #d4b574;
-    text-decoration: none;
-    border: 1px solid #9b7b42;
-    padding: 11px 25px;
-    margin-top: 25px;
-    transition: 0.3s;
+    display:inline-block;
+    color:#d4b574;
+    text-decoration:none;
+    border:1px solid #9b7b42;
+    padding:11px 25px;
+    margin-top:25px;
+    transition:0.3s;
 }
-
 .volver:hover {
-    background: #241d10;
-    border-color: #e5c783;
+    background:#241d10;
+    border-color:#e5c783;
 }
-
-.centro { text-align: center; }
+.centro { text-align:center; }
 
 footer {
-    border-top: 1px solid #51432b;
-    padding: 35px 15px;
-    text-align: center;
-    color: #a99572;
-    font-size: 14px;
+    border-top:1px solid #51432b;
+    padding:35px 15px;
+    text-align:center;
+    color:#a99572;
+    font-size:14px;
 }
 
 @media(max-width:600px) {
-    header { padding-top: 35px; }
-    nav { gap: 15px; }
-    .texto p { font-size: 16px; }
-    .contenedor { padding: 0 18px; }
-
-    #musicFrame {
-        width: 180px;
-        height: 102px;
-        right: 8px;
-        bottom: 8px;
-    }
+    header { padding-top:35px; }
+    nav { gap:15px; }
+    .texto p { font-size:16px; }
+    .contenedor { padding:0 18px; }
 }
 </style>
 </head>
@@ -229,13 +180,14 @@ footer {
 </nav>
 
 <div class="music-control">
-    <button id="musicButton" type="button"
-    onclick="controlarMusica()" disabled>
-        PREPARANDO MÚSICA...
+    <button id="musicButton" type="button" onclick="controlarMusica()">
+        ♫ ESCUCHAR MÚSICA
     </button>
 </div>
 
-<div id="musicFrame"></div>
+<audio id="musicaFondo" preload="none" loop>
+    <source src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/abydos_music-cinematic-inspiring-piano-and-strings-162791%20%281%29.mp3" type="audio/mpeg">
+</audio>
 
 <main class="contenedor texto" id="inicio">
 
@@ -666,74 +618,32 @@ SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
 </footer>
 
 <script>
-let reproductor = null;
-let musicaActiva = false;
-
+const musica = document.getElementById("musicaFondo");
 const musicButton = document.getElementById("musicButton");
 
-function onYouTubeIframeAPIReady() {
+let musicaActiva = false;
 
-    reproductor = new YT.Player("musicFrame", {
-        width: "220",
-        height: "124",
-        videoId: "-yOZEiHLuVU",
-
-        playerVars: {
-            autoplay: 0,
-            controls: 1,
-            playsinline: 1,
-            listType: "playlist",
-            list: "PLJMxsph_t8wgx0IcyyD_Dt9b6kbjK"
-        },
-
-        events: {
-            onReady: function() {
-                musicButton.disabled = false;
-                musicButton.textContent = "♫ ESCUCHAR MÚSICA";
-            },
-
-            onStateChange: function(event) {
-
-                if (event.data === YT.PlayerState.PLAYING) {
-                    musicaActiva = true;
-                    musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
-                }
-
-                if (
-                    event.data === YT.PlayerState.PAUSED ||
-                    event.data === YT.PlayerState.ENDED
-                ) {
-                    musicaActiva = false;
-                    musicButton.textContent = "♫ ESCUCHAR MÚSICA";
-                }
-            },
-
-            onError: function(event) {
-                musicButton.textContent = "ERROR DE REPRODUCCIÓN";
-                console.log("Error de YouTube:", event.data);
-            }
+async function controlarMusica() {
+    if (!musicaActiva) {
+        try {
+            await musica.play();
+            musicaActiva = true;
+            musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
+        } catch (error) {
+            musicButton.textContent = "NO SE PUDO REPRODUCIR";
+            console.error("Error al reproducir la música:", error);
         }
-    });
-}
-
-function controlarMusica() {
-
-    if (!reproductor || typeof reproductor.playVideo !== "function") {
-        return;
-    }
-
-    if (musicaActiva) {
-        reproductor.pauseVideo();
     } else {
-        reproductor.playVideo();
+        musica.pause();
+        musicaActiva = false;
+        musicButton.textContent = "♫ ESCUCHAR MÚSICA";
     }
 }
 </script>
 
-<script src="https://www.youtube.com/iframe_api"></script>
-
 </body>
 </html>
+
 
 
 
