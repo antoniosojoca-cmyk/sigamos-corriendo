@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,221 +8,184 @@
 <title>SIGAMOS CORRIENDO | Mi vida como atleta</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html { scroll-behavior: smooth; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
 
 body {
-    background: #080808;
-    color: #e8e0d1;
-    font-family: Georgia, "Times New Roman", serif;
-    line-height: 1.9;
+    background:#080808;
+    color:#e8e0d1;
+    font-family:Georgia,"Times New Roman",serif;
+    line-height:1.9;
 }
 
 header {
-    text-align: center;
-    padding: 45px 20px 30px;
+    text-align:center;
+    padding:45px 20px 30px;
 }
-
 header h1 {
-    color: #d4b574;
-    font-size: clamp(34px, 6vw, 58px);
-    letter-spacing: 5px;
-    font-weight: normal;
+    color:#d4b574;
+    font-size:clamp(34px,6vw,58px);
+    letter-spacing:5px;
+    font-weight:normal;
 }
-
 header p {
-    color: #c4b99f;
-    font-style: italic;
-    margin-top: 10px;
-    font-size: 17px;
+    color:#c4b99f;
+    font-style:italic;
+    margin-top:10px;
+    font-size:17px;
 }
 
 nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px;
-    padding: 18px;
-    border-top: 1px solid #6e5934;
-    border-bottom: 1px solid #6e5934;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:25px;
+    padding:18px;
+    border-top:1px solid #6e5934;
+    border-bottom:1px solid #6e5934;
 }
-
 nav a {
-    color: #d4b574;
-    text-decoration: none;
-    font-size: 15px;
+    color:#d4b574;
+    text-decoration:none;
+    font-size:15px;
 }
-
-nav a:hover { color: white; }
+nav a:hover { color:white; }
 
 .music-control {
-    text-align: center;
-    padding: 22px 10px 5px;
+    text-align:center;
+    padding:22px 10px 5px;
 }
-
 #musicButton {
-    background: transparent;
-    color: #d4b574;
-    border: 1px solid #9b7b42;
-    border-radius: 30px;
-    padding: 11px 25px;
-    font-family: Georgia, serif;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
+    background:transparent;
+    color:#d4b574;
+    border:1px solid #9b7b42;
+    border-radius:30px;
+    padding:11px 25px;
+    font-family:Georgia,serif;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
 }
-
 #musicButton:hover {
-    background: #241d10;
-    border-color: #e5c783;
-}
-
-#musicFrame {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    left: -100px;
-    top: -100px;
-    opacity: 0;
-    pointer-events: none;
-    border: 0;
+    background:#241d10;
+    border-color:#e5c783;
 }
 
 .portada {
-    width: 100%;
-    max-width: 1000px;
-    margin: 35px auto;
-    padding: 0 15px;
-    text-align: center;
+    width:100%;
+    max-width:1000px;
+    margin:35px auto;
+    padding:0 15px;
+    text-align:center;
 }
-
 .portada img {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: none;
-    object-fit: contain;
-    margin: auto;
-    border: 1px solid #78613a;
+    display:block;
+    width:100%;
+    height:auto;
+    max-height:none;
+    object-fit:contain;
+    margin:auto;
+    border:1px solid #78613a;
 }
-
 .frase {
-    color: #d4b574;
-    font-size: 20px;
-    font-style: italic;
-    margin-top: 25px;
+    color:#d4b574;
+    font-size:20px;
+    font-style:italic;
+    margin-top:25px;
 }
 
 .contenedor {
-    max-width: 850px;
-    margin: 75px auto;
-    padding: 0 25px;
+    max-width:850px;
+    margin:75px auto;
+    padding:0 25px;
 }
-
 .seccion {
-    margin-bottom: 85px;
-    scroll-margin-top: 30px;
+    margin-bottom:85px;
+    scroll-margin-top:30px;
 }
-
 .etiqueta {
-    text-align: center;
-    color: #a88a50;
-    letter-spacing: 4px;
-    font-size: 12px;
-    margin-bottom: 12px;
+    text-align:center;
+    color:#a88a50;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:12px;
 }
-
 h2 {
-    text-align: center;
-    color: #d4b574;
-    font-size: 31px;
-    font-weight: normal;
-    margin-bottom: 35px;
+    text-align:center;
+    color:#d4b574;
+    font-size:31px;
+    font-weight:normal;
+    margin-bottom:35px;
 }
-
 h3 {
-    text-align: center;
-    color: #d4b574;
-    font-size: 23px;
-    font-weight: normal;
-    margin-bottom: 30px;
-    font-style: italic;
+    text-align:center;
+    color:#d4b574;
+    font-size:23px;
+    font-weight:normal;
+    margin-bottom:30px;
+    font-style:italic;
 }
-
 .seccion p {
-    font-size: 18px;
-    margin-bottom: 22px;
-    text-align: justify;
+    font-size:18px;
+    margin-bottom:22px;
+    text-align:justify;
 }
-
 .separador {
-    width: 90px;
-    height: 1px;
-    background: #9b7b42;
-    margin: 65px auto;
+    width:90px;
+    height:1px;
+    background:#9b7b42;
+    margin:65px auto;
 }
-
 .destacado {
-    color: #d4b574;
-    text-align: center !important;
-    font-size: 21px !important;
-    font-style: italic;
-    margin-top: 35px;
+    color:#d4b574;
+    text-align:center !important;
+    font-size:21px !important;
+    font-style:italic;
+    margin-top:35px;
 }
-
 .indice {
-    border-top: 1px solid #6e5934;
-    padding-top: 55px;
+    border-top:1px solid #6e5934;
+    padding-top:55px;
 }
-
 .capitulo {
-    display: block;
-    max-width: 650px;
-    margin: 15px auto;
-    padding: 17px 20px;
-    border: 1px solid #51432b;
-    color: #e8e0d1;
-    text-decoration: none;
-    text-align: center;
-    transition: 0.3s;
+    display:block;
+    max-width:650px;
+    margin:15px auto;
+    padding:17px 20px;
+    border:1px solid #51432b;
+    color:#e8e0d1;
+    text-decoration:none;
+    text-align:center;
+    transition:0.3s;
 }
-
 .capitulo:hover {
-    background: #211b10;
-    border-color: #d4b574;
+    background:#211b10;
+    border-color:#d4b574;
 }
-
 .capitulo strong {
-    display: block;
-    color: #d4b574;
-    font-weight: normal;
-    font-size: 18px;
+    display:block;
+    color:#d4b574;
+    font-weight:normal;
+    font-size:18px;
 }
-
 .capitulo span {
-    font-size: 14px;
-    color: #b8ad9b;
+    font-size:14px;
+    color:#b8ad9b;
 }
-
 footer {
-    border-top: 1px solid #51432b;
-    padding: 35px 15px;
-    text-align: center;
-    color: #a99572;
-    font-size: 14px;
+    border-top:1px solid #51432b;
+    padding:35px 15px;
+    text-align:center;
+    color:#a99572;
+    font-size:14px;
 }
 
 @media(max-width:600px) {
-    header { padding-top: 35px; }
-    nav { gap: 15px; }
-    .seccion p { font-size: 16px; }
-    h2 { font-size: 27px; }
-    .portada { padding: 0 8px; }
+    header { padding-top:35px; }
+    nav { gap:15px; }
+    .seccion p { font-size:16px; }
+    h2 { font-size:27px; }
+    .portada { padding:0 8px; }
 }
 </style>
 </head>
@@ -233,7 +197,7 @@ footer {
     <p>Mi vida, mi pasión y una nueva forma de seguir adelante</p>
 </header>
 
-    <nav>
+<nav>
     <a href="#portada">Portada</a>
     <a href="#dedicatoria">Dedicatoria</a>
     <a href="#prologo">Prólogo</a>
@@ -245,17 +209,13 @@ footer {
     <button id="musicButton" type="button" onclick="controlarMusica()">
         ♫ ESCUCHAR MÚSICA
     </button>
-
-    <iframe
-        id="musicFrame"
-        src="https://www.youtube.com/embed/-yOZEiHLuVU?enablejsapi=1&list=PLJMxsph_t8wgx0IcyyD_Dt9b6kbjK&playsinline=1"
-        title="Música de fondo"
-        allow="autoplay; encrypted-media">
-    </iframe>
 </div>
 
-<section class="portada" id="portada">
+<audio id="musicaFondo" preload="none" loop>
+    <source src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/abydos_music-cinematic-inspiring-piano-and-strings-162791%20%281%29.mp3" type="audio/mpeg">
+</audio>
 
+<section class="portada" id="portada">
     <img
     src="Sigamos%20corriendo_%20historia%20de%20superaci%C3%B3n.png"
     alt="Portada del libro Sigamos corriendo">
@@ -263,190 +223,187 @@ footer {
     <p class="frase">
         Una historia de esfuerzo, valores y superación.
     </p>
-
 </section>
 
 <main class="contenedor">
 
-    <section class="seccion" id="dedicatoria">
+<section class="seccion" id="dedicatoria">
 
-        <p class="etiqueta">UNA DEDICATORIA ESPECIAL</p>
-        <h2>A mi mujer, mi compañera de camino</h2>
+    <p class="etiqueta">UNA DEDICATORIA ESPECIAL</p>
+    <h2>A mi mujer, mi compañera de camino</h2>
 
-        <p>Este libro también es tuyo.</p>
+    <p>Este libro también es tuyo.</p>
 
-        <p>
-        Porque durante todos estos años has estado a mi lado,
-        acompañándome en este camino que un día decidí emprender.
-        </p>
+    <p>
+    Porque durante todos estos años has estado a mi lado,
+    acompañándome en este camino que un día decidí emprender.
+    </p>
 
-        <p>
-        Has disfrutado conmigo de mis triunfos, de mis alegrías
-        y de esos momentos en los que el esfuerzo tenía su
-        recompensa. Pero también has sufrido mis malos momentos,
-        mis lesiones, mis decepciones y las dificultades que han
-        ido apareciendo.
-        </p>
+    <p>
+    Has disfrutado conmigo de mis triunfos, de mis alegrías
+    y de esos momentos en los que el esfuerzo tenía su
+    recompensa. Pero también has sufrido mis malos momentos,
+    mis lesiones, mis decepciones y las dificultades que han
+    ido apareciendo.
+    </p>
 
-        <p>
-        Has vivido el atletismo conmigo, aunque no siempre fueras
-        tú quien cruzara la línea de meta.
-        </p>
+    <p>
+    Has vivido el atletismo conmigo, aunque no siempre fueras
+    tú quien cruzara la línea de meta.
+    </p>
 
-        <p>
-        Cuando miro hacia atrás y recuerdo todo lo que he vivido,
-        sé que no habría sido igual sin tu compañía.
-        </p>
+    <p>
+    Cuando miro hacia atrás y recuerdo todo lo que he vivido,
+    sé que no habría sido igual sin tu compañía.
+    </p>
 
-        <p>
-        Gracias por estar a mi lado, por compartir mis alegrías
-        y por acompañarme también cuando las cosas no salieron
-        como esperaba.
-        </p>
+    <p>
+    Gracias por estar a mi lado, por compartir mis alegrías
+    y por acompañarme también cuando las cosas no salieron
+    como esperaba.
+    </p>
 
-        <p class="destacado">
-        Si este libro habla de mi vida como atleta, también habla
-        de ti, porque has formado parte de cada paso del camino.
-        </p>
+    <p class="destacado">
+    Si este libro habla de mi vida como atleta, también habla
+    de ti, porque has formado parte de cada paso del camino.
+    </p>
 
-    </section>
+</section>
 
-    <div class="separador"></div>
+<div class="separador"></div>
 
-    <section class="seccion" id="prologo">
+<section class="seccion" id="prologo">
 
-        <p class="etiqueta">ANTES DE COMENZAR EL CAMINO</p>
-        <h2>PRÓLOGO</h2>
-        <h3>Una vida en movimiento</h3>
+    <p class="etiqueta">ANTES DE COMENZAR EL CAMINO</p>
+    <h2>PRÓLOGO</h2>
+    <h3>Una vida en movimiento</h3>
 
-        <p>
-        Nunca imaginé que aquella afición que comenzó casi por
-        casualidad acabaría convirtiéndose en una parte tan
-        importante de mi vida.
-        </p>
+    <p>
+    Nunca imaginé que aquella afición que comenzó casi por
+    casualidad acabaría convirtiéndose en una parte tan
+    importante de mi vida.
+    </p>
 
-        <p>
-        Todo empezó con las ganas de probar, de hacer algo
-        diferente y de descubrir hasta dónde podía llegar.
-        No tenía grandes objetivos ni pensaba que el atletismo
-        terminaría acompañándome durante tantos años.
-        </p>
+    <p>
+    Todo empezó con las ganas de probar, de hacer algo
+    diferente y de descubrir hasta dónde podía llegar.
+    No tenía grandes objetivos ni pensaba que el atletismo
+    terminaría acompañándome durante tantos años.
+    </p>
 
-        <p>
-        Con el tiempo llegaron los entrenamientos, las carreras,
-        los primeros compañeros, los clubes, las amistades y
-        también los resultados. Viví alegrías que nunca olvidaré,
-        conseguí metas que al principio me parecían imposibles
-        y conocí personas que dejaron una huella en mi camino.
-        </p>
+    <p>
+    Con el tiempo llegaron los entrenamientos, las carreras,
+    los primeros compañeros, los clubes, las amistades y
+    también los resultados. Viví alegrías que nunca olvidaré,
+    conseguí metas que al principio me parecían imposibles
+    y conocí personas que dejaron una huella en mi camino.
+    </p>
 
-        <p>
-        Pero el atletismo también me enseñó que no todo son
-        victorias. Hubo sacrificios, momentos de cansancio,
-        lesiones y situaciones en las que tuve que aprender
-        a detenerme y mirar las cosas de otra manera.
-        </p>
+    <p>
+    Pero el atletismo también me enseñó que no todo son
+    victorias. Hubo sacrificios, momentos de cansancio,
+    lesiones y situaciones en las que tuve que aprender
+    a detenerme y mirar las cosas de otra manera.
+    </p>
 
-        <p>
-        Hoy, después de más de veinticinco años vinculado
-        a este deporte, miro atrás y comprendo que lo
-        verdaderamente importante no fueron solamente los
-        puestos conseguidos ni las medallas. Fue todo lo que
-        viví mientras corría: las personas que conocí, los
-        valores que aprendí y el estilo de vida que encontré.
-        </p>
+    <p>
+    Hoy, después de más de veinticinco años vinculado
+    a este deporte, miro atrás y comprendo que lo
+    verdaderamente importante no fueron solamente los
+    puestos conseguidos ni las medallas. Fue todo lo que
+    viví mientras corría: las personas que conocí, los
+    valores que aprendí y el estilo de vida que encontré.
+    </p>
 
-        <p>
-        Ahora mi camino es diferente. Tengo que escuchar más
-        a mi cuerpo, aceptar mis limitaciones y descubrir
-        nuevas formas de seguir sintiéndome atleta. Todavía
-        conservo la esperanza de volver a correr, pero también
-        he aprendido que el deporte es mucho más que cruzar
-        una meta.
-        </p>
+    <p>
+    Ahora mi camino es diferente. Tengo que escuchar más
+    a mi cuerpo, aceptar mis limitaciones y descubrir
+    nuevas formas de seguir sintiéndome atleta. Todavía
+    conservo la esperanza de volver a correr, pero también
+    he aprendido que el deporte es mucho más que cruzar
+    una meta.
+    </p>
 
-        <p>
-        Este libro nace para recordar ese recorrido. Para contar
-        mis experiencias, mis alegrías, mis errores y todo
-        aquello que el atletismo me ha enseñado.
-        </p>
+    <p>
+    Este libro nace para recordar ese recorrido. Para contar
+    mis experiencias, mis alegrías, mis errores y todo
+    aquello que el atletismo me ha enseñado.
+    </p>
 
-        <p>
-        No pretendo contar la historia de un gran campeón.
-        Quiero contar la historia de una persona que encontró
-        en el atletismo una pasión y una forma de vivir.
-        </p>
+    <p>
+    No pretendo contar la historia de un gran campeón.
+    Quiero contar la historia de una persona que encontró
+    en el atletismo una pasión y una forma de vivir.
+    </p>
 
-        <p>
-        Porque, si algo tengo claro, es que, aunque tuviera
-        que empezar de nuevo, volvería a elegir el mismo camino.
-        </p>
+    <p>
+    Porque, si algo tengo claro, es que, aunque tuviera
+    que empezar de nuevo, volvería a elegir el mismo camino.
+    </p>
 
-        <p class="destacado">
-        Veinte mil veces volvería a correr.
-        </p>
+    <p class="destacado">
+    Veinte mil veces volvería a correr.
+    </p>
 
-        <p>
-        Y mientras haya ilusión, siempre habrá una manera
-        de seguir adelante.
-        </p>
+    <p>
+    Y mientras haya ilusión, siempre habrá una manera
+    de seguir adelante.
+    </p>
 
-        <p class="destacado">
-        Porque esta historia se llama SIGAMOS CORRIENDO.
-        </p>
+    <p class="destacado">
+    Porque esta historia se llama SIGAMOS CORRIENDO.
+    </p>
 
-    </section>
+</section>
 
-    <div class="separador"></div>
+<div class="separador"></div>
 
-    <section class="seccion indice" id="indice">
+<section class="seccion indice" id="indice">
 
-        <p class="etiqueta">EL CAMINO QUE VAMOS A RECORRER</p>
-        <h2>ÍNDICE DEL LIBRO</h2>
+    <p class="etiqueta">EL CAMINO QUE VAMOS A RECORRER</p>
+    <h2>ÍNDICE DEL LIBRO</h2>
 
-        <a class="capitulo" href="#prologo">
-            <strong>PRÓLOGO</strong>
-            <span>Una vida en movimiento</span>
-        </a>
+    <a class="capitulo" href="#prologo">
+        <strong>PRÓLOGO</strong>
+        <span>Una vida en movimiento</span>
+    </a>
 
-       
-        <a class="capitulo" href="capitulo-1.html">
-    <strong>CAPÍTULO I</strong>
-    <span>Cuando empezó todo</span>
-</a>
+    <a class="capitulo" href="capitulo-1.html">
+        <strong>CAPÍTULO I</strong>
+        <span>Cuando empezó todo</span>
+    </a>
 
-        <div class="capitulo">
-            <strong>CAPÍTULO II</strong>
-            <span>Una familia llamada Nueva Jarilla</span>
-        </div>
+    <div class="capitulo">
+        <strong>CAPÍTULO II</strong>
+        <span>Una familia llamada Nueva Jarilla</span>
+    </div>
 
-        <div class="capitulo">
-            <strong>CAPÍTULO III</strong>
-            <span>Entre carreras, amistades y podios</span>
-        </div>
+    <div class="capitulo">
+        <strong>CAPÍTULO III</strong>
+        <span>Entre carreras, amistades y podios</span>
+    </div>
 
-        <div class="capitulo">
-            <strong>CAPÍTULO IV</strong>
-            <span>Cuando el cuerpo pidió parar</span>
-        </div>
+    <div class="capitulo">
+        <strong>CAPÍTULO IV</strong>
+        <span>Cuando el cuerpo pidió parar</span>
+    </div>
 
-        <div class="capitulo">
-            <strong>CAPÍTULO V</strong>
-            <span>Aprender a seguir adelante</span>
-        </div>
+    <div class="capitulo">
+        <strong>CAPÍTULO V</strong>
+        <span>Aprender a seguir adelante</span>
+    </div>
 
-        <div class="capitulo">
-            <strong>EPÍLOGO</strong>
-            <span>Si volviera a empezar</span>
-        </div>
+    <div class="capitulo">
+        <strong>EPÍLOGO</strong>
+        <span>Si volviera a empezar</span>
+    </div>
 
-        <div class="capitulo">
-            <strong>GALERÍA</strong>
-            <span>Los recuerdos de una vida atlética</span>
-        </div>
+    <div class="capitulo">
+        <strong>GALERÍA</strong>
+        <span>Los recuerdos de una vida atlética</span>
+    </div>
 
-    </section>
-
+</section>
 </main>
 
 <footer>
@@ -454,29 +411,24 @@ footer {
 </footer>
 
 <script>
-const musicFrame = document.getElementById("musicFrame");
+const musica = document.getElementById("musicaFondo");
 const musicButton = document.getElementById("musicButton");
 
 let musicaActiva = false;
 
-function controlarMusica() {
+async function controlarMusica() {
+
     if (!musicaActiva) {
-
-        musicFrame.contentWindow.postMessage(
-            '{"event":"command","func":"playVideo","args":""}',
-            "*"
-        );
-
-        musicaActiva = true;
-        musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
-
+        try {
+            await musica.play();
+            musicaActiva = true;
+            musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
+        } catch (error) {
+            musicButton.textContent = "NO SE PUDO REPRODUCIR";
+            console.error("Error al reproducir la música:", error);
+        }
     } else {
-
-        musicFrame.contentWindow.postMessage(
-            '{"event":"command","func":"pauseVideo","args":""}',
-            "*"
-        );
-
+        musica.pause();
         musicaActiva = false;
         musicButton.textContent = "♫ ESCUCHAR MÚSICA";
     }
