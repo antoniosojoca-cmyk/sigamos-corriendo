@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,6 +8,7 @@
 
 <style>
 * { box-sizing:border-box; margin:0; padding:0; }
+
 html { scroll-behavior:smooth; }
 
 body {
@@ -22,12 +22,14 @@ header {
     text-align:center;
     padding:45px 20px 30px;
 }
+
 header h1 {
     color:#d4b574;
     font-size:clamp(34px,6vw,58px);
     letter-spacing:5px;
     font-weight:normal;
 }
+
 header p {
     color:#c4b99f;
     font-style:italic;
@@ -44,17 +46,20 @@ nav {
     border-top:1px solid #6e5934;
     border-bottom:1px solid #6e5934;
 }
+
 nav a {
     color:#d4b574;
     text-decoration:none;
     font-size:15px;
 }
+
 nav a:hover { color:white; }
 
 .music-control {
     text-align:center;
     padding:22px 10px 5px;
 }
+
 #musicButton {
     background:transparent;
     color:#d4b574;
@@ -66,9 +71,22 @@ nav a:hover { color:white; }
     cursor:pointer;
     transition:0.3s;
 }
+
 #musicButton:hover {
     background:#241d10;
     border-color:#e5c783;
+}
+
+/* REPRODUCTOR DE YOUTUBE OCULTO */
+#musicFrame {
+    position:absolute;
+    width:1px;
+    height:1px;
+    left:-10000px;
+    top:0;
+    opacity:0;
+    pointer-events:none;
+    border:0;
 }
 
 .portada {
@@ -78,15 +96,16 @@ nav a:hover { color:white; }
     padding:0 15px;
     text-align:center;
 }
+
 .portada img {
     display:block;
     width:100%;
     height:auto;
-    max-height:none;
     object-fit:contain;
     margin:auto;
     border:1px solid #78613a;
 }
+
 .frase {
     color:#d4b574;
     font-size:20px;
@@ -99,10 +118,12 @@ nav a:hover { color:white; }
     margin:75px auto;
     padding:0 25px;
 }
+
 .seccion {
     margin-bottom:85px;
     scroll-margin-top:30px;
 }
+
 .etiqueta {
     text-align:center;
     color:#a88a50;
@@ -110,6 +131,7 @@ nav a:hover { color:white; }
     font-size:12px;
     margin-bottom:12px;
 }
+
 h2 {
     text-align:center;
     color:#d4b574;
@@ -117,6 +139,7 @@ h2 {
     font-weight:normal;
     margin-bottom:35px;
 }
+
 h3 {
     text-align:center;
     color:#d4b574;
@@ -125,17 +148,20 @@ h3 {
     margin-bottom:30px;
     font-style:italic;
 }
+
 .seccion p {
     font-size:18px;
     margin-bottom:22px;
     text-align:justify;
 }
+
 .separador {
     width:90px;
     height:1px;
     background:#9b7b42;
     margin:65px auto;
 }
+
 .destacado {
     color:#d4b574;
     text-align:center !important;
@@ -143,10 +169,12 @@ h3 {
     font-style:italic;
     margin-top:35px;
 }
+
 .indice {
     border-top:1px solid #6e5934;
     padding-top:55px;
 }
+
 .capitulo {
     display:block;
     max-width:650px;
@@ -158,20 +186,24 @@ h3 {
     text-align:center;
     transition:0.3s;
 }
+
 .capitulo:hover {
     background:#211b10;
     border-color:#d4b574;
 }
+
 .capitulo strong {
     display:block;
     color:#d4b574;
     font-weight:normal;
     font-size:18px;
 }
+
 .capitulo span {
     font-size:14px;
     color:#b8ad9b;
 }
+
 footer {
     border-top:1px solid #51432b;
     padding:35px 15px;
@@ -211,9 +243,13 @@ footer {
     </button>
 </div>
 
-<audio id="musicaFondo" preload="none" loop>
-    <source src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/abydos_music-cinematic-inspiring-piano-and-strings-162791%20%281%29.mp3" type="audio/mpeg">
-</audio>
+<!-- VIDEO OCULTO: SOLO SE ESCUCHA LA MUSICA -->
+<iframe
+    id="musicFrame"
+    src="https://www.youtube.com/embed/0o8vszqVL2U?enablejsapi=1&playsinline=1&controls=0&rel=0&fs=0"
+    title="Música de fondo"
+    allow="autoplay; encrypted-media">
+</iframe>
 
 <section class="portada" id="portada">
     <img
@@ -411,24 +447,38 @@ footer {
 </footer>
 
 <script>
-const musica = document.getElementById("musicaFondo");
+const musicFrame = document.getElementById("musicFrame");
 const musicButton = document.getElementById("musicButton");
 
 let musicaActiva = false;
 
-async function controlarMusica() {
+function controlarMusica() {
 
     if (!musicaActiva) {
-        try {
-            await musica.play();
-            musicaActiva = true;
-            musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
-        } catch (error) {
-            musicButton.textContent = "NO SE PUDO REPRODUCIR";
-            console.error("Error al reproducir la música:", error);
-        }
+
+        musicFrame.contentWindow.postMessage(
+            JSON.stringify({
+                event:"command",
+                func:"playVideo",
+                args:[]
+            }),
+            "*"
+        );
+
+        musicaActiva = true;
+        musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
+
     } else {
-        musica.pause();
+
+        musicFrame.contentWindow.postMessage(
+            JSON.stringify({
+                event:"command",
+                func:"pauseVideo",
+                args:[]
+            }),
+            "*"
+        );
+
         musicaActiva = false;
         musicButton.textContent = "♫ ESCUCHAR MÚSICA";
     }
@@ -437,6 +487,7 @@ async function controlarMusica() {
 
 </body>
 </html>
+
 
 
 
