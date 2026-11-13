@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capítulo II | SIGAMOS CORRIENDO</title>
+
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+
+body {
+    background:#080808;
+    color:#e8e0d1;
+    font-family:Georgia,"Times New Roman",serif;
+    line-height:1.9;
+}
+
+header {
+    text-align:center;
+    padding:45px 20px 30px;
+}
+
+header h1 {
+    color:#d4b574;
+    font-size:clamp(32px,6vw,52px);
+    letter-spacing:4px;
+    font-weight:normal;
+}
+
+header p {
+    color:#c4b99f;
+    font-style:italic;
+    margin-top:10px;
+}
+
+nav {
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:25px;
+    padding:18px;
+    border-top:1px solid #6e5934;
+    border-bottom:1px solid #6e5934;
+}
+
+nav a {
+    color:#d4b574;
+    text-decoration:none;
+    font-size:15px;
+}
+
+nav a:hover { color:white; }
+
+.music-control {
+    text-align:center;
+    padding:22px 10px 5px;
+}
+
+#musicButton {
+    background:transparent;
+    color:#d4b574;
+    border:1px solid #9b7b42;
+    border-radius:30px;
+    padding:11px 25px;
+    font-family:Georgia,serif;
+    font-size:15px;
+    cursor:pointer;
+}
+
+#musicButton:hover {
+    background:#241d10;
+    border-color:#e5c783;
+}
+
+#musicFrame {
+    position:absolute;
+    width:1px;
+    height:1px;
+    left:-10000px;
+    top:0;
+    opacity:0;
+    pointer-events:none;
+    border:0;
+}
+
+.contenedor {
+    max-width:900px;
+    margin:65px auto;
+    padding:0 25px;
+}
+
+.etiqueta {
+    text-align:center;
+    color:#a88a50;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+h2 {
+    text-align:center;
+    color:#d4b574;
+    font-size:clamp(27px,4vw,35px);
+    font-weight:normal;
+    margin-bottom:25px;
+}
+
+h3 {
+    text-align:center;
+    color:#d4b574;
+    font-size:23px;
+    font-weight:normal;
+    font-style:italic;
+    margin:55px 0 25px;
+}
+
+.texto p {
+    font-size:18px;
+    margin-bottom:22px;
+    text-align:justify;
+}
+
+.foto {
+    max-width:760px;
+    margin:45px auto 55px;
+    text-align:center;
+}
+
+.foto img {
+    display:block;
+    width:100%;
+    height:auto;
+    max-height:650px;
+    object-fit:contain;
+    margin:auto;
+}
+
+.foto figcaption {
+    color:#b8a47e;
+    font-size:14px;
+    font-style:italic;
+    margin-top:13px;
+}
+
+.destacado {
+    color:#d4b574;
+    text-align:center !important;
+    font-size:21px !important;
+    font-style:italic;
+    margin:35px 0;
+}
+
+.separador {
+    width:90px;
+    height:1px;
+    background:#9b7b42;
+    margin:60px auto;
+}
+
+.volver {
+    display:inline-block;
+    color:#d4b574;
+    text-decoration:none;
+    border:1px solid #9b7b42;
+    padding:11px 25px;
+    margin-top:25px;
+    transition:0.3s;
+}
+
+.volver:hover {
+    background:#241d10;
+    border-color:#e5c783;
+}
+
+.centro { text-align:center; }
+
+footer {
+    border-top:1px solid #51432b;
+    padding:35px 15px;
+    text-align:center;
+    color:#a99572;
+    font-size:14px;
+}
+
+@media(max-width:600px) {
+    header { padding-top:35px; }
+    nav { gap:15px; }
+    .texto p { font-size:16px; }
+    .contenedor { padding:0 18px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>SIGAMOS CORRIENDO</h1>
+    <p>Mi vida, mi pasión y una nueva forma de seguir adelante</p>
+</header>
+
+<nav>
+    <a href="index.html#portada">Portada</a>
+    <a href="index.html#prologo">Prólogo</a>
+    <a href="index.html#indice">Índice del libro</a>
+    <a href="capitulo-1.html">Capítulo I</a>
+    <a href="#inicio">Capítulo II</a>
+</nav>
+
+<div class="music-control">
+    <button id="musicButton" type="button" onclick="controlarMusica()">
+        ♫ ESCUCHAR MÚSICA
+    </button>
+</div>
+
+<iframe
+    id="musicFrame"
+    src="https://www.youtube.com/embed/0o8vszqVL2U?enablejsapi=1&playsinline=1&controls=0&rel=0&fs=0"
+    title="Música de fondo"
+    allow="autoplay; encrypted-media">
+</iframe>
+
+<main class="contenedor texto" id="inicio">
+
+<p class="etiqueta">MI HISTORIA · CAPÍTULO II</p>
+
+<h2>UNA FAMILIA LLAMADA NUEVA JARILLA</h2>
+
+<p class="destacado">
+A veces, el mejor premio que nos da el deporte no se consigue en una meta, sino en las personas que encontramos por el camino.
+</p>
+
+<h3>Una invitación que llegó sin buscarla</h3>
+
+<p>
+Después de aproximadamente un año corriendo por mi cuenta, comenzaron a aparecer en mi camino personas vinculadas al Club Atletismo Nueva Jarilla. Coincidíamos en las carreras, hablábamos de atletismo y poco a poco fui conociendo a algunos de sus componentes.
+</p>
+
+<p>
+Nunca había pensado seriamente en pertenecer a un club. Para mí, correr era algo que hacía porque me gustaba, una afición que cada vez ocupaba más espacio en mi vida. No me consideraba un corredor especial ni pensaba que necesitara formar parte de un equipo.
+</p>
+
+<p>
+También hubo interés por parte de otros clubes, pero algo me decía que Nueva Jarilla era diferente. Me atraía la manera de ser de aquellas personas, su humildad y la cercanía con la que trataban a los demás.
+</p>
+
+<h3>Juanpe y la puerta de entrada al club</h3>
+
+<p>
+Recuerdo especialmente a Juanpe, que era el presidente. El club estaba empezando, era pequeño y tenía ilusión por crecer y seguir avanzando en el mundo del atletismo.
+</p>
+
+<p>
+Fue él, junto con los compañeros, quien me hizo sentir que podía formar parte de aquel grupo. Finalmente acepté la propuesta y me incorporé a Nueva Jarilla.
+</p>
+
+<p>
+Con el tiempo comprendí que aquella decisión había sido mucho más importante de lo que imaginaba. No estaba entrando solamente en un club deportivo: estaba encontrando un grupo de personas con las que compartir carreras, conversaciones, experiencias y muchos momentos especiales.
+</p>
+
+<figure class="foto">
+<img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20241112-WA0007.jpg"
+alt="Dos compañeros del club Atletismo Nueva Jarilla">
+<figcaption>Compartiendo el atletismo y los buenos momentos con los compañeros.</figcaption>
+</figure>
+
+<h3>Un club pequeño, pero grande en humanidad</h3>
+
+<p>
+Nueva Jarilla no era un club numeroso. Éramos aproximadamente cuatro o cinco personas, trabajadores que teníamos nuestras obligaciones y que buscábamos los momentos disponibles para entrenar y competir.
+</p>
+
+<p>
+No siempre podíamos coincidir en los entrenamientos. Muchas veces cada uno hacía su preparación por separado y nos encontrábamos directamente en las carreras. Pero eso nunca impidió que existiera un sentimiento de compañerismo.
+</p>
+
+<p>
+Con los años he aprendido que el tamaño de un club no se mide por el número de corredores que tiene, sino por la calidad humana de las personas que lo forman.
+</p>
+
+<p>
+Allí encontré sencillez, respeto y una manera muy especial de entender el deporte. No hacía falta tener grandes medios ni ser un atleta destacado para sentirse importante dentro de aquel grupo.
+</p>
+
+<figure class="foto">
+<img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20181021-WA0001%20%281%29.jpg"
+alt="Compañeros del club reunidos en una jornada deportiva">
+<figcaption>Una imagen de compañerismo: personas unidas por una misma afición.</figcaption>
+</figure>
+
+<h3>Mi familia también formaba parte de aquella familia</h3>
+
+<p>
+Hay algo de aquellos años que recuerdo con un cariño especial: el trato que recibieron mi mujer y mi hijo.
+</p>
+
+<p>
+Los compañeros no se limitaron a aceptarme a mí como corredor. También hicieron que mi familia se sintiera acogida. Mi mujer y mi hijo formaban parte de aquel ambiente, compartían conmigo muchos momentos y recibían el mismo cariño y cercanía.
+</p>
+
+<p>
+Para mí eso tenía un valor enorme. El atletismo me había dado la oportunidad de conocer personas, pero Nueva Jarilla consiguió algo todavía más importante: que quienes estaban a mi lado también se sintieran parte de aquel pequeño mundo.
+</p>
+
+<p>
+Cuando uno encuentra un lugar donde se siente querido y donde su familia también es bien recibida, descubre que hay cosas que no se pueden medir con tiempos, marcas ni clasificaciones.
+</p>
+
+<h3>Los recuerdos que permanecen</h3>
+
+<p>
+Conservo fotografías de aquellos momentos porque, cuando las miro, no veo solamente a unos corredores. Veo compañeros, amistades y una etapa de mi vida que recuerdo con mucho afecto.
+</p>
+
+<p>
+Puede que no siempre entrenáramos juntos, puede que cada uno tuviera sus propios objetivos y sus circunstancias, pero cuando nos encontrábamos en una carrera volvíamos a compartir esa afición que nos unía.
+</p>
+
+<figure class="foto">
+<img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20170115_120844.jpg"
+alt="Recuerdo de una jornada con compañeros de Nueva Jarilla">
+<figcaption>Los recuerdos de una etapa que siempre llevaré conmigo.</figcaption>
+</figure>
+
+<h3>El mejor trofeo no siempre está en el podio</h3>
+
+<p>
+A lo largo de mis años como atleta he tenido la suerte de conseguir buenos resultados y de subir a algunos podios. Son recuerdos que guardo con satisfacción, pero con el paso del tiempo he comprendido que hay premios que tienen un significado mucho más profundo.
+</p>
+
+<p>
+El cariño de los compañeros, la confianza, las palabras de ánimo y la manera en que hicieron sentir a mi familia son recuerdos que no se guardan en una vitrina. Se quedan dentro de uno.
+</p>
+
+<p>
+Por eso, cuando pienso en Nueva Jarilla, no pienso únicamente en un club de atletismo. Pienso en las personas que me abrieron sus puertas y que me hicieron sentir uno más desde el principio.
+</p>
+
+<p class="destacado">
+El mejor trofeo que me llevé de Nueva Jarilla fue el cariño de aquella familia.
+</p>
+
+<div class="separador"></div>
+
+<p class="destacado">
+Los años pasan, las carreras terminan y los resultados quedan atrás. Pero las personas que nos hicieron felices durante el camino siguen ocupando un lugar especial en nuestros recuerdos.
+</p>
+
+<div class="centro">
+<a class="volver" href="index.html#indice">
+← VOLVER AL ÍNDICE DEL LIBRO
+</a>
+</div>
+
+</main>
+
+<footer>
+SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
+</footer>
+
+<script>
+const musicFrame = document.getElementById("musicFrame");
+const musicButton = document.getElementById("musicButton");
+
+let musicaActiva = false;
+
+function controlarMusica() {
+    if (!musicaActiva) {
+        musicFrame.contentWindow.postMessage(
+            JSON.stringify({
+                event:"command",
+                func:"playVideo",
+                args:[]
+            }),
+            "*"
+        );
+
+        musicaActiva = true;
+        musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
+    } else {
+        musicFrame.contentWindow.postMessage(
+            JSON.stringify({
+                event:"command",
+                func:"pauseVideo",
+                args:[]
+            }),
+            "*"
+        );
+
+        musicaActiva = false;
+        musicButton.textContent = "♫ ESCUCHAR MÚSICA";
+    }
+}
+</script>
+
+</body>
+</html>
