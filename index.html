@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,7 +23,7 @@ body {
     line-height:1.85;
 }
 
-/* LIBRO CERRADO */
+/* PORTADA CERRADA */
 
 .entrada {
     min-height:100vh;
@@ -54,7 +53,7 @@ body {
 .libro-cerrado {
     position:relative;
     width:min(78vw,430px);
-    aspect-ratio:0.72;
+    aspect-ratio:.72;
     perspective:1400px;
     margin:0 auto 42px;
     filter:drop-shadow(20px 25px 22px rgba(0,0,0,.75));
@@ -176,7 +175,7 @@ body {
     margin-top:18px;
 }
 
-/* INTERIOR DEL LIBRO */
+/* INTERIOR */
 
 .interior {
     display:none;
@@ -214,7 +213,7 @@ body.abierto .interior { display:block; }
     border:0;
 }
 
-/* CADA APERTURA CONTIENE DOS PÁGINAS */
+/* LIBRO Y APERTURAS */
 
 .libro-abierto {
     position:relative;
@@ -224,6 +223,7 @@ body.abierto .interior { display:block; }
     border-radius:5px;
     box-shadow:0 25px 60px rgba(0,0,0,.8),inset 0 0 0 2px #b38c4c;
     overflow:hidden;
+    perspective:1800px;
 }
 
 .apertura {
@@ -234,12 +234,20 @@ body.abierto .interior { display:block; }
 
 .apertura.activa {
     display:grid;
-    animation:aparecer .45s ease;
+    z-index:2;
+    animation:aparecer .35s ease;
+}
+
+.apertura.preparando {
+    display:grid;
+    position:absolute;
+    inset:0;
+    z-index:1;
 }
 
 @keyframes aparecer {
-    from { opacity:.45; transform:translateY(5px); }
-    to { opacity:1; transform:translateY(0); }
+    from { opacity:.5; }
+    to { opacity:1; }
 }
 
 .apertura::before {
@@ -363,7 +371,87 @@ body.abierto .interior { display:block; }
 
 .capitulo span { font-size:13px; }
 
-/* CONTROLES PARA PASAR PÁGINA */
+/* HOJA ANIMADA */
+
+.hoja-giro {
+    position:absolute;
+    top:0;
+    right:0;
+    width:50%;
+    height:100%;
+    z-index:10;
+    transform-origin:left center;
+    transform-style:preserve-3d;
+    pointer-events:none;
+    box-shadow:none;
+}
+
+.hoja-giro.girando {
+    animation:girarAdelante .95s cubic-bezier(.55,.05,.35,1) forwards;
+}
+
+.hoja-giro.girando-atras {
+    left:0;
+    right:auto;
+    transform-origin:right center;
+    animation:girarAtras .95s cubic-bezier(.55,.05,.35,1) forwards;
+}
+
+.cara-hoja {
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    background:#e9dfc9;
+    box-shadow:0 0 20px rgba(0,0,0,.18);
+}
+
+.cara-hoja .pagina {
+    width:100%;
+    height:100%;
+    min-height:690px;
+    padding:48px clamp(22px,5vw,65px) 65px;
+}
+
+.hoja-trasera {
+    transform:rotateY(180deg);
+    background:#e9dfc9;
+}
+
+.hoja-trasera .pagina {
+    border:0;
+}
+
+@keyframes girarAdelante {
+    0% {
+        transform:rotateY(0deg);
+        box-shadow:0 0 0 rgba(0,0,0,0);
+    }
+    45% {
+        box-shadow:-18px 0 30px rgba(0,0,0,.28);
+    }
+    100% {
+        transform:rotateY(-180deg);
+        box-shadow:-5px 0 15px rgba(0,0,0,.1);
+    }
+}
+
+@keyframes girarAtras {
+    0% {
+        transform:rotateY(0deg);
+        box-shadow:0 0 0 rgba(0,0,0,0);
+    }
+    45% {
+        box-shadow:18px 0 30px rgba(0,0,0,.28);
+    }
+    100% {
+        transform:rotateY(180deg);
+        box-shadow:5px 0 15px rgba(0,0,0,.1);
+    }
+}
+
+/* CONTROLES */
 
 .controles-paginas {
     display:flex;
@@ -422,6 +510,8 @@ body.abierto .interior { display:block; }
     padding:30px 10px;
 }
 
+/* MÓVILES */
+
 @media(max-width:750px) {
     .interior {
         padding:8px;
@@ -448,13 +538,18 @@ body.abierto .interior { display:block; }
 
     .pagina-derecha { border-left:0; }
 
-    .pagina p { font-size:15px; }
-
     .controles-paginas { gap:10px; }
 
     .boton-pagina {
         padding:10px 13px;
         font-size:12px;
+    }
+
+    /* En móvil usamos una transición suave sin giro 3D */
+    .hoja-giro { display:none; }
+
+    .apertura.activa {
+        animation:aparecer .4s ease;
     }
 }
 </style>
@@ -462,7 +557,7 @@ body.abierto .interior { display:block; }
 
 <body>
 
-<!-- PORTADA DEL LIBRO CERRADO -->
+<!-- PORTADA -->
 
 <section class="entrada">
 
@@ -500,7 +595,7 @@ body.abierto .interior { display:block; }
 
 </section>
 
-<!-- INTERIOR DEL LIBRO -->
+<!-- INTERIOR -->
 
 <section class="interior" id="interior">
 
@@ -517,9 +612,9 @@ body.abierto .interior { display:block; }
         allow="autoplay; encrypted-media">
     </iframe>
 
-    <div class="libro-abierto">
+    <div class="libro-abierto" id="libroAbierto">
 
-        <!-- PRIMERA APERTURA: DEDICATORIA Y COMIENZO DEL PRÓLOGO -->
+        <!-- APERTURA 1 -->
 
         <div class="apertura activa">
 
@@ -618,7 +713,7 @@ body.abierto .interior { display:block; }
 
         </div>
 
-        <!-- SEGUNDA APERTURA: FINAL DEL PRÓLOGO E ÍNDICE -->
+        <!-- APERTURA 2 -->
 
         <div class="apertura">
 
@@ -747,7 +842,7 @@ body.abierto .interior { display:block; }
 
     </div>
 
-    <!-- BOTONES PARA AVANZAR Y RETROCEDER -->
+    <!-- CONTROLES DE LECTURA -->
 
     <div class="controles-paginas">
 
@@ -774,6 +869,8 @@ body.abierto .interior { display:block; }
 </section>
 
 <script>
+/* ABRIR Y CERRAR */
+
 function abrirLibro() {
     document.body.classList.add("abierto");
     window.scrollTo({top:0,behavior:"smooth"});
@@ -784,45 +881,141 @@ function cerrarLibro() {
     window.scrollTo({top:0,behavior:"smooth"});
 }
 
-/* PASAR LAS APERTURAS DEL LIBRO */
+/* NAVEGACIÓN Y ANIMACIÓN DE PÁGINAS */
 
-const aperturas = document.querySelectorAll(".apertura");
+const aperturas = Array.from(document.querySelectorAll(".apertura"));
+const libroAbierto = document.getElementById("libroAbierto");
 const botonAnterior = document.getElementById("anterior");
 const botonSiguiente = document.getElementById("siguiente");
 const contadorPaginas = document.getElementById("contadorPaginas");
 
 let aperturaActual = 0;
+let animacionEnCurso = false;
 
-function actualizarLibro() {
-
-    aperturas.forEach((apertura, indice) => {
-        apertura.classList.toggle("activa", indice === aperturaActual);
-    });
-
+function actualizarControles() {
     botonAnterior.disabled = aperturaActual === 0;
     botonSiguiente.disabled = aperturaActual === aperturas.length - 1;
 
     contadorPaginas.textContent =
         "Apertura " + (aperturaActual + 1) + " de " + aperturas.length;
+}
 
-    window.scrollTo({top:0,behavior:"smooth"});
+function crearHoja(direccion, aperturaDestino) {
+
+    const hoja = document.createElement("div");
+    hoja.className = "hoja-giro";
+
+    const caraFrontal = document.createElement("div");
+    caraFrontal.className = "cara-hoja hoja-frontal";
+
+    const caraTrasera = document.createElement("div");
+    caraTrasera.className = "cara-hoja hoja-trasera";
+
+    let paginaFrontal;
+    let paginaTrasera;
+
+    if (direccion === 1) {
+        paginaFrontal = aperturas[aperturaActual]
+            .querySelector(".pagina-derecha").cloneNode(true);
+
+        paginaTrasera = aperturaDestino
+            .querySelector(".pagina-izquierda").cloneNode(true);
+    } else {
+        paginaFrontal = aperturas[aperturaActual]
+            .querySelector(".pagina-izquierda").cloneNode(true);
+
+        paginaTrasera = aperturaDestino
+            .querySelector(".pagina-derecha").cloneNode(true);
+
+        hoja.classList.add("girando-atras");
+    }
+
+    caraFrontal.appendChild(paginaFrontal);
+    caraTrasera.appendChild(paginaTrasera);
+
+    hoja.appendChild(caraFrontal);
+    hoja.appendChild(caraTrasera);
+
+    return hoja;
 }
 
 function cambiarApertura(direccion) {
 
-    const nuevaApertura = aperturaActual + direccion;
+    if (animacionEnCurso) return;
 
-    if (nuevaApertura < 0 || nuevaApertura >= aperturas.length) {
+    const nuevoIndice = aperturaActual + direccion;
+
+    if (nuevoIndice < 0 || nuevoIndice >= aperturas.length) return;
+
+    const aperturaActualElemento = aperturas[aperturaActual];
+    const aperturaDestino = aperturas[nuevoIndice];
+
+    animacionEnCurso = true;
+    botonAnterior.disabled = true;
+    botonSiguiente.disabled = true;
+
+    /* En móviles utilizamos una transición sencilla */
+
+    if (window.innerWidth <= 750) {
+
+        aperturaActualElemento.classList.remove("activa");
+        aperturaDestino.classList.add("activa");
+
+        aperturaActual = nuevoIndice;
+        actualizarControles();
+
+        window.scrollTo({top:0,behavior:"smooth"});
+
+        setTimeout(() => {
+            animacionEnCurso = false;
+            actualizarControles();
+        }, 450);
+
         return;
     }
 
-    aperturaActual = nuevaApertura;
-    actualizarLibro();
+    /* Preparamos la siguiente apertura debajo de la hoja */
+
+    aperturaDestino.classList.add("preparando");
+
+    /* Creamos la hoja con sus dos caras */
+
+    const hoja = crearHoja(direccion, aperturaDestino);
+
+    libroAbierto.appendChild(hoja);
+
+    /* Iniciamos el giro */
+
+    requestAnimationFrame(() => {
+        hoja.classList.add(
+            direccion === 1 ? "girando" : "girando-atras"
+        );
+    });
+
+    /* Al terminar, mostramos la nueva apertura */
+
+    setTimeout(() => {
+
+        aperturaActualElemento.classList.remove("activa");
+        aperturaDestino.classList.remove("preparando");
+        aperturaDestino.classList.add("activa");
+
+        hoja.remove();
+
+        aperturaActual = nuevoIndice;
+
+        animacionEnCurso = false;
+
+        actualizarControles();
+
+        window.scrollTo({top:0,behavior:"smooth"});
+
+    }, 1000);
 }
 
-actualizarLibro();
+actualizarControles();
 
-/* MÚSICA DE FONDO */
+/* MÚSICA */
 
 const musicFrame = document.getElementById("musicFrame");
 const musicButton = document.getElementById("musicButton");
@@ -864,6 +1057,8 @@ function controlarMusica() {
 
 </body>
 </html>
+
+
 
 
 
