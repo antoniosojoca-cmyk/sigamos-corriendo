@@ -54,22 +54,43 @@ nav a{
 
 nav a:hover{color:white}
 
-.music-control{
+.music-control,
+.narracion-control{
     text-align:center;
-    padding:15px 10px;
+    padding:12px 10px;
 }
 
-#musicButton{
+#musicButton,
+.narracion-control button{
     background:transparent;
     color:#d4b574;
     border:1px solid #9b7b42;
     border-radius:30px;
-    padding:9px 23px;
+    padding:10px 20px;
     font-family:Georgia,serif;
     cursor:pointer;
+    margin:4px;
+    transition:.25s;
 }
 
-#musicButton:hover{background:#241d10}
+#musicButton:hover,
+.narracion-control button:hover{
+    background:#241d10;
+}
+
+.narracion-control button:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+}
+
+#narracionEstado{
+    display:block;
+    color:#bca982;
+    font-size:12px;
+    font-style:italic;
+    margin-top:8px;
+    min-height:20px;
+}
 
 #musicFrame{
     position:fixed;
@@ -159,7 +180,7 @@ nav a:hover{color:white}
     margin:20px 0;
 }
 
-/* FOTOGRAFÍAS MÁS GRANDES */
+/* FOTOGRAFÍAS */
 .pagina-contenido figure{
     margin:18px auto;
     text-align:center;
@@ -385,6 +406,8 @@ footer{
     .numero-pagina{font-size:10px}
     .controles{gap:8px}
     .controles button{padding:10px 13px;font-size:11px}
+    #musicButton,
+    .narracion-control button{font-size:11px;padding:9px 13px}
 }
 
 @media(max-width:430px){
@@ -414,6 +437,27 @@ footer{
     <button id="musicButton" type="button" onclick="controlarMusica()" disabled>
         CARGANDO MÚSICA...
     </button>
+</div>
+
+<!-- CONTROLES DE NARRACIÓN -->
+<div class="narracion-control">
+    <button id="narrarButton" type="button" onclick="iniciarNarracion()">
+        ♫ ESCUCHAR MI HISTORIA
+    </button>
+
+    <button id="pausarButton" type="button" onclick="pausarNarracion()" disabled>
+        Ⅱ PAUSAR
+    </button>
+
+    <button id="continuarButton" type="button" onclick="continuarNarracion()" disabled>
+        ▶ CONTINUAR
+    </button>
+
+    <button id="detenerButton" type="button" onclick="detenerNarracion()" disabled>
+        ■ DETENER
+    </button>
+
+    <span id="narracionEstado">Narración disponible en tu navegador</span>
 </div>
 
 <div id="musicFrame"></div>
@@ -621,7 +665,8 @@ SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
 </footer>
 
 <script>
-/* Música de fondo */
+/* MÚSICA DE FONDO */
+
 let reproductor;
 let musicaActiva=false;
 const musicButton=document.getElementById("musicButton");
@@ -668,8 +713,249 @@ function controlarMusica(){
     else reproductor.playVideo();
 }
 
-/* Distribución automática del texto en páginas */
-const original=document.getElementById("contenidoOriginal");
+
+/* =====================================
+   NARRACIÓN DEL CAPÍTULO
+   ===================================== */
+
+const narrarButton=document.getElementById("narrarButton");
+const pausarButton=document.getElementById("pausarButton");
+const continuarButton=document.getElementById("continuarButton");
+const detenerButton=document.getElementById("detenerButton");
+const narracionEstado=document.getElementById("narracionEstado");
+
+let fragmentosNarracion=[];
+let indiceNarracion=0;
+let narracionActiva=false;
+let narracionPausada=false;
+let numeroSesionNarracion=0;
+
+function actualizarControlesNarracion(){
+    narrarButton.disabled=narracionActiva;
+    pausarButton.disabled=!narracionActiva || narracionPausada;
+    continuarButton.disabled=!narracionActiva || !narracionPausada;
+    detenerButton.disabled=!narracionActiva;
+}
+
+/* Divide los textos largos en fragmentos cómodos para la voz */
+function dividirTexto(texto,maximo=220){
+    const frases=texto.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[texto];
+    const resultado=[];
+    let bloque="";
+
+    frases.forEach(frase=>{
+        frase=frase.trim();
+        if(!frase)return;
+
+        if((bloque+" "+frase).trim().length<=maximo){
+            bloque=(bloque+" "+frase).trim();
+        }else{
+            if(bloque)resultado.push(bloque);
+
+            if(frase.length<=maximo){
+                bloque=frase;
+            }else{
+                const palabras=frase.split(/\s+/);
+                bloque="";
+
+                palabras.forEach(palabra=>{
+                    if((bloque+" "+palabra).trim().length>maximo){
+                        if(bloque)resultado.push(bloque);
+                        bloque=palabra;
+                    }else{
+                        bloque=(bloque+" "+palabra).trim();
+                    }
+                });
+            }
+        }
+    });
+
+    if(bloque)resultado.push(bloque);
+    return resultado;
+}
+
+/* Selecciona una voz española, dando preferencia a nombres masculinos */
+function elegirVozEspanola(){
+    const voces=window.speechSynthesis.getVoices();
+
+    const espanolas=voces.filter(voz=>
+        voz.lang && voz.lang.toLowerCase().startsWith("es")
+    );
+
+    const nombresMasculinos=[
+        "jorge","alvaro","álvaro","pablo","diego",
+        "enrique","miguel","carlos","antonio",
+        "male","masculino"
+    ];
+
+    const vozMasculina=espanolas.find(voz=>{
+        const nombre=voz.name.toLowerCase();
+        return nombresMasculinos.some(palabra=>nombre.includes(palabra));
+    });
+
+    if(vozMasculina)return vozMasculina;
+
+    const vozEspana=espanolas.find(voz=>
+        voz.lang.toLowerCase()==="es-es"
+    );
+
+    if(vozEspana)return vozEspana;
+
+    return espanolas[0]||null;
+}
+
+/* Prepara todos los textos del capítulo en su orden original */
+function prepararNarracion(){
+    fragmentosNarracion=[];
+
+    const bloques=Array.from(original.children);
+
+    bloques.forEach(elemento=>{
+        let texto="";
+
+        if(elemento.tagName==="FIGURE"){
+            const pie=elemento.querySelector("figcaption");
+            texto=pie ? pie.textContent.trim() : "";
+        }else{
+            texto=elemento.textContent.trim();
+        }
+
+        if(!texto)return;
+
+        const partes=dividirTexto(texto);
+        fragmentosNarracion.push(...partes);
+    });
+}
+
+/* Lee el siguiente fragmento */
+function leerSiguienteFragmento(sesion){
+    if(sesion!==numeroSesionNarracion)return;
+
+    if(!narracionActiva || narracionPausada)return;
+
+    if(indiceNarracion>=fragmentosNarracion.length){
+        narracionActiva=false;
+        narracionPausada=false;
+        narracionEstado.textContent="La narración ha terminado. Gracias por escuchar tu historia.";
+        actualizarControlesNarracion();
+        return;
+    }
+
+    const texto=fragmentosNarracion[indiceNarracion];
+
+    const voz=new SpeechSynthesisUtterance(texto);
+    voz.lang="es-ES";
+    voz.rate=0.88;
+    voz.pitch=0.85;
+    voz.volume=1;
+
+    const vozElegida=elegirVozEspanola();
+    if(vozElegida)voz.voice=vozElegida;
+
+    voz.onend=function(){
+        if(sesion!==numeroSesionNarracion)return;
+
+        indiceNarracion++;
+
+        const porcentaje=Math.round(
+            indiceNarracion/fragmentosNarracion.length*100
+        );
+
+        narracionEstado.textContent=
+            "Leyendo tu historia... "+porcentaje+"%";
+
+        leerSiguienteFragmento(sesion);
+    };
+
+    voz.onerror=function(event){
+        if(sesion!==numeroSesionNarracion)return;
+
+        if(event.error==="canceled" || event.error==="interrupted")return;
+
+        indiceNarracion++;
+        leerSiguienteFragmento(sesion);
+    };
+
+    window.speechSynthesis.speak(voz);
+}
+
+function iniciarNarracion(){
+    if(!("speechSynthesis" in window)){
+        narracionEstado.textContent=
+            "Este navegador no dispone de narración de voz.";
+        return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    numeroSesionNarracion++;
+    indiceNarracion=0;
+    narracionActiva=true;
+    narracionPausada=false;
+
+    prepararNarracion();
+    actualizarControlesNarracion();
+
+    narracionEstado.textContent="Preparando la voz para leer tu historia...";
+
+    const sesion=numeroSesionNarracion;
+
+    setTimeout(()=>{
+        if(sesion!==numeroSesionNarracion)return;
+
+        narracionEstado.textContent="Leyendo tu historia desde el principio...";
+        leerSiguienteFragmento(sesion);
+    },300);
+}
+
+function pausarNarracion(){
+    if(!narracionActiva)return;
+
+    window.speechSynthesis.pause();
+    narracionPausada=true;
+    narracionEstado.textContent="Narración pausada.";
+    actualizarControlesNarracion();
+}
+
+function continuarNarracion(){
+    if(!narracionActiva || !narracionPausada)return;
+
+    window.speechSynthesis.resume();
+    narracionPausada=false;
+    narracionEstado.textContent="Continuando la lectura...";
+    actualizarControlesNarracion();
+}
+
+function detenerNarracion(){
+    numeroSesionNarracion++;
+    window.speechSynthesis.cancel();
+
+    narracionActiva=false;
+    narracionPausada=false;
+    indiceNarracion=0;
+
+    narracionEstado.textContent="Narración detenida.";
+    actualizarControlesNarracion();
+}
+
+/* Carga de voces del navegador */
+if("speechSynthesis" in window){
+    window.speechSynthesis.onvoiceschanged=function(){
+        window.speechSynthesis.getVoices();
+    };
+}else{
+    narracionEstado.textContent=
+        "Tu navegador no permite la narración de voz.";
+    narrarButton.disabled=true;
+}
+
+actualizarControlesNarracion();
+
+
+/* =====================================
+   DISTRIBUCIÓN AUTOMÁTICA DEL TEXTO
+   ===================================== */
+
 const elementos=Array.from(original.children);
 const paginas=[];
 let paginaActual=[];
@@ -785,6 +1071,7 @@ mostrarApertura();
 
 </body>
 </html>
+
 
 
 
