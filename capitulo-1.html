@@ -708,10 +708,18 @@ function onYouTubeIframeAPIReady(){
     });
 }
 
-function controlarMusica(){
+
+    function controlarMusica(){
     if(!reproductor)return;
-    if(musicaActiva)reproductor.pauseVideo();
-    else reproductor.playVideo();
+
+    reproductor.setVolume(18);
+
+    if(musicaActiva){
+        reproductor.pauseVideo();
+    }else{
+        reproductor.playVideo();
+    }
+
 }
 
 
