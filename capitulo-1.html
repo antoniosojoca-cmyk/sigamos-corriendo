@@ -100,7 +100,7 @@ nav a:hover{color:white}
 .pagina{
     position:relative;
     width:50%;
-    min-height:690px;
+    min-height:760px;
     aspect-ratio:0.73;
     overflow:hidden;
     padding:45px 42px;
@@ -159,21 +159,23 @@ nav a:hover{color:white}
     margin:20px 0;
 }
 
+/* FOTOGRAFÍAS MÁS GRANDES */
 .pagina-contenido figure{
-    margin:12px auto;
+    margin:18px auto;
     text-align:center;
+    width:100%;
 }
 
 .pagina-contenido figure img{
     display:block;
-    max-width:100%;
-    max-height:360px;
+    max-width:95%;
+    max-height:430px;
     width:auto;
     height:auto;
     object-fit:contain;
     margin:auto;
     border:5px solid #fffaf0;
-    box-shadow:0 3px 12px #8c7955;
+    box-shadow:0 3px 15px #8c7955;
 }
 
 .pagina-contenido figcaption{
@@ -377,7 +379,7 @@ footer{
     .pagina-contenido h2{font-size:16px}
     .pagina-contenido h3{font-size:14px}
     .pagina-contenido .destacado{font-size:12px}
-    .pagina-contenido figure img{max-height:220px}
+    .pagina-contenido figure img{max-height:250px}
     .cara{padding:22px 15px}
     .cara .pagina-contenido{font-size:10px}
     .numero-pagina{font-size:10px}
@@ -390,7 +392,7 @@ footer{
     .pagina-contenido{font-size:10px}
     .pagina-contenido p{margin-bottom:8px}
     .pagina-contenido h3{margin:8px 0}
-    .pagina-contenido figure img{max-height:190px}
+    .pagina-contenido figure img{max-height:210px}
 }
 </style>
 </head>
@@ -422,9 +424,7 @@ footer{
 
         <div class="pagina izquierda">
             <div class="pagina-contenido" id="paginaIzquierda">
-                <div class="pagina-vacia">
-                    SIGAMOS CORRIENDO
-                </div>
+                <div class="pagina-vacia">SIGAMOS CORRIENDO</div>
             </div>
             <div class="numero-pagina" id="numeroIzquierda"></div>
         </div>
@@ -464,7 +464,7 @@ footer{
 
 </main>
 
-<!-- CONTENIDO ORIGINAL: SE CONSERVA COMPLETO Y SE DISTRIBUYE EN LAS PÁGINAS -->
+<!-- CONTENIDO ORIGINAL -->
 <article id="contenidoOriginal">
 
 <p class="destacado">A veces, las grandes historias comienzan sin saber hasta dónde nos llevarán.</p>
@@ -785,6 +785,7 @@ mostrarApertura();
 
 </body>
 </html>
+
 
 
 
