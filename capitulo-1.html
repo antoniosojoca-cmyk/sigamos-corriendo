@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,137 +8,55 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 
 body{
     background:#080808;
     color:#e8e0d1;
     font-family:Georgia,"Times New Roman",serif;
-    line-height:1.8;
+    min-height:100vh;
+    line-height:1.65;
 }
 
 header{
     text-align:center;
-    padding:25px 15px;
-    border-bottom:1px solid #594729;
+    padding:30px 15px 18px;
 }
 
-header a{
+header h1{
     color:#d4b574;
-    text-decoration:none;
-    font-size:13px;
-    letter-spacing:2px;
+    font-size:clamp(25px,4vw,38px);
+    letter-spacing:4px;
+    font-weight:normal;
 }
 
 header p{
-    color:#a99572;
-    font-size:13px;
+    color:#bca982;
     font-style:italic;
     margin-top:7px;
+    font-size:14px;
 }
 
-/* PORTADA CERRADA */
-
-.portada{
-    width:min(430px,88%);
-    min-height:590px;
-    margin:55px auto;
-    padding:28px;
-    background:
-      linear-gradient(135deg,rgba(255,255,255,.05),transparent 35%),
-      linear-gradient(90deg,#17130c,#302516 8%,#17130c 17%,#0c0b09 100%);
-    border:1px solid #a1844e;
-    border-radius:5px 13px 13px 5px;
-    box-shadow:
-      -12px 10px 0 #17130d,
-      -16px 14px 0 #090909,
-      18px 25px 45px #000;
-    position:relative;
+nav{
     display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:space-between;
-    text-align:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:22px;
+    padding:14px;
+    border-top:1px solid #6e5934;
+    border-bottom:1px solid #6e5934;
 }
 
-.portada:before{
-    content:"";
-    position:absolute;
-    left:15px;
-    top:0;
-    bottom:0;
-    width:2px;
-    background:linear-gradient(transparent,#b39459,transparent);
-    opacity:.65;
-}
-
-.portada-superior{
-    color:#b99b60;
-    font-size:12px;
-    letter-spacing:4px;
-    margin-top:20px;
-}
-
-.portada-numero{
+nav a{
     color:#d4b574;
-    font-size:75px;
-    line-height:1;
-    font-weight:normal;
-    margin-top:30px;
+    text-decoration:none;
+    font-size:14px;
 }
 
-.portada h1{
-    color:#e3c98e;
-    font-size:clamp(27px,6vw,39px);
-    font-weight:normal;
-    letter-spacing:3px;
-    line-height:1.3;
-    margin:20px 0;
-}
-
-.portada-linea{
-    width:100px;
-    height:1px;
-    background:#a1844e;
-    margin:15px auto;
-}
-
-.portada-subtitulo{
-    color:#c9b994;
-    font-size:15px;
-    font-style:italic;
-    max-width:280px;
-}
-
-.portada-pie{
-    color:#b99b60;
-    font-size:12px;
-    letter-spacing:3px;
-    margin-bottom:15px;
-}
-
-.abrir{
-    background:transparent;
-    border:1px solid #b39459;
-    color:#e1c587;
-    padding:13px 30px;
-    font-family:Georgia,serif;
-    letter-spacing:2px;
-    cursor:pointer;
-    transition:.3s;
-    margin-top:25px;
-}
-
-.abrir:hover{
-    background:#302516;
-    border-color:#e5c783;
-}
-
-/* MÚSICA */
+nav a:hover{color:white}
 
 .music-control{
     text-align:center;
-    margin:20px auto;
+    padding:15px 10px;
 }
 
 #musicButton{
@@ -147,14 +64,12 @@ header p{
     color:#d4b574;
     border:1px solid #9b7b42;
     border-radius:30px;
-    padding:10px 24px;
+    padding:9px 23px;
     font-family:Georgia,serif;
-    font-size:14px;
     cursor:pointer;
 }
 
 #musicButton:hover{background:#241d10}
-#musicButton:disabled{opacity:.6;cursor:wait}
 
 #musicFrame{
     position:fixed;
@@ -166,218 +81,316 @@ header p{
     pointer-events:none;
 }
 
-/* LIBRO ABIERTO */
-
-#libro{
-    display:none;
-    max-width:1200px;
-    margin:45px auto 25px;
-    padding:0 18px;
+.libro-zona{
+    max-width:1250px;
+    margin:20px auto 35px;
+    padding:0 20px;
 }
 
-.libro-titulo{
-    text-align:center;
-    color:#d4b574;
-    font-size:13px;
-    letter-spacing:4px;
-    margin-bottom:22px;
-}
-
-.apertura{
-    display:none;
-    grid-template-columns:1fr 1fr;
-    gap:3px;
-    background:#17130d;
-    padding:12px;
-    border:1px solid #8b7041;
-    box-shadow:0 20px 55px #000;
-    animation:aparecer .45s ease;
-}
-
-.apertura.activa{display:grid}
-
-@keyframes aparecer{
-    from{opacity:0;transform:translateY(8px)}
-    to{opacity:1;transform:translateY(0)}
+.libro{
+    position:relative;
+    display:flex;
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    perspective:2200px;
+    filter:drop-shadow(0 20px 28px #000);
 }
 
 .pagina{
-    background:#eee7d8;
-    color:#30291f;
-    min-height:590px;
-    max-height:690px;
-    overflow-y:auto;
-    padding:38px clamp(20px,4vw,48px);
     position:relative;
-    box-shadow:inset 0 0 25px rgba(80,60,30,.10);
+    width:50%;
+    min-height:690px;
+    aspect-ratio:0.73;
+    overflow:hidden;
+    padding:45px 42px;
+    color:#29251e;
+    background:
+        linear-gradient(90deg,#d5c8aa 0%,#f4ecd9 5%,#f8f1e2 50%,#eee4cf 100%);
+    box-shadow:inset 0 0 22px #9b8760;
 }
 
-.pagina:first-child{
-    border-right:1px solid #d0c4ad;
+.pagina.izquierda{
+    border-right:1px solid #c8b895;
+    border-radius:7px 0 0 7px;
+    box-shadow:inset -12px 0 22px rgba(70,50,20,.10);
 }
 
-.pagina:after{
-    content:"";
-    position:absolute;
-    top:0;
-    bottom:0;
-    right:0;
-    width:8px;
-    background:linear-gradient(90deg,transparent,rgba(70,50,25,.07));
-    pointer-events:none;
+.pagina.derecha{
+    border-radius:0 7px 7px 0;
+    box-shadow:inset 12px 0 22px rgba(70,50,20,.10);
 }
 
-.numero-pagina{
-    color:#a58a5b;
-    font-size:12px;
+.pagina-contenido{
+    height:100%;
+    overflow:hidden;
+    font-size:14px;
+    line-height:1.65;
+}
+
+.pagina-contenido h2{
+    color:#80602a;
+    font-size:20px;
+    font-weight:normal;
     text-align:center;
-    letter-spacing:2px;
-    margin-top:25px;
+    margin:8px 0 17px;
+    font-style:italic;
 }
 
-.etiqueta{
+.pagina-contenido h3{
+    color:#88652d;
+    font-size:17px;
+    font-weight:normal;
+    font-style:italic;
     text-align:center;
-    color:#987943;
-    letter-spacing:3px;
-    font-size:11px;
+    margin:12px 0 13px;
+}
+
+.pagina-contenido p{
+    text-align:justify;
     margin-bottom:12px;
 }
 
-.pagina h2{
-    text-align:center;
-    color:#806333;
-    font-size:25px;
-    font-weight:normal;
-    line-height:1.35;
-    margin:8px 0 22px;
-}
-
-.pagina h3{
-    color:#876b3c;
-    font-size:20px;
-    font-weight:normal;
+.pagina-contenido .destacado{
+    color:#88652d;
     font-style:italic;
     text-align:center;
-    line-height:1.4;
-    margin:15px 0 20px;
-}
-
-.pagina p{
-    font-size:15px;
-    line-height:1.85;
-    text-align:justify;
-    margin-bottom:16px;
-}
-
-.pagina .destacado{
-    color:#8b6b35;
-    font-size:17px;
-    font-style:italic;
-    text-align:center;
-    margin:24px 0;
-}
-
-.foto{
-    margin:22px auto;
-    text-align:center;
-}
-
-.foto img{
-    display:block;
-    width:100%;
-    max-height:350px;
-    object-fit:contain;
-    margin:auto;
-}
-
-.foto figcaption{
-    color:#8a754e;
-    font-size:12px;
-    font-style:italic;
-    margin-top:9px;
-}
-
-.ornamento{
-    color:#a78b55;
-    text-align:center;
-    font-size:20px;
+    font-size:16px;
     margin:20px 0;
 }
 
-/* NAVEGACIÓN */
+.pagina-contenido figure{
+    margin:12px auto;
+    text-align:center;
+}
+
+.pagina-contenido figure img{
+    display:block;
+    max-width:100%;
+    max-height:290px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    margin:auto;
+    border:5px solid #fffaf0;
+    box-shadow:0 3px 12px #8c7955;
+}
+
+.pagina-contenido figcaption{
+    color:#806b48;
+    font-size:11px;
+    font-style:italic;
+    margin-top:7px;
+    text-align:center;
+}
+
+.numero-pagina{
+    position:absolute;
+    bottom:15px;
+    left:0;
+    width:100%;
+    text-align:center;
+    color:#9b8358;
+    font-size:12px;
+}
+
+.pagina-portada{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    height:100%;
+    padding:20px;
+}
+
+.pagina-portada .numero{
+    color:#9b783d;
+    letter-spacing:5px;
+    font-size:13px;
+    margin-bottom:35px;
+}
+
+.pagina-portada h2{
+    color:#9b783d;
+    font-size:clamp(25px,4vw,39px);
+    letter-spacing:2px;
+    line-height:1.4;
+    font-style:normal;
+    margin:0;
+}
+
+.pagina-portada .adorno{
+    width:100px;
+    height:1px;
+    background:#a7894f;
+    margin:28px auto;
+}
+
+.pagina-portada p{
+    color:#796746;
+    font-style:italic;
+    font-size:15px;
+}
+
+.pagina-vacia{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#b09a70;
+    font-size:15px;
+    font-style:italic;
+    text-align:center;
+    padding:20px;
+}
 
 .controles{
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:20px;
+    gap:22px;
+    margin:25px auto;
     flex-wrap:wrap;
-    margin:25px auto 55px;
 }
 
 .controles button{
-    background:transparent;
-    color:#d4b574;
-    border:1px solid #9b7b42;
-    padding:11px 22px;
+    background:linear-gradient(135deg,#e2ca91,#a78343);
+    color:#21190c;
+    border:1px solid #e1c27d;
+    padding:12px 25px;
     font-family:Georgia,serif;
+    letter-spacing:1px;
     cursor:pointer;
-    transition:.3s;
+    transition:.25s;
 }
 
-.controles button:hover:not(:disabled){
-    background:#241d10;
-    border-color:#e5c783;
+.controles button:hover{
+    background:#f0dcae;
+    transform:translateY(-2px);
 }
 
 .controles button:disabled{
-    opacity:.3;
-    cursor:default;
+    opacity:.35;
+    cursor:not-allowed;
+    transform:none;
 }
 
 #contador{
-    color:#b9a47c;
+    color:#c9b27d;
     font-size:13px;
-    letter-spacing:2px;
+    min-width:110px;
+    text-align:center;
 }
 
-.cerrar{
+/* Hoja que gira */
+.hoja-giro{
+    position:absolute;
+    top:0;
+    width:50%;
+    height:100%;
+    z-index:5;
+    transform-style:preserve-3d;
+    pointer-events:none;
+    display:none;
+}
+
+.hoja-giro.derecha{
+    left:50%;
+    transform-origin:left center;
+}
+
+.hoja-giro.izquierda{
+    left:0;
+    transform-origin:right center;
+}
+
+.hoja-giro.animar-adelante{
     display:block;
-    margin:0 auto 55px;
-    background:transparent;
-    color:#d4b574;
-    border:1px solid #9b7b42;
-    padding:11px 25px;
-    font-family:Georgia,serif;
-    cursor:pointer;
+    animation:giroAdelante .85s ease-in-out forwards;
 }
 
-.cerrar:hover{background:#241d10}
+.hoja-giro.animar-atras{
+    display:block;
+    animation:giroAtras .85s ease-in-out forwards;
+}
+
+.cara{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    padding:40px 32px;
+    background:#f4ecd9;
+    color:#29251e;
+    backface-visibility:hidden;
+    box-shadow:inset 0 0 20px #9b8760;
+}
+
+.cara.frontal{transform:rotateY(0deg)}
+.cara.trasera{transform:rotateY(180deg)}
+
+.cara .pagina-contenido{
+    font-size:13px;
+}
+
+@keyframes giroAdelante{
+    from{transform:rotateY(0deg)}
+    to{transform:rotateY(-180deg)}
+}
+
+@keyframes giroAtras{
+    from{transform:rotateY(0deg)}
+    to{transform:rotateY(180deg)}
+}
 
 footer{
-    border-top:1px solid #51432b;
-    padding:30px 15px;
     text-align:center;
     color:#a99572;
+    border-top:1px solid #51432b;
+    padding:25px 10px;
     font-size:13px;
 }
 
+.volver{
+    color:#d4b574;
+    text-decoration:none;
+    border:1px solid #9b7b42;
+    padding:10px 20px;
+    display:inline-block;
+    margin:5px;
+}
+
+.volver:hover{background:#241d10}
+
+#contenidoOriginal{display:none}
+
 @media(max-width:700px){
-    .portada{min-height:530px;margin:35px auto}
-    .apertura{grid-template-columns:1fr;padding:7px}
+    .libro-zona{padding:0 8px}
     .pagina{
-        min-height:unset;
-        max-height:560px;
-        padding:28px 23px;
+        min-height:570px;
+        padding:22px 15px;
     }
-    .pagina:first-child{
-        border-right:0;
-        border-bottom:2px solid #d0c4ad;
+    .pagina-contenido{
+        font-size:11px;
+        line-height:1.5;
     }
-    .pagina p{font-size:14px}
-    .pagina h2{font-size:22px}
-    .controles{gap:10px}
-    .controles button{padding:10px 15px}
+    .pagina-contenido h2{font-size:16px}
+    .pagina-contenido h3{font-size:14px}
+    .pagina-contenido .destacado{font-size:12px}
+    .pagina-contenido figure img{max-height:170px}
+    .cara{padding:22px 15px}
+    .cara .pagina-contenido{font-size:10px}
+    .numero-pagina{font-size:10px}
+    .controles{gap:8px}
+    .controles button{padding:10px 13px;font-size:11px}
+}
+
+@media(max-width:430px){
+    .pagina{min-height:520px;padding:17px 10px}
+    .pagina-contenido{font-size:10px}
+    .pagina-contenido p{margin-bottom:8px}
+    .pagina-contenido h3{margin:8px 0}
+    .pagina-contenido figure img{max-height:130px}
 }
 </style>
 </head>
@@ -385,377 +398,236 @@ footer{
 <body>
 
 <header>
-    <a href="index.html#indice">← VOLVER AL ÍNDICE GENERAL</a>
-    <p>Sigamos corriendo · Mi vida, mi pasión y una nueva forma de seguir adelante</p>
+    <h1>SIGAMOS CORRIENDO</h1>
+    <p>Mi vida, mi pasión y una nueva forma de seguir adelante</p>
 </header>
 
-<!-- PORTADA DEL CAPÍTULO -->
-
-<section class="portada" id="portadaCapitulo">
-    <div class="portada-superior">SIGAMOS CORRIENDO</div>
-
-    <div>
-        <div class="portada-numero">I</div>
-        <div class="portada-linea"></div>
-        <h1>CUANDO<br>EMPEZÓ TODO</h1>
-        <div class="portada-linea"></div>
-        <p class="portada-subtitulo">
-            Una historia de comienzos, carreras, amistades y superación
-        </p>
-    </div>
-
-    <div>
-        <button class="abrir" onclick="abrirCapitulo()">ABRIR CAPÍTULO</button>
-        <div class="portada-pie">MI HISTORIA · CAPÍTULO I</div>
-    </div>
-</section>
+<nav>
+    <a href="index.html#portada">Portada</a>
+    <a href="index.html#prologo">Prólogo</a>
+    <a href="index.html#indice">Índice del libro</a>
+</nav>
 
 <div class="music-control">
-    <button id="musicButton" type="button"
-        onclick="controlarMusica()" disabled>
+    <button id="musicButton" type="button" onclick="controlarMusica()" disabled>
         CARGANDO MÚSICA...
     </button>
 </div>
 
 <div id="musicFrame"></div>
 
-<!-- INTERIOR DEL LIBRO -->
+<main class="libro-zona">
+
+    <div class="libro" id="libro">
+
+        <div class="pagina izquierda">
+            <div class="pagina-contenido" id="paginaIzquierda">
+                <div class="pagina-vacia">
+                    SIGAMOS CORRIENDO
+                </div>
+            </div>
+            <div class="numero-pagina" id="numeroIzquierda"></div>
+        </div>
+
+        <div class="pagina derecha">
+            <div class="pagina-contenido" id="paginaDerecha">
+                <div class="pagina-portada">
+                    <div class="numero">CAPÍTULO I</div>
+                    <h2>CUANDO<br>EMPEZÓ TODO</h2>
+                    <div class="adorno"></div>
+                    <p>Una vida entre carreras, recuerdos y superación</p>
+                </div>
+            </div>
+            <div class="numero-pagina" id="numeroDerecha"></div>
+        </div>
+
+        <div class="hoja-giro derecha" id="hojaGiro">
+            <div class="cara frontal">
+                <div class="pagina-contenido" id="caraFrontal"></div>
+            </div>
+            <div class="cara trasera">
+                <div class="pagina-contenido" id="caraTrasera"></div>
+            </div>
+        </div>
 
-<main id="libro">
-
-    <div class="libro-titulo">CAPÍTULO I · CUANDO EMPEZÓ TODO</div>
-
-    <!-- APERTURA 1 -->
-
-    <section class="apertura activa">
-        <article class="pagina">
-            <p class="etiqueta">MI HISTORIA · CAPÍTULO I</p>
-            <h2>CUANDO EMPEZÓ TODO</h2>
-            <div class="ornamento">✦</div>
-
-            <p class="destacado">
-                A veces, las grandes historias comienzan sin saber hasta dónde nos llevarán.
-            </p>
-
-            <h3>Mis primeros pasos</h3>
-
-            <p>Todo empezó casi por casualidad. No tenía grandes objetivos ni pensaba que el atletismo acabaría convirtiéndose en una parte tan importante de mi vida. Simplemente sentía curiosidad por probar, por hacer algo diferente y descubrir si era capaz de correr.</p>
-
-            <p>Recuerdo que al principio me daba cierta vergüenza que me vieran correr. En aquellos tiempos no era tan habitual como ahora y, para algunas personas, salir a correr podía parecer una tontería. Por eso prefería hacerlo en un recinto cerrado, donde pudiera entrenar sin sentirme observado por los conocidos.</p>
-
-            <p>Aquel lugar era un colegio que se conocía como Santa Fe y que actualmente es el de los Marianistas. Tenía bastante espacio deportivo, campos de fútbol y pistas para practicar baloncesto o balonmano. Yo corría alrededor del campo de fútbol y aprovechaba para hacer algunos ejercicios.</p>
-
-            <p>Así, poco a poco, fui acostumbrándome a correr. Sin darme cuenta, aquello que había comenzado como una prueba empezó a convertirse en una afición.</p>
-
-            <div class="numero-pagina">1</div>
-        </article>
-
-        <article class="pagina">
-            <h3>De Santa Fe a los caminos</h3>
-
-            <p>Después de unos cinco o seis meses entrenando en aquel recinto, empecé a salir a correr por el campo y por otros lugares. También comenzaron a llegar las primeras competiciones. Era un paso importante: pasaba de entrenar por mi cuenta a enfrentarme a otros corredores y a descubrir lo que significaba participar en una carrera.</p>
-
-            <div class="ornamento">✦</div>
-
-            <h3>Mi primera gran prueba: la Media Maratón de Jerez</h3>
-
-            <p>Mi primera carrera fue la Media Maratón de Jerez de la Frontera. Todavía recuerdo la sensación de encontrarme rodeado de tantos corredores. Escuchaba conversaciones sobre tiempos, marcas y objetivos. Muchos llevaban su equipación y parecían tener muy claro lo que iban a hacer.</p>
-
-            <p>Yo, en cambio, me sentía pequeño ante aquella situación. Me preguntaba si sería capaz de terminar y si realmente estaba preparado para afrontar tantos kilómetros.</p>
-
-            <p>Mi planteamiento fue sencillo: salir despacio, mantener mi propio ritmo y no preocuparme por los demás. Mi único objetivo era llegar a la meta.</p>
-
-            <div class="numero-pagina">2</div>
-        </article>
-    </section>
-
-    <!-- APERTURA 2 -->
-
-    <section class="apertura">
-        <article class="pagina">
-            <p>Y lo conseguí. Pero hubo algo que me llamó especialmente la atención. Los espectadores aplaudían a todos los corredores, sin importar el puesto que ocuparan ni el tiempo que hicieran. Allí comprendí que el atletismo tenía algo más que competir y conseguir resultados.</p>
-
-            <p>Cuando terminé, si no hubiera estado tan cansado, creo que habría vuelto a empezar para vivir de nuevo aquella experiencia. La sensación fue tan especial que me animó a seguir entrenando y a querer mejorar.</p>
-
-            <figure class="foto">
-                <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20180909-WA0005.jpg"
-                alt="Antonio corriendo en una competición">
-                <figcaption>El recuerdo de tantos kilómetros y tantas carreras.</figcaption>
-            </figure>
-
-            <div class="numero-pagina">3</div>
-        </article>
-
-        <article class="pagina">
-            <h3>Después de la meta, llegaron las ganas de mejorar</h3>
-
-            <p>Aquella primera experiencia despertó en mí el deseo de mejorar. Empecé a fijarme en los corredores con más experiencia, a escuchar sus consejos y a interesarme por sus entrenamientos.</p>
-
-            <p>Pero también fui comprendiendo que no todo lo que le servía a otra persona tenía por qué servirme a mí. Cada corredor tiene sus características, su forma de ser y sus propias posibilidades. Intentaba aprender de los demás, pero adaptando los entrenamientos a mi manera de entender el atletismo.</p>
-
-            <div class="ornamento">✦</div>
-
-            <h3>Un año corriendo por mi cuenta</h3>
-
-            <p>Durante casi un año continué corriendo por mi cuenta. En ese tiempo fui conociendo a otros corredores, haciendo amistades y encontrándome con personas que compartían aquella misma afición.</p>
-
-            <p>Entre ellas aparecieron algunos miembros del Club Atletismo Nueva Jarilla. También hubo personas de otros clubes que se interesaron por mí, pero poco a poco fui sintiendo una cercanía especial con la gente de Nueva Jarilla.</p>
-
-            <div class="numero-pagina">4</div>
-        </article>
-    </section>
-
-    <!-- APERTURA 3 -->
-
-    <section class="apertura">
-        <article class="pagina">
-            <p>No buscaba formar parte de un equipo. Ni siquiera se me había pasado por la cabeza. Pensaba que para pertenecer a un club había que ser un corredor mucho mejor de lo que yo me consideraba. Sin embargo, aquellas personas me hicieron sentir que lo importante no era solamente cómo corría, sino también quién era.</p>
-
-            <div class="ornamento">✦</div>
-
-            <h3>Juanpe y una decisión que me cambió la vida</h3>
-
-            <p>Después de conocer a algunos representantes del club y coincidir con ellos en distintas carreras, me plantearon la posibilidad de incorporarme. Me lo pensé durante un tiempo y finalmente acepté.</p>
-
-            <p>Recuerdo especialmente a Juanpe, el presidente. Nueva Jarilla estaba empezando y quería seguir creciendo deportivamente. Aquella propuesta terminó convirtiéndose en una decisión que me marcaría mucho más de lo que imaginaba.</p>
-
-            <div class="numero-pagina">5</div>
-        </article>
-
-        <article class="pagina">
-            <p>Lo que encontré allí fue algo que no esperaba: humildad, cercanía y un trato que me hizo sentir parte de una familia. Algunos compañeros llegaron a decirme que me apreciaban mucho como persona. Y aquel cariño no se quedó solamente en mí, también se extendió a mi mujer y a mi hijo.</p>
-
-            <p class="destacado">Sentir aquel cariño fue como si hubiese ganado el mejor trofeo de mi vida.</p>
-
-            <figure class="foto">
-                <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20170115_120844.jpg"
-                alt="Antonio junto a sus compañeros de atletismo">
-                <figcaption>Los compañeros y las amistades que hicieron especial el camino.</figcaption>
-            </figure>
-
-            <div class="numero-pagina">6</div>
-        </article>
-    </section>
-
-    <!-- APERTURA 4 -->
-
-    <section class="apertura">
-        <article class="pagina">
-            <h3>Dos maneras de vivir el atletismo</h3>
-
-            <p>Nueva Jarilla era un club pequeño, formado por personas trabajadoras que sacaban tiempo para practicar deporte cuando podían. Éramos pocos, cuatro o cinco miembros, y no siempre resultaba fácil coincidir para entrenar. Muchas veces nos encontrábamos directamente en las carreras.</p>
-
-            <p>Al principio me costaba entender que algunos compañeros no entrenaran o compitieran con tanta frecuencia como yo. Con el paso de los años he comprendido que cada persona vive el atletismo a su manera.</p>
-
-            <p>Para mí llegó a convertirse en una forma de vida. En ocasiones daba prioridad a los entrenamientos y a las competiciones incluso por delante de otros asuntos personales. Para otros compañeros era una afición que disfrutaban cuando sus obligaciones se lo permitían.</p>
-
-            <div class="numero-pagina">7</div>
-        </article>
-
-        <article class="pagina">
-            <p>Ninguna de las dos maneras era mejor que la otra. Simplemente cada uno encontraba su propio espacio dentro del deporte.</p>
-
-            <div class="ornamento">✦</div>
-
-            <h3>La emoción de competir y el deseo de superarme</h3>
-
-            <p>Con el paso del tiempo, las carreras fueron ocupando cada vez más espacio en mi vida. Llegaron los buenos resultados, los primeros puestos, los segundos y los terceros, y también la emoción de subir a un podio.</p>
-
-            <p>Era una satisfacción escuchar los aplausos, recibir las felicitaciones de las personas que entregaban los premios y ver la alegría de mi familia. Todo aquello me animaba a seguir entrenando y a intentar superarme.</p>
-
-            <div class="numero-pagina">8</div>
-        </article>
-    </section>
-
-    <!-- APERTURA 5 -->
-
-    <section class="apertura">
-        <article class="pagina">
-            <p>En ocasiones, corredores mucho más jóvenes, de veinte o veinticinco años, me preguntaban qué edad tenía. Cuando se lo decía, algunos comentaban que esperaban poder correr como yo cuando llegaran a mi edad. También escuchaba expresiones como «fino, fino» al referirse a mi estado de forma.</p>
-
-            <p>Aquellos comentarios me daban una enorme satisfacción y reforzaban mi autoestima. Me hacían sentir que todo el esfuerzo había merecido la pena.</p>
-
-            <figure class="foto">
-                <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20180414_124755%20%281%29.jpg"
-                alt="Antonio en el podio junto a otros corredores">
-                <figcaption>Los resultados y las alegrías que también forman parte de mi historia.</figcaption>
-            </figure>
-
-            <div class="numero-pagina">9</div>
-        </article>
-
-        <article class="pagina">
-            <h3>La primera llamada de atención: el cuerpo también necesita descansar</h3>
-
-            <p>Con tantas ganas de mejorar y de seguir consiguiendo buenos resultados, cometí un error: cada vez quería exigirme más. Me costaba escuchar las señales que mi cuerpo me estaba enviando. Cuando aparecía el cansancio, en lugar de bajar el ritmo, muchas veces intentaba seguir como si nada.</p>
-
-            <p>Hace unos años llegó una de las primeras lesiones importantes: una fascitis plantar acompañada de un espolón calcáneo. Tuve que dejar de correr durante aproximadamente dos meses.</p>
-
-            <p>Aquella parada me produjo rabia y frustración. Me preocupaba pensar que quizá no pudiera volver a correr. Confiaba en que la medicación y la fisioterapia solucionaran pronto el problema, porque lo único que deseaba era regresar a las carreras.</p>
-
-            <div class="numero-pagina">10</div>
-        </article>
-    </section>
-
-    <!-- APERTURA 6 -->
-
-    <section class="apertura">
-        <article class="pagina">
-            <h3>Volver a correr, pero no saber esperar</h3>
-
-            <p>Finalmente conseguí recuperarme y volver a competir. Sin embargo, hoy reconozco que tendría que haber regresado de una manera mucho más progresiva.</p>
-
-            <p>Volví con muchas ganas y mantuve un ritmo exigente. Los resultados seguían llegando, pero también empecé a notar que las piernas se cansaban más y que necesitaba más tiempo para recuperarme.</p>
-
-            <p>Entre el trabajo, los entrenamientos, las carreras, los desplazamientos, las preocupaciones y el paso de los años, el cuerpo va acumulando esfuerzos. Yo seguía mirando los resultados y muchas veces no quería ver las señales que me pedían bajar el ritmo.</p>
-
-            <p>Ahora entiendo que no escuchar al cuerpo puede llevarnos a cometer errores. No solamente por la edad, sino porque cualquier corredor necesita descanso, recuperación y equilibrio.</p>
-
-            <div class="numero-pagina">11</div>
-        </article>
-
-        <article class="pagina">
-            <h3>La lesión que cambió mi camino</h3>
-
-            <p>Más adelante apareció una molestia en la rodilla durante un entrenamiento habitual. Al principio no le di demasiada importancia. Pensé que sería algo pasajero y que con unos días de descanso y medicación desaparecería.</p>
-
-            <p>Pero cuando intentaba volver a correr, la molestia reaparecía con más fuerza. Aun así, seguí entrenando y compitiendo durante un tiempo, intentando convencerme de que podría superar aquella dificultad.</p>
-
-            <p>Llegó un momento en el que tuve que reconocer que no podía continuar de la misma manera. Decidí parar y acudir a los profesionales sanitarios para saber qué estaba pasando.</p>
-
-            <div class="numero-pagina">12</div>
-        </article>
-    </section>
-
-    <!-- APERTURA 7 -->
-
-    <section class="apertura">
-        <article class="pagina">
-            <h3>Cuando tuve que aceptar que debía parar</h3>
-
-            <p>Al principio se barajaron distintas posibilidades, como un problema de menisco, desgaste o artrosis. Me realizaron una ecografía, una radiografía y una exploración manual.</p>
-
-            <p>La ecografía señaló una pérdida de cartílago en la rodilla, una rotura parcial del menisco medial y un derrame leve. Escuchar aquel diagnóstico fue difícil, especialmente porque llevaba tantos años haciendo del atletismo una parte fundamental de mi vida.</p>
-
-            <p>Los médicos me explicaron que todo dependería de cómo respondiera al tratamiento. Me hablaron de infiltraciones y de medicación antiinflamatoria, pero también me dejaron claro que, si algún día volvía a correr, tendría que hacerlo a otro ritmo. Nadie podía asegurarme que volvería a hacerlo.</p>
-
-            <div class="numero-pagina">13</div>
-        </article>
-
-        <article class="pagina">
-            <p>Lo primero que hice fue empezar a asumir que quizá no volvería a correr. Sin embargo, no dejé de pensar que tal vez todavía existiera alguna posibilidad.</p>
-
-            <div class="ornamento">✦</div>
-
-            <h3>La marcha atlética: otra forma de seguir</h3>
-
-            <p>Mientras espero una última intervención, una radiofrecuencia en la rodilla, he empezado a practicar marcha atlética. Es una disciplina que siempre me había gustado, aunque también la veía muy difícil por la técnica que requiere.</p>
-
-            <p>Llevo poco tiempo practicándola y tengo que reconocer que todavía no disfruto de ella como me gustaría. En la zona donde vivo apenas veo personas que la practiquen y tampoco cuento con un equipo cercano que pueda ayudarme a aprender.</p>
-
-            <div class="numero-pagina">14</div>
-        </article>
-    </section>
-
-    <!-- APERTURA 8 -->
-
-    <section class="apertura">
-        <article class="pagina">
-            <p>Por eso intento informarme, leer y buscar consejos y vídeos en las redes sociales. Voy haciendo lo que puedo, aprendiendo poco a poco y sin rendirme.</p>
-
-            <p>Pero quiero ser sincero: mi mente sigue estando puesta en volver a correr. La marcha es ahora una manera de continuar haciendo atletismo, pero no ha sustituido el deseo que tengo de volver a sentirme corredor.</p>
-
-            <div class="ornamento">✦</div>
-
-            <h3>Si vuelvo a correr, será para disfrutar</h3>
-
-            <p>Todavía no tengo claro qué haría si finalmente pudiera volver a correr. Lo primero sería tomármelo con mucha tranquilidad, sin prisas y sin cometer los errores del pasado. Tendría que aprender a respetar mis limitaciones y escuchar mucho más a mi cuerpo.</p>
-
-            <div class="numero-pagina">15</div>
-        </article>
-
-        <article class="pagina">
-            <p>Si algún día volviera a competir, sería porque me encontrara preparado y lo viera claro. El resultado me daría igual. Lo que realmente me gustaría sería reencontrarme con mis compañeros, volver a respirar el ambiente de las carreras y compartir esos momentos que durante tantos años fueron parte de mi vida.</p>
-
-            <p>También echo de menos a mis antiguos compañeros de Nueva Jarilla. Actualmente apenas mantenemos contacto, salvo algunas ocasiones a través de las redes sociales. Me gustaría mucho volver a encontrarlos, saludarlos y recordar juntos aquellos años.</p>
-
-            <p>No necesitaría conseguir una medalla ni subir a un podio. Me bastaría con estar allí, compartir un rato con ellos y sentir de nuevo ese ambiente tan especial.</p>
-
-            <div class="numero-pagina">16</div>
-        </article>
-    </section>
-
-    <!-- APERTURA 9: FINAL -->
-
-    <section class="apertura">
-        <article class="pagina">
-            <div class="ornamento">✦</div>
-
-            <p class="destacado">
-                Quizá algún día vuelva a correr. Y si lo consigo, no necesitaré ganar ninguna carrera para sentirme ganador.
-            </p>
-
-            <div class="ornamento">✦</div>
-
-            <p>Puede que haya tenido que cambiar mi manera de seguir, pero no he dejado de sentirme atleta.</p>
-
-            <div class="ornamento">❦</div>
-
-            <p class="numero-pagina">17</p>
-        </article>
-
-        <article class="pagina">
-            <p class="etiqueta">SIGAMOS CORRIENDO</p>
-            <h2>EL CAMINO CONTINÚA</h2>
-
-            <p class="destacado">
-                Una historia no termina cuando tenemos que detenernos. A veces, simplemente, comienza una nueva manera de continuar.
-            </p>
-
-            <div class="ornamento">✦</div>
-
-            <p style="text-align:center;margin-top:35px">
-                FIN DEL CAPÍTULO I
-            </p>
-
-            <div class="numero-pagina">18</div>
-        </article>
-    </section>
-
-    <div class="controles">
-        <button id="anterior" onclick="cambiarApertura(-1)" disabled>
-            ← ANTERIOR
-        </button>
-
-        <span id="contador">Apertura 1 de 9</span>
-
-        <button id="siguiente" onclick="cambiarApertura(1)">
-            SIGUIENTE →
-        </button>
     </div>
 
-    <button class="cerrar" onclick="cerrarCapitulo()">
-        CERRAR EL CAPÍTULO
-    </button>
+    <div class="controles">
+        <button id="anterior" onclick="pasarPagina(-1)" disabled>← ANTERIOR</button>
+        <span id="contador">Presentación</span>
+        <button id="siguiente" onclick="pasarPagina(1)">SIGUIENTE →</button>
+    </div>
+
+    <div style="text-align:center;margin:20px 0 35px">
+        <a class="volver" href="index.html#indice">← VOLVER AL ÍNDICE DEL LIBRO</a>
+    </div>
 
 </main>
 
+<!-- CONTENIDO ORIGINAL: SE CONSERVA COMPLETO Y SE DISTRIBUYE EN LAS PÁGINAS -->
+<article id="contenidoOriginal">
+
+<p class="destacado">A veces, las grandes historias comienzan sin saber hasta dónde nos llevarán.</p>
+
+<h3>Mis primeros pasos</h3>
+
+<p>Todo empezó casi por casualidad. No tenía grandes objetivos ni pensaba que el atletismo acabaría convirtiéndose en una parte tan importante de mi vida. Simplemente sentía curiosidad por probar, por hacer algo diferente y descubrir si era capaz de correr.</p>
+
+<p>Recuerdo que al principio me daba cierta vergüenza que me vieran correr. En aquellos tiempos no era tan habitual como ahora y, para algunas personas, salir a correr podía parecer una tontería. Por eso prefería hacerlo en un recinto cerrado, donde pudiera entrenar sin sentirme observado por los conocidos.</p>
+
+<p>Aquel lugar era un colegio que se conocía como Santa Fe y que actualmente es el de los Marianistas. Tenía bastante espacio deportivo, campos de fútbol y pistas para practicar baloncesto o balonmano. Yo corría alrededor del campo de fútbol y aprovechaba para hacer algunos ejercicios.</p>
+
+<p>Así, poco a poco, fui acostumbrándome a correr. Sin darme cuenta, aquello que había comenzado como una prueba empezó a convertirse en una afición.</p>
+
+<h3>De Santa Fe a los caminos</h3>
+
+<p>Después de unos cinco o seis meses entrenando en aquel recinto, empecé a salir a correr por el campo y por otros lugares. También comenzaron a llegar las primeras competiciones. Era un paso importante: pasaba de entrenar por mi cuenta a enfrentarme a otros corredores y a descubrir lo que significaba participar en una carrera.</p>
+
+<h3>Mi primera gran prueba: la Media Maratón de Jerez</h3>
+
+<p>Mi primera carrera fue la Media Maratón de Jerez de la Frontera. Todavía recuerdo la sensación de encontrarme rodeado de tantos corredores. Escuchaba conversaciones sobre tiempos, marcas y objetivos. Muchos llevaban su equipación y parecían tener muy claro lo que iban a hacer.</p>
+
+<p>Yo, en cambio, me sentía pequeño ante aquella situación. Me preguntaba si sería capaz de terminar y si realmente estaba preparado para afrontar tantos kilómetros.</p>
+
+<p>Mi planteamiento fue sencillo: salir despacio, mantener mi propio ritmo y no preocuparme por los demás. Mi único objetivo era llegar a la meta.</p>
+
+<p>Y lo conseguí. Pero hubo algo que me llamó especialmente la atención. Los espectadores aplaudían a todos los corredores, sin importar el puesto que ocuparan ni el tiempo que hicieran. Allí comprendí que el atletismo tenía algo más que competir y conseguir resultados.</p>
+
+<p>Cuando terminé, si no hubiera estado tan cansado, creo que habría vuelto a empezar para vivir de nuevo aquella experiencia. La sensación fue tan especial que me animó a seguir entrenando y a querer mejorar.</p>
+
+<figure>
+<img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20180909-WA0005.jpg" alt="Antonio corriendo en una competición">
+<figcaption>El recuerdo de tantos kilómetros y tantas carreras.</figcaption>
+</figure>
+
+<h3>Después de la meta, llegaron las ganas de mejorar</h3>
+
+<p>Aquella primera experiencia despertó en mí el deseo de mejorar. Empecé a fijarme en los corredores con más experiencia, a escuchar sus consejos y a interesarme por sus entrenamientos.</p>
+
+<p>Pero también fui comprendiendo que no todo lo que le servía a otra persona tenía por qué servirme a mí. Cada corredor tiene sus características, su forma de ser y sus propias posibilidades. Intentaba aprender de los demás, pero adaptando los entrenamientos a mi manera de entender el atletismo.</p>
+
+<h3>Un año corriendo por mi cuenta</h3>
+
+<p>Durante casi un año continué corriendo por mi cuenta. En ese tiempo fui conociendo a otros corredores, haciendo amistades y encontrándome con personas que compartían aquella misma afición.</p>
+
+<p>Entre ellas aparecieron algunos miembros del Club Atletismo Nueva Jarilla. También hubo personas de otros clubes que se interesaron por mí, pero poco a poco fui sintiendo una cercanía especial con la gente de Nueva Jarilla.</p>
+
+<p>No buscaba formar parte de un equipo. Ni siquiera se me había pasado por la cabeza. Pensaba que para pertenecer a un club había que ser un corredor mucho mejor de lo que yo me consideraba. Sin embargo, aquellas personas me hicieron sentir que lo importante no era solamente cómo corría, sino también quién era.</p>
+
+<h3>Juanpe y una decisión que me cambió la vida</h3>
+
+<p>Después de conocer a algunos representantes del club y coincidir con ellos en distintas carreras, me plantearon la posibilidad de incorporarme. Me lo pensé durante un tiempo y finalmente acepté.</p>
+
+<p>Recuerdo especialmente a Juanpe, el presidente. Nueva Jarilla estaba empezando y quería seguir creciendo deportivamente. Aquella propuesta terminó convirtiéndose en una decisión que me marcaría mucho más de lo que imaginaba.</p>
+
+<p>Lo que encontré allí fue algo que no esperaba: humildad, cercanía y un trato que me hizo sentir parte de una familia. Algunos compañeros llegaron a decirme que me apreciaban mucho como persona. Y aquel cariño no se quedó solamente en mí, también se extendió a mi mujer y a mi hijo.</p>
+
+<p class="destacado">Sentir aquel cariño fue como si hubiese ganado el mejor trofeo de mi vida.</p>
+
+<figure>
+<img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20170115_120844.jpg" alt="Antonio junto a sus compañeros de atletismo">
+<figcaption>Los compañeros y las amistades que hicieron especial el camino.</figcaption>
+</figure>
+
+<h3>Dos maneras de vivir el atletismo</h3>
+
+<p>Nueva Jarilla era un club pequeño, formado por personas trabajadoras que sacaban tiempo para practicar deporte cuando podían. Éramos pocos, cuatro o cinco miembros, y no siempre resultaba fácil coincidir para entrenar. Muchas veces nos encontrábamos directamente en las carreras.</p>
+
+<p>Al principio me costaba entender que algunos compañeros no entrenaran o compitieran con tanta frecuencia como yo. Con el paso de los años he comprendido que cada persona vive el atletismo a su manera.</p>
+
+<p>Para mí llegó a convertirse en una forma de vida. En ocasiones daba prioridad a los entrenamientos y a las competiciones incluso por delante de otros asuntos personales. Para otros compañeros era una afición que disfrutaban cuando sus obligaciones se lo permitían.</p>
+
+<p>Ninguna de las dos maneras era mejor que la otra. Simplemente cada uno encontraba su propio espacio dentro del deporte.</p>
+
+<h3>La emoción de competir y el deseo de superarme</h3>
+
+<p>Con el paso del tiempo, las carreras fueron ocupando cada vez más espacio en mi vida. Llegaron los buenos resultados, los primeros puestos, los segundos y los terceros, y también la emoción de subir a un podio.</p>
+
+<p>Era una satisfacción escuchar los aplausos, recibir las felicitaciones de las personas que entregaban los premios y ver la alegría de mi familia. Todo aquello me animaba a seguir entrenando y a intentar superarme.</p>
+
+<p>En ocasiones, corredores mucho más jóvenes, de veinte o veinticinco años, me preguntaban qué edad tenía. Cuando se lo decía, algunos comentaban que esperaban poder correr como yo cuando llegaran a mi edad. También escuchaba expresiones como «fino, fino» al referirse a mi estado de forma.</p>
+
+<p>Aquellos comentarios me daban una enorme satisfacción y reforzaban mi autoestima. Me hacían sentir que todo el esfuerzo había merecido la pena.</p>
+
+<figure>
+<img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20180414_124755%20%281%29.jpg" alt="Antonio en el podio junto a otros corredores">
+<figcaption>Los resultados y las alegrías que también forman parte de mi historia.</figcaption>
+</figure>
+
+<h3>La primera llamada de atención: el cuerpo también necesita descansar</h3>
+
+<p>Con tantas ganas de mejorar y de seguir consiguiendo buenos resultados, cometí un error: cada vez quería exigirme más. Me costaba escuchar las señales que mi cuerpo me estaba enviando. Cuando aparecía el cansancio, en lugar de bajar el ritmo, muchas veces intentaba seguir como si nada.</p>
+
+<p>Hace unos años llegó una de las primeras lesiones importantes: una fascitis plantar acompañada de un espolón calcáneo. Tuve que dejar de correr durante aproximadamente dos meses.</p>
+
+<p>Aquella parada me produjo rabia y frustración. Me preocupaba pensar que quizá no pudiera volver a correr. Confiaba en que la medicación y la fisioterapia solucionaran pronto el problema, porque lo único que deseaba era regresar a las carreras.</p>
+
+<h3>Volver a correr, pero no saber esperar</h3>
+
+<p>Finalmente conseguí recuperarme y volver a competir. Sin embargo, hoy reconozco que tendría que haber regresado de una manera mucho más progresiva.</p>
+
+<p>Volví con muchas ganas y mantuve un ritmo exigente. Los resultados seguían llegando, pero también empecé a notar que las piernas se cansaban más y que necesitaba más tiempo para recuperarme.</p>
+
+<p>Entre el trabajo, los entrenamientos, las carreras, los desplazamientos, las preocupaciones y el paso de los años, el cuerpo va acumulando esfuerzos. Yo seguía mirando los resultados y muchas veces no quería ver las señales que me pedían bajar el ritmo.</p>
+
+<p>Ahora entiendo que no escuchar al cuerpo puede llevarnos a cometer errores. No solamente por la edad, sino porque cualquier corredor necesita descanso, recuperación y equilibrio.</p>
+
+<h3>La lesión que cambió mi camino</h3>
+
+<p>Más adelante apareció una molestia en la rodilla durante un entrenamiento habitual. Al principio no le di demasiada importancia. Pensé que sería algo pasajero y que con unos días de descanso y medicación desaparecería.</p>
+
+<p>Pero cuando intentaba volver a correr, la molestia reaparecía con más fuerza. Aun así, seguí entrenando y compitiendo durante un tiempo, intentando convencerme de que podría superar aquella dificultad.</p>
+
+<p>Llegó un momento en el que tuve que reconocer que no podía continuar de la misma manera. Decidí parar y acudir a los profesionales sanitarios para saber qué estaba pasando.</p>
+
+<h3>Cuando tuve que aceptar que debía parar</h3>
+
+<p>Al principio se barajaron distintas posibilidades, como un problema de menisco, desgaste o artrosis. Me realizaron una ecografía, una radiografía y una exploración manual.</p>
+
+<p>La ecografía señaló una pérdida de cartílago en la rodilla, una rotura parcial del menisco medial y un derrame leve. Escuchar aquel diagnóstico fue difícil, especialmente porque llevaba tantos años haciendo del atletismo una parte fundamental de mi vida.</p>
+
+<p>Los médicos me explicaron que todo dependería de cómo respondiera al tratamiento. Me hablaron de infiltraciones y de medicación antiinflamatoria, pero también me dejaron claro que, si algún día volvía a correr, tendría que hacerlo a otro ritmo. Nadie podía asegurarme que volvería a hacerlo.</p>
+
+<p>Lo primero que hice fue empezar a asumir que quizá no volvería a correr. Sin embargo, no dejé de pensar que tal vez todavía existiera alguna posibilidad.</p>
+
+<h3>La marcha atlética: otra forma de seguir</h3>
+
+<p>Mientras espero una última intervención, una radiofrecuencia en la rodilla, he empezado a practicar marcha atlética. Es una disciplina que siempre me había gustado, aunque también la veía muy difícil por la técnica que requiere.</p>
+
+<p>Llevo poco tiempo practicándola y tengo que reconocer que todavía no disfruto de ella como me gustaría. En la zona donde vivo apenas veo personas que la practiquen y tampoco cuento con un equipo cercano que pueda ayudarme a aprender.</p>
+
+<p>Por eso intento informarme, leer y buscar consejos y vídeos en las redes sociales. Voy haciendo lo que puedo, aprendiendo poco a poco y sin rendirme.</p>
+
+<p>Pero quiero ser sincero: mi mente sigue estando puesta en volver a correr. La marcha es ahora una manera de continuar haciendo atletismo, pero no ha sustituido el deseo que tengo de volver a sentirme corredor.</p>
+
+<h3>Si vuelvo a correr, será para disfrutar</h3>
+
+<p>Todavía no tengo claro qué haría si finalmente pudiera volver a correr. Lo primero sería tomármelo con mucha tranquilidad, sin prisas y sin cometer los errores del pasado. Tendría que aprender a respetar mis limitaciones y escuchar mucho más a mi cuerpo.</p>
+
+<p>Si algún día volviera a competir, sería porque me encontrara preparado y lo viera claro. El resultado me daría igual. Lo que realmente me gustaría sería reencontrarme con mis compañeros, volver a respirar el ambiente de las carreras y compartir esos momentos que durante tantos años fueron parte de mi vida.</p>
+
+<p>También echo de menos a mis antiguos compañeros de Nueva Jarilla. Actualmente apenas mantenemos contacto, salvo algunas ocasiones a través de las redes sociales. Me gustaría mucho volver a encontrarlos, saludarlos y recordar juntos aquellos años.</p>
+
+<p>No necesitaría conseguir una medalla ni subir a un podio. Me bastaría con estar allí, compartir un rato con ellos y sentir de nuevo ese ambiente tan especial.</p>
+
+<p class="destacado">Quizá algún día vuelva a correr. Y si lo consigo, no necesitaré ganar ninguna carrera para sentirme ganador.</p>
+
+<p class="destacado">Puede que haya tenido que cambiar mi manera de seguir, pero no he dejado de sentirme atleta.</p>
+
+</article>
+
 <footer>
-    SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
+SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
 </footer>
 
-<!-- MÚSICA DE YOUTUBE -->
-
-<script src="https://www.youtube.com/iframe_api"></script>
-
 <script>
+/* Música de fondo */
 let reproductor;
-let musicaActiva = false;
-
-const musicButton = document.getElementById("musicButton");
+let musicaActiva=false;
+const musicButton=document.getElementById("musicButton");
 
 function onYouTubeIframeAPIReady(){
-    reproductor = new YT.Player("musicFrame",{
+    reproductor=new YT.Player("musicFrame",{
         width:"1",
         height:"1",
         videoId:"0o8vszqVL2U",
@@ -776,11 +648,8 @@ function onYouTubeIframeAPIReady(){
                     musicaActiva=true;
                     musicButton.textContent="Ⅱ PAUSAR MÚSICA";
                 }
-
-                if(
-                    event.data===YT.PlayerState.PAUSED ||
-                    event.data===YT.PlayerState.ENDED
-                ){
+                if(event.data===YT.PlayerState.PAUSED ||
+                   event.data===YT.PlayerState.ENDED){
                     musicaActiva=false;
                     musicButton.textContent="♫ ESCUCHAR MÚSICA";
                 }
@@ -794,65 +663,130 @@ function onYouTubeIframeAPIReady(){
 }
 
 function controlarMusica(){
-    if(!reproductor || typeof reproductor.playVideo!=="function")return;
+    if(!reproductor)return;
+    if(musicaActiva)reproductor.pauseVideo();
+    else reproductor.playVideo();
+}
 
-    if(musicaActiva){
-        reproductor.pauseVideo();
-    }else{
-        reproductor.playVideo();
+/* Distribución automática del texto en páginas */
+const original=document.getElementById("contenidoOriginal");
+const elementos=Array.from(original.children);
+const paginas=[];
+let paginaActual=[];
+let pesoActual=0;
+const limite=650;
+
+elementos.forEach(elemento=>{
+    const copia=elemento.cloneNode(true);
+    let peso=(elemento.textContent||"").length;
+
+    if(elemento.tagName==="FIGURE")peso+=220;
+    if(elemento.tagName==="H3")peso+=70;
+
+    if(pesoActual+peso>limite && paginaActual.length){
+        paginas.push(paginaActual);
+        paginaActual=[];
+        pesoActual=0;
     }
+
+    paginaActual.push(copia);
+    pesoActual+=peso;
+});
+
+if(paginaActual.length)paginas.push(paginaActual);
+
+let apertura=0;
+let girando=false;
+
+const izquierda=document.getElementById("paginaIzquierda");
+const derecha=document.getElementById("paginaDerecha");
+const numeroIzq=document.getElementById("numeroIzquierda");
+const numeroDer=document.getElementById("numeroDerecha");
+const hoja=document.getElementById("hojaGiro");
+const caraFrontal=document.getElementById("caraFrontal");
+const caraTrasera=document.getElementById("caraTrasera");
+const contador=document.getElementById("contador");
+const botonAnterior=document.getElementById("anterior");
+const botonSiguiente=document.getElementById("siguiente");
+
+const totalAperturas=1+Math.ceil(paginas.length/2);
+
+function contenidoDePagina(indice){
+    if(indice<0 || indice>=paginas.length){
+        return '<div class="pagina-vacia">SIGAMOS CORRIENDO</div>';
+    }
+    return paginas[indice].map(el=>el.outerHTML).join("");
 }
-
-/* ABRIR Y CERRAR EL CAPÍTULO */
-
-function abrirCapitulo(){
-    document.getElementById("portadaCapitulo").style.display="none";
-    document.getElementById("libro").style.display="block";
-    document.getElementById("libro").scrollIntoView({behavior:"smooth"});
-    mostrarApertura();
-}
-
-function cerrarCapitulo(){
-    document.getElementById("libro").style.display="none";
-    document.getElementById("portadaCapitulo").style.display="flex";
-    document.getElementById("portadaCapitulo").scrollIntoView({behavior:"smooth"});
-}
-
-/* PASAR LAS PÁGINAS */
-
-let aperturaActual=0;
-const aperturas=document.querySelectorAll(".apertura");
 
 function mostrarApertura(){
-    aperturas.forEach((apertura,index)=>{
-        apertura.classList.toggle("activa",index===aperturaActual);
-    });
+    if(apertura===0){
+        izquierda.innerHTML='<div class="pagina-vacia">SIGAMOS CORRIENDO<br><br>Una historia de esfuerzo, valores y superación</div>';
+        derecha.innerHTML=`
+            <div class="pagina-portada">
+                <div class="numero">CAPÍTULO I</div>
+                <h2>CUANDO<br>EMPEZÓ TODO</h2>
+                <div class="adorno"></div>
+                <p>Una vida entre carreras, recuerdos y superación</p>
+            </div>`;
+        numeroIzq.textContent="";
+        numeroDer.textContent="";
+        contador.textContent="Presentación";
+    }else{
+        const primero=(apertura-1)*2;
+        izquierda.innerHTML=contenidoDePagina(primero);
+        derecha.innerHTML=contenidoDePagina(primero+1);
+        numeroIzq.textContent=primero+1;
+        numeroDer.textContent=primero+2<=paginas.length?primero+2:"";
+        contador.textContent="Apertura "+(apertura+1)+" de "+totalAperturas;
+    }
 
-    document.getElementById("contador").textContent=
-        "Apertura "+(aperturaActual+1)+" de "+aperturas.length;
-
-    document.getElementById("anterior").disabled=aperturaActual===0;
-    document.getElementById("siguiente").disabled=
-        aperturaActual===aperturas.length-1;
+    botonAnterior.disabled=apertura===0;
+    botonSiguiente.disabled=apertura===totalAperturas-1;
 }
 
-function cambiarApertura(direccion){
-    const nueva=aperturaActual+direccion;
+function pasarPagina(direccion){
+    if(girando)return;
 
-    if(nueva<0 || nueva>=aperturas.length)return;
+    const destino=apertura+direccion;
+    if(destino<0 || destino>=totalAperturas)return;
 
-    aperturaActual=nueva;
-    mostrarApertura();
+    girando=true;
 
-    document.getElementById("libro").scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-    });
+    if(direccion===1){
+        hoja.className="hoja-giro derecha";
+        caraFrontal.innerHTML=derecha.innerHTML;
+        caraTrasera.innerHTML=destino===0
+            ? derecha.innerHTML
+            : contenidoDePagina((destino-1)*2);
+        void hoja.offsetWidth;
+        hoja.classList.add("animar-adelante");
+    }else{
+        hoja.className="hoja-giro izquierda";
+        caraFrontal.innerHTML=izquierda.innerHTML;
+        caraTrasera.innerHTML=destino===0
+            ? '<div class="pagina-portada"><div class="numero">CAPÍTULO I</div><h2>CUANDO<br>EMPEZÓ TODO</h2><div class="adorno"></div><p>Una vida entre carreras, recuerdos y superación</p></div>'
+            : contenidoDePagina((destino-1)*2+1);
+        void hoja.offsetWidth;
+        hoja.classList.add("animar-atras");
+    }
+
+    setTimeout(()=>{
+        apertura=destino;
+        hoja.className="hoja-giro derecha";
+        mostrarApertura();
+        girando=false;
+    },850);
 }
+
+mostrarApertura();
 </script>
+
+<script src="https://www.youtube.com/iframe_api"></script>
 
 </body>
 </html>
+
+
 
 
 
