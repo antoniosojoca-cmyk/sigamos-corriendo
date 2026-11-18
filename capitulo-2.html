@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,188 +8,400 @@
 <title>Capítulo II | SIGAMOS CORRIENDO</title>
 
 <style>
-* { box-sizing:border-box; margin:0; padding:0; }
-html { scroll-behavior:smooth; }
+*{box-sizing:border-box;margin:0;padding:0}
 
-body {
+body{
     background:#080808;
     color:#e8e0d1;
     font-family:Georgia,"Times New Roman",serif;
-    line-height:1.9;
+    min-height:100vh;
+    line-height:1.65;
 }
 
-header {
-    text-align:center;
-    padding:45px 20px 30px;
-}
+header{text-align:center;padding:30px 15px 18px}
 
-header h1 {
+header h1{
     color:#d4b574;
-    font-size:clamp(32px,6vw,52px);
+    font-size:clamp(25px,4vw,38px);
     letter-spacing:4px;
     font-weight:normal;
 }
 
-header p {
-    color:#c4b99f;
+header p{
+    color:#bca982;
     font-style:italic;
-    margin-top:10px;
+    margin-top:7px;
+    font-size:14px;
 }
 
-nav {
+nav{
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
-    gap:25px;
-    padding:18px;
+    gap:22px;
+    padding:14px;
     border-top:1px solid #6e5934;
     border-bottom:1px solid #6e5934;
 }
 
-nav a {
+nav a{
     color:#d4b574;
     text-decoration:none;
-    font-size:15px;
+    font-size:14px;
 }
 
-nav a:hover { color:white; }
+nav a:hover{color:white}
 
-.music-control {
+.music-control,.narracion-control{
     text-align:center;
-    padding:22px 10px 5px;
+    padding:12px 10px;
 }
 
-#musicButton {
+#musicButton,.narracion-control button{
     background:transparent;
     color:#d4b574;
     border:1px solid #9b7b42;
     border-radius:30px;
-    padding:11px 25px;
+    padding:10px 20px;
     font-family:Georgia,serif;
-    font-size:15px;
     cursor:pointer;
+    margin:4px;
+    transition:.25s;
 }
 
-#musicButton:hover {
+#musicButton:hover,.narracion-control button:hover{
     background:#241d10;
-    border-color:#e5c783;
 }
 
-#musicFrame {
-    position:absolute;
+.narracion-control button:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+}
+
+#narracionEstado{
+    display:block;
+    color:#bca982;
+    font-size:12px;
+    font-style:italic;
+    margin-top:8px;
+    min-height:20px;
+}
+
+#musicFrame{
+    position:fixed;
     width:1px;
     height:1px;
     left:-10000px;
     top:0;
     opacity:0;
     pointer-events:none;
-    border:0;
 }
 
-.contenedor {
-    max-width:900px;
-    margin:65px auto;
-    padding:0 25px;
+.libro-zona{
+    max-width:1250px;
+    margin:20px auto 35px;
+    padding:0 20px;
 }
 
-.etiqueta {
+.libro{
+    position:relative;
+    display:flex;
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    perspective:2200px;
+    filter:drop-shadow(0 20px 28px #000);
+}
+
+.pagina{
+    position:relative;
+    width:50%;
+    min-height:760px;
+    aspect-ratio:.73;
+    overflow:hidden;
+    padding:45px 42px;
+    color:#29251e;
+    background:linear-gradient(90deg,#d5c8aa 0%,#f4ecd9 5%,#f8f1e2 50%,#eee4cf 100%);
+    box-shadow:inset 0 0 22px #9b8760;
+}
+
+.pagina.izquierda{
+    border-right:1px solid #c8b895;
+    border-radius:7px 0 0 7px;
+    box-shadow:inset -12px 0 22px rgba(70,50,20,.10);
+}
+
+.pagina.derecha{
+    border-radius:0 7px 7px 0;
+    box-shadow:inset 12px 0 22px rgba(70,50,20,.10);
+}
+
+.pagina-contenido{
+    height:100%;
+    overflow:hidden;
+    font-size:14px;
+    line-height:1.65;
+}
+
+.pagina-contenido h2{
+    color:#80602a;
+    font-size:20px;
+    font-weight:normal;
     text-align:center;
-    color:#a88a50;
-    letter-spacing:4px;
-    font-size:12px;
+    margin:8px 0 17px;
+    font-style:italic;
+}
+
+.pagina-contenido h3{
+    color:#88652d;
+    font-size:17px;
+    font-weight:normal;
+    font-style:italic;
+    text-align:center;
+    margin:12px 0 13px;
+}
+
+.pagina-contenido p{
+    text-align:justify;
     margin-bottom:12px;
 }
 
-h2 {
-    text-align:center;
-    color:#d4b574;
-    font-size:clamp(27px,4vw,35px);
-    font-weight:normal;
-    margin-bottom:25px;
-}
-
-h3 {
-    text-align:center;
-    color:#d4b574;
-    font-size:23px;
-    font-weight:normal;
+.pagina-contenido .destacado{
+    color:#88652d;
     font-style:italic;
-    margin:55px 0 25px;
-}
-
-.texto p {
-    font-size:18px;
-    margin-bottom:22px;
-    text-align:justify;
-}
-
-.foto {
-    max-width:760px;
-    margin:45px auto 55px;
     text-align:center;
+    font-size:16px;
+    margin:20px 0;
 }
 
-.foto img {
-    display:block;
+.pagina-contenido figure{
+    margin:18px auto;
+    text-align:center;
     width:100%;
+}
+
+.pagina-contenido figure img{
+    display:block;
+    max-width:95%;
+    max-height:430px;
+    width:auto;
     height:auto;
-    max-height:650px;
     object-fit:contain;
     margin:auto;
+    border:5px solid #fffaf0;
+    box-shadow:0 3px 15px #8c7955;
 }
 
-.foto figcaption {
-    color:#b8a47e;
-    font-size:14px;
+.pagina-contenido figcaption{
+    color:#806b48;
+    font-size:11px;
     font-style:italic;
-    margin-top:13px;
+    margin-top:7px;
+    text-align:center;
 }
 
-.destacado {
-    color:#d4b574;
-    text-align:center !important;
-    font-size:21px !important;
-    font-style:italic;
-    margin:35px 0;
+.numero-pagina{
+    position:absolute;
+    bottom:15px;
+    left:0;
+    width:100%;
+    text-align:center;
+    color:#9b8358;
+    font-size:12px;
 }
 
-.separador {
-    width:90px;
+.pagina-portada{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    height:100%;
+    padding:20px;
+}
+
+.pagina-portada .numero{
+    color:#9b783d;
+    letter-spacing:5px;
+    font-size:13px;
+    margin-bottom:35px;
+}
+
+.pagina-portada h2{
+    color:#9b783d;
+    font-size:clamp(25px,4vw,39px);
+    letter-spacing:2px;
+    line-height:1.4;
+    font-style:normal;
+    margin:0;
+}
+
+.pagina-portada .adorno{
+    width:100px;
     height:1px;
-    background:#9b7b42;
-    margin:60px auto;
+    background:#a7894f;
+    margin:28px auto;
 }
 
-.volver {
-    display:inline-block;
+.pagina-portada p{
+    color:#796746;
+    font-style:italic;
+    font-size:15px;
+}
+
+.pagina-vacia{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#b09a70;
+    font-size:15px;
+    font-style:italic;
+    text-align:center;
+    padding:20px;
+}
+
+.controles{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:22px;
+    margin:25px auto;
+    flex-wrap:wrap;
+}
+
+.controles button{
+    background:linear-gradient(135deg,#e2ca91,#a78343);
+    color:#21190c;
+    border:1px solid #e1c27d;
+    padding:12px 25px;
+    font-family:Georgia,serif;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.controles button:hover{
+    background:#f0dcae;
+    transform:translateY(-2px);
+}
+
+.controles button:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+    transform:none;
+}
+
+#contador{
+    color:#c9b27d;
+    font-size:13px;
+    min-width:110px;
+    text-align:center;
+}
+
+.hoja-giro{
+    position:absolute;
+    top:0;
+    width:50%;
+    height:100%;
+    z-index:5;
+    transform-style:preserve-3d;
+    pointer-events:none;
+    display:none;
+}
+
+.hoja-giro.derecha{
+    left:50%;
+    transform-origin:left center;
+}
+
+.hoja-giro.izquierda{
+    left:0;
+    transform-origin:right center;
+}
+
+.hoja-giro.animar-adelante{
+    display:block;
+    animation:giroAdelante .85s ease-in-out forwards;
+}
+
+.hoja-giro.animar-atras{
+    display:block;
+    animation:giroAtras .85s ease-in-out forwards;
+}
+
+.cara{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    padding:40px 32px;
+    background:#f4ecd9;
+    color:#29251e;
+    backface-visibility:hidden;
+    box-shadow:inset 0 0 20px #9b8760;
+}
+
+.cara.frontal{transform:rotateY(0deg)}
+.cara.trasera{transform:rotateY(180deg)}
+
+.cara .pagina-contenido{font-size:13px}
+
+@keyframes giroAdelante{
+    from{transform:rotateY(0deg)}
+    to{transform:rotateY(-180deg)}
+}
+
+@keyframes giroAtras{
+    from{transform:rotateY(0deg)}
+    to{transform:rotateY(180deg)}
+}
+
+footer{
+    text-align:center;
+    color:#a99572;
+    border-top:1px solid #51432b;
+    padding:25px 10px;
+    font-size:13px;
+}
+
+.volver{
     color:#d4b574;
     text-decoration:none;
     border:1px solid #9b7b42;
-    padding:11px 25px;
-    margin-top:25px;
-    transition:0.3s;
+    padding:10px 20px;
+    display:inline-block;
+    margin:5px;
 }
 
-.volver:hover {
-    background:#241d10;
-    border-color:#e5c783;
+.volver:hover{background:#241d10}
+
+#contenidoOriginal{display:none}
+
+@media(max-width:700px){
+    .libro-zona{padding:0 8px}
+    .pagina{min-height:570px;padding:22px 15px}
+    .pagina-contenido{font-size:11px;line-height:1.5}
+    .pagina-contenido h2{font-size:16px}
+    .pagina-contenido h3{font-size:14px}
+    .pagina-contenido .destacado{font-size:12px}
+    .pagina-contenido figure img{max-height:250px}
+    .cara{padding:22px 15px}
+    .cara .pagina-contenido{font-size:10px}
+    .numero-pagina{font-size:10px}
+    .controles{gap:8px}
+    .controles button{padding:10px 13px;font-size:11px}
+    #musicButton,.narracion-control button{
+        font-size:11px;
+        padding:9px 13px;
+    }
 }
 
-.centro { text-align:center; }
-
-footer {
-    border-top:1px solid #51432b;
-    padding:35px 15px;
-    text-align:center;
-    color:#a99572;
-    font-size:14px;
-}
-
-@media(max-width:600px) {
-    header { padding-top:35px; }
-    nav { gap:15px; }
-    .texto p { font-size:16px; }
-    .contenedor { padding:0 18px; }
+@media(max-width:430px){
+    .pagina{min-height:520px;padding:17px 10px}
+    .pagina-contenido{font-size:10px}
+    .pagina-contenido p{margin-bottom:8px}
+    .pagina-contenido h3{margin:8px 0}
+    .pagina-contenido figure img{max-height:210px}
 }
 </style>
 </head>
@@ -205,27 +418,78 @@ footer {
     <a href="index.html#prologo">Prólogo</a>
     <a href="index.html#indice">Índice del libro</a>
     <a href="capitulo-1.html">Capítulo I</a>
-    <a href="#inicio">Capítulo II</a>
 </nav>
 
 <div class="music-control">
-    <button id="musicButton" type="button" onclick="controlarMusica()">
-        ♫ ESCUCHAR MÚSICA
+    <button id="musicButton" type="button" onclick="controlarMusica()" disabled>
+        CARGANDO MÚSICA...
     </button>
 </div>
 
-<iframe
-    id="musicFrame"
-    src="https://www.youtube.com/embed/0o8vszqVL2U?enablejsapi=1&playsinline=1&controls=0&rel=0&fs=0"
-    title="Música de fondo"
-    allow="autoplay; encrypted-media">
-</iframe>
+<div class="narracion-control">
+    <button id="narrarButton" type="button" onclick="iniciarNarracion()">
+        ♫ ESCUCHAR MI HISTORIA
+    </button>
+    <button id="pausarButton" type="button" onclick="pausarNarracion()" disabled>
+        Ⅱ PAUSAR
+    </button>
+    <button id="continuarButton" type="button" onclick="continuarNarracion()" disabled>
+        ▶ CONTINUAR
+    </button>
+    <button id="detenerButton" type="button" onclick="detenerNarracion()" disabled>
+        ■ DETENER
+    </button>
+    <span id="narracionEstado">Narración disponible en tu navegador</span>
+</div>
 
-<main class="contenedor texto" id="inicio">
+<div id="musicFrame"></div>
 
-<p class="etiqueta">MI HISTORIA · CAPÍTULO II</p>
+<main class="libro-zona">
+    <div class="libro" id="libro">
 
-<h2>UNA FAMILIA LLAMADA NUEVA JARILLA</h2>
+        <div class="pagina izquierda">
+            <div class="pagina-contenido" id="paginaIzquierda">
+                <div class="pagina-vacia">SIGAMOS CORRIENDO</div>
+            </div>
+            <div class="numero-pagina" id="numeroIzquierda"></div>
+        </div>
+
+        <div class="pagina derecha">
+            <div class="pagina-contenido" id="paginaDerecha">
+                <div class="pagina-portada">
+                    <div class="numero">CAPÍTULO II</div>
+                    <h2>UNA FAMILIA<br>LLAMADA<br>NUEVA JARILLA</h2>
+                    <div class="adorno"></div>
+                    <p>El valor de las personas que encontramos en el camino</p>
+                </div>
+            </div>
+            <div class="numero-pagina" id="numeroDerecha"></div>
+        </div>
+
+        <div class="hoja-giro derecha" id="hojaGiro">
+            <div class="cara frontal">
+                <div class="pagina-contenido" id="caraFrontal"></div>
+            </div>
+            <div class="cara trasera">
+                <div class="pagina-contenido" id="caraTrasera"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="controles">
+        <button id="anterior" onclick="pasarPagina(-1)" disabled>← ANTERIOR</button>
+        <span id="contador">Presentación</span>
+        <button id="siguiente" onclick="pasarPagina(1)">SIGUIENTE →</button>
+    </div>
+
+    <div style="text-align:center;margin:20px 0 35px">
+        <a class="volver" href="index.html#indice">← VOLVER AL ÍNDICE DEL LIBRO</a>
+    </div>
+</main>
+
+<!-- TEXTO ORIGINAL DEL CAPÍTULO II -->
+<article id="contenidoOriginal">
 
 <p class="destacado">
 A veces, el mejor premio que nos da el deporte no se consigue en una meta, sino en las personas que encontramos por el camino.
@@ -259,7 +523,7 @@ Fue él, junto con los compañeros, quien me hizo sentir que podía formar parte
 Con el tiempo comprendí que aquella decisión había sido mucho más importante de lo que imaginaba. No estaba entrando solamente en un club deportivo: estaba encontrando un grupo de personas con las que compartir carreras, conversaciones, experiencias y muchos momentos especiales.
 </p>
 
-<figure class="foto">
+<figure>
 <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20241112-WA0007.jpg"
 alt="Dos compañeros del club Atletismo Nueva Jarilla">
 <figcaption>Compartiendo el atletismo y los buenos momentos con los compañeros.</figcaption>
@@ -283,7 +547,7 @@ Con los años he aprendido que el tamaño de un club no se mide por el número d
 Allí encontré sencillez, respeto y una manera muy especial de entender el deporte. No hacía falta tener grandes medios ni ser un atleta destacado para sentirse importante dentro de aquel grupo.
 </p>
 
-<figure class="foto">
+<figure>
 <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20181021-WA0001%20%281%29.jpg"
 alt="Compañeros del club reunidos en una jornada deportiva">
 <figcaption>Una imagen de compañerismo: personas unidas por una misma afición.</figcaption>
@@ -317,7 +581,7 @@ Conservo fotografías de aquellos momentos porque, cuando las miro, no veo solam
 Puede que no siempre entrenáramos juntos, puede que cada uno tuviera sus propios objetivos y sus circunstancias, pero cuando nos encontrábamos en una carrera volvíamos a compartir esa afición que nos unía.
 </p>
 
-<figure class="foto">
+<figure>
 <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20170115_120844.jpg"
 alt="Recuerdo de una jornada con compañeros de Nueva Jarilla">
 <figcaption>Los recuerdos de una etapa que siempre llevaré conmigo.</figcaption>
@@ -347,52 +611,423 @@ El mejor trofeo que me llevé de Nueva Jarilla fue el cariño de aquella familia
 Los años pasan, las carreras terminan y los resultados quedan atrás. Pero las personas que nos hicieron felices durante el camino siguen ocupando un lugar especial en nuestros recuerdos.
 </p>
 
-<div class="centro">
-<a class="volver" href="index.html#indice">
-← VOLVER AL ÍNDICE DEL LIBRO
-</a>
-</div>
-
-</main>
+</article>
 
 <footer>
 SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
 </footer>
 
 <script>
-const musicFrame = document.getElementById("musicFrame");
-const musicButton = document.getElementById("musicButton");
+/* REFERENCIA AL TEXTO ORIGINAL */
+const original=document.getElementById("contenidoOriginal");
 
-let musicaActiva = false;
+/* MÚSICA DE FONDO */
 
-function controlarMusica() {
-    if (!musicaActiva) {
-        musicFrame.contentWindow.postMessage(
-            JSON.stringify({
-                event:"command",
-                func:"playVideo",
-                args:[]
-            }),
-            "*"
-        );
+let reproductor;
+let musicaActiva=false;
+const musicButton=document.getElementById("musicButton");
 
-        musicaActiva = true;
-        musicButton.textContent = "Ⅱ PAUSAR MÚSICA";
-    } else {
-        musicFrame.contentWindow.postMessage(
-            JSON.stringify({
-                event:"command",
-                func:"pauseVideo",
-                args:[]
-            }),
-            "*"
-        );
+function onYouTubeIframeAPIReady(){
+    reproductor=new YT.Player("musicFrame",{
+        width:"1",
+        height:"1",
+        videoId:"0o8vszqVL2U",
+        playerVars:{
+            autoplay:0,
+            controls:0,
+            playsinline:1,
+            rel:0,
+            enablejsapi:1
+        },
+        events:{
+            onReady:function(){
+                reproductor.setVolume(18);
+                musicButton.disabled=false;
+                musicButton.textContent="♫ ESCUCHAR MÚSICA";
+            },
+            onStateChange:function(event){
+                if(event.data===YT.PlayerState.PLAYING){
+                    musicaActiva=true;
+                    musicButton.textContent="Ⅱ PAUSAR MÚSICA";
+                }
+                if(event.data===YT.PlayerState.PAUSED ||
+                   event.data===YT.PlayerState.ENDED){
+                    musicaActiva=false;
+                    musicButton.textContent="♫ ESCUCHAR MÚSICA";
+                }
+            },
+            onError:function(){
+                musicButton.disabled=false;
+                musicButton.textContent="NO SE PUDO REPRODUCIR";
+            }
+        }
+    });
+}
 
-        musicaActiva = false;
-        musicButton.textContent = "♫ ESCUCHAR MÚSICA";
+function controlarMusica(){
+    if(!reproductor)return;
+
+    reproductor.setVolume(18);
+
+    if(musicaActiva){
+        reproductor.pauseVideo();
+    }else{
+        reproductor.playVideo();
     }
 }
+
+
+/* NARRACIÓN DEL CAPÍTULO */
+
+const narrarButton=document.getElementById("narrarButton");
+const pausarButton=document.getElementById("pausarButton");
+const continuarButton=document.getElementById("continuarButton");
+const detenerButton=document.getElementById("detenerButton");
+const narracionEstado=document.getElementById("narracionEstado");
+
+let fragmentosNarracion=[];
+let indiceNarracion=0;
+let narracionActiva=false;
+let narracionPausada=false;
+let numeroSesionNarracion=0;
+
+function actualizarControlesNarracion(){
+    narrarButton.disabled=narracionActiva;
+    pausarButton.disabled=!narracionActiva || narracionPausada;
+    continuarButton.disabled=!narracionActiva || !narracionPausada;
+    detenerButton.disabled=!narracionActiva;
+}
+
+function dividirTexto(texto,maximo=220){
+    const frases=texto.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[texto];
+    const resultado=[];
+    let bloque="";
+
+    frases.forEach(frase=>{
+        frase=frase.trim();
+        if(!frase)return;
+
+        if((bloque+" "+frase).trim().length<=maximo){
+            bloque=(bloque+" "+frase).trim();
+        }else{
+            if(bloque)resultado.push(bloque);
+
+            if(frase.length<=maximo){
+                bloque=frase;
+            }else{
+                const palabras=frase.split(/\s+/);
+                bloque="";
+
+                palabras.forEach(palabra=>{
+                    if((bloque+" "+palabra).trim().length>maximo){
+                        if(bloque)resultado.push(bloque);
+                        bloque=palabra;
+                    }else{
+                        bloque=(bloque+" "+palabra).trim();
+                    }
+                });
+            }
+        }
+    });
+
+    if(bloque)resultado.push(bloque);
+    return resultado;
+}
+
+function elegirVozEspanola(){
+    const voces=window.speechSynthesis.getVoices();
+    const espanolas=voces.filter(voz=>
+        voz.lang && voz.lang.toLowerCase().startsWith("es")
+    );
+
+    const nombresMasculinos=[
+        "jorge","alvaro","álvaro","pablo","diego",
+        "enrique","miguel","carlos","antonio",
+        "male","masculino"
+    ];
+
+    const vozMasculina=espanolas.find(voz=>{
+        const nombre=voz.name.toLowerCase();
+        return nombresMasculinos.some(p=>nombre.includes(p));
+    });
+
+    if(vozMasculina)return vozMasculina;
+
+    const vozEspana=espanolas.find(voz=>
+        voz.lang.toLowerCase()==="es-es"
+    );
+
+    return vozEspana || espanolas[0] || null;
+}
+
+function prepararNarracion(){
+    fragmentosNarracion=[];
+
+    const bloques=Array.from(original.children);
+
+    bloques.forEach(elemento=>{
+        let texto="";
+
+        if(elemento.tagName==="FIGURE"){
+            const pie=elemento.querySelector("figcaption");
+            texto=pie ? pie.textContent.trim() : "";
+        }else{
+            texto=elemento.textContent.trim();
+        }
+
+        if(texto){
+            fragmentosNarracion.push(...dividirTexto(texto));
+        }
+    });
+}
+
+function leerSiguienteFragmento(sesion){
+    if(sesion!==numeroSesionNarracion)return;
+    if(!narracionActiva || narracionPausada)return;
+
+    if(indiceNarracion>=fragmentosNarracion.length){
+        narracionActiva=false;
+        narracionPausada=false;
+        narracionEstado.textContent="La narración ha terminado. Gracias por escuchar tu historia.";
+        actualizarControlesNarracion();
+        return;
+    }
+
+    const voz=new SpeechSynthesisUtterance(
+        fragmentosNarracion[indiceNarracion]
+    );
+
+    voz.lang="es-ES";
+    voz.rate=0.88;
+    voz.pitch=0.85;
+    voz.volume=1;
+
+    const vozElegida=elegirVozEspanola();
+    if(vozElegida)voz.voice=vozElegida;
+
+    voz.onend=function(){
+        if(sesion!==numeroSesionNarracion)return;
+
+        indiceNarracion++;
+
+        const porcentaje=Math.round(
+            indiceNarracion/fragmentosNarracion.length*100
+        );
+
+        narracionEstado.textContent=
+            "Leyendo tu historia... "+porcentaje+"%";
+
+        leerSiguienteFragmento(sesion);
+    };
+
+    voz.onerror=function(event){
+        if(sesion!==numeroSesionNarracion)return;
+        if(event.error==="canceled" || event.error==="interrupted")return;
+
+        narracionEstado.textContent="Se ha producido un problema con la voz del navegador.";
+        narracionActiva=false;
+        actualizarControlesNarracion();
+    };
+
+    window.speechSynthesis.speak(voz);
+}
+
+function iniciarNarracion(){
+    if(!("speechSynthesis" in window)){
+        narracionEstado.textContent="Este navegador no dispone de narración de voz.";
+        return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    numeroSesionNarracion++;
+    indiceNarracion=0;
+    narracionActiva=true;
+    narracionPausada=false;
+
+    prepararNarracion();
+    actualizarControlesNarracion();
+
+    narracionEstado.textContent="Preparando la voz para leer tu historia...";
+
+    const sesion=numeroSesionNarracion;
+
+    setTimeout(()=>{
+        if(sesion!==numeroSesionNarracion)return;
+
+        narracionEstado.textContent="Leyendo tu historia desde el principio...";
+        leerSiguienteFragmento(sesion);
+    },400);
+}
+
+function pausarNarracion(){
+    if(!narracionActiva)return;
+
+    window.speechSynthesis.pause();
+    narracionPausada=true;
+    narracionEstado.textContent="Narración pausada.";
+    actualizarControlesNarracion();
+}
+
+function continuarNarracion(){
+    if(!narracionActiva || !narracionPausada)return;
+
+    window.speechSynthesis.resume();
+    narracionPausada=false;
+    narracionEstado.textContent="Continuando la lectura...";
+    actualizarControlesNarracion();
+}
+
+function detenerNarracion(){
+    numeroSesionNarracion++;
+    window.speechSynthesis.cancel();
+
+    narracionActiva=false;
+    narracionPausada=false;
+    indiceNarracion=0;
+
+    narracionEstado.textContent="Narración detenida.";
+    actualizarControlesNarracion();
+}
+
+if("speechSynthesis" in window){
+    window.speechSynthesis.onvoiceschanged=function(){
+        window.speechSynthesis.getVoices();
+    };
+}else{
+    narracionEstado.textContent="Tu navegador no permite la narración de voz.";
+    narrarButton.disabled=true;
+}
+
+actualizarControlesNarracion();
+
+
+/* DISTRIBUCIÓN AUTOMÁTICA DEL TEXTO EN PÁGINAS */
+
+const elementos=Array.from(original.children);
+const paginas=[];
+let paginaActual=[];
+let pesoActual=0;
+const limite=650;
+
+elementos.forEach(elemento=>{
+    const copia=elemento.cloneNode(true);
+    let peso=(elemento.textContent||"").length;
+
+    if(elemento.tagName==="FIGURE")peso+=220;
+    if(elemento.tagName==="H3")peso+=70;
+
+    if(pesoActual+peso>limite && paginaActual.length){
+        paginas.push(paginaActual);
+        paginaActual=[];
+        pesoActual=0;
+    }
+
+    paginaActual.push(copia);
+    pesoActual+=peso;
+});
+
+if(paginaActual.length)paginas.push(paginaActual);
+
+let apertura=0;
+let girando=false;
+
+const izquierda=document.getElementById("paginaIzquierda");
+const derecha=document.getElementById("paginaDerecha");
+const numeroIzq=document.getElementById("numeroIzquierda");
+const numeroDer=document.getElementById("numeroDerecha");
+const hoja=document.getElementById("hojaGiro");
+const caraFrontal=document.getElementById("caraFrontal");
+const caraTrasera=document.getElementById("caraTrasera");
+const contador=document.getElementById("contador");
+const botonAnterior=document.getElementById("anterior");
+const botonSiguiente=document.getElementById("siguiente");
+
+const totalAperturas=1+Math.ceil(paginas.length/2);
+
+function contenidoDePagina(indice){
+    if(indice<0 || indice>=paginas.length){
+        return '<div class="pagina-vacia">SIGAMOS CORRIENDO</div>';
+    }
+
+    return paginas[indice].map(el=>el.outerHTML).join("");
+}
+
+function mostrarApertura(){
+    if(apertura===0){
+        izquierda.innerHTML='<div class="pagina-vacia">SIGAMOS CORRIENDO<br><br>Una historia de esfuerzo, valores y superación</div>';
+
+        derecha.innerHTML=`
+            <div class="pagina-portada">
+                <div class="numero">CAPÍTULO II</div>
+                <h2>UNA FAMILIA<br>LLAMADA<br>NUEVA JARILLA</h2>
+                <div class="adorno"></div>
+                <p>El valor de las personas que encontramos en el camino</p>
+            </div>`;
+
+        numeroIzq.textContent="";
+        numeroDer.textContent="";
+        contador.textContent="Presentación";
+    }else{
+        const primero=(apertura-1)*2;
+
+        izquierda.innerHTML=contenidoDePagina(primero);
+        derecha.innerHTML=contenidoDePagina(primero+1);
+
+        numeroIzq.textContent=primero+1;
+        numeroDer.textContent=primero+2<=paginas.length?primero+2:"";
+
+        contador.textContent="Apertura "+(apertura+1)+" de "+totalAperturas;
+    }
+
+    botonAnterior.disabled=apertura===0;
+    botonSiguiente.disabled=apertura===totalAperturas-1;
+}
+
+function pasarPagina(direccion){
+    if(girando)return;
+
+    const destino=apertura+direccion;
+
+    if(destino<0 || destino>=totalAperturas)return;
+
+    girando=true;
+
+    if(direccion===1){
+        hoja.className="hoja-giro derecha";
+        caraFrontal.innerHTML=derecha.innerHTML;
+
+        caraTrasera.innerHTML=contenidoDePagina(
+            (destino-1)*2
+        );
+
+        void hoja.offsetWidth;
+        hoja.classList.add("animar-adelante");
+    }else{
+        hoja.className="hoja-giro izquierda";
+        caraFrontal.innerHTML=izquierda.innerHTML;
+
+        caraTrasera.innerHTML=destino===0
+            ? '<div class="pagina-portada"><div class="numero">CAPÍTULO II</div><h2>UNA FAMILIA<br>LLAMADA<br>NUEVA JARILLA</h2><div class="adorno"></div><p>El valor de las personas que encontramos en el camino</p></div>'
+            : contenidoDePagina((destino-1)*2+1);
+
+        void hoja.offsetWidth;
+        hoja.classList.add("animar-atras");
+    }
+
+    setTimeout(()=>{
+        apertura=destino;
+        hoja.className="hoja-giro derecha";
+        mostrarApertura();
+        girando=false;
+    },850);
+}
+
+mostrarApertura();
 </script>
+
+<script src="https://www.youtube.com/iframe_api"></script>
 
 </body>
 </html>
+
