@@ -1,0 +1,594 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capítulo IV | Cuando el cuerpo pidió parar</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 25px 15px 45px;
+    background: #080808;
+    color: #e8e0d1;
+    font-family: Georgia, serif;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 25px;
+}
+
+header h1 {
+    color: #d4b574;
+    font-size: 30px;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #c7b995;
+    font-style: italic;
+}
+
+button {
+    background: #d4b574;
+    color: #17120a;
+    border: 1px solid #d4b574;
+    padding: 11px 17px;
+    margin: 5px;
+    border-radius: 4px;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #f0d69b;
+}
+
+.controles {
+    margin: 20px auto;
+    max-width: 900px;
+}
+
+.libro {
+    max-width: 1050px;
+    margin: 25px auto;
+    perspective: 1800px;
+}
+
+.apertura {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: stretch;
+    box-shadow: 0 12px 40px rgba(0,0,0,.7);
+}
+
+.pagina {
+    background: #eee5d2;
+    color: #332b20;
+    min-height: 570px;
+    padding: 35px 38px;
+    text-align: left;
+    line-height: 1.75;
+    font-size: 16px;
+    position: relative;
+    border: 1px solid #d1c3a8;
+    overflow: hidden;
+}
+
+.pagina.izquierda {
+    border-radius: 5px 0 0 5px;
+    box-shadow: inset -12px 0 18px rgba(70,50,20,.10);
+}
+
+.pagina.derecha {
+    border-radius: 0 5px 5px 0;
+    box-shadow: inset 12px 0 18px rgba(70,50,20,.10);
+}
+
+.pagina h2 {
+    color: #87652d;
+    font-size: 21px;
+    text-align: center;
+    letter-spacing: 1px;
+    margin: 5px 0 22px;
+}
+
+.pagina h3 {
+    color: #87652d;
+    font-size: 18px;
+    text-align: center;
+}
+
+.pagina p {
+    text-align: justify;
+    margin-bottom: 17px;
+}
+
+.numero {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #9a896b;
+    font-size: 13px;
+}
+
+.foto {
+    display: block;
+    width: 100%;
+    max-height: 270px;
+    object-fit: contain;
+    margin: 18px auto;
+    border-radius: 3px;
+}
+
+.frase {
+    color: #87652d;
+    font-style: italic;
+    text-align: center !important;
+    font-size: 18px;
+    margin-top: 30px;
+}
+
+.doble {
+    display: none;
+    animation: aparecer .55s ease;
+}
+
+.doble.activa {
+    display: grid;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: .2;
+        transform: rotateY(-5deg);
+    }
+    to {
+        opacity: 1;
+        transform: rotateY(0);
+    }
+}
+
+.pie {
+    color: #c7b995;
+    margin-top: 35px;
+    font-size: 14px;
+}
+
+@media(max-width: 700px) {
+    .apertura {
+        grid-template-columns: 1fr;
+    }
+
+    .pagina {
+        min-height: auto;
+        padding: 30px 25px 55px;
+        border-radius: 4px !important;
+    }
+
+    .pagina.derecha {
+        margin-top: 8px;
+    }
+
+    header h1 {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>CAPÍTULO IV</h1>
+    <p>Cuando el cuerpo pidió parar</p>
+</header>
+
+<div class="controles">
+    <button onclick="escuchar()">ESCUCHAR MI HISTORIA</button>
+    <button onclick="pausar()">PAUSAR</button>
+    <button onclick="continuar()">CONTINUAR</button>
+    <button onclick="detener()">DETENER</button>
+</div>
+
+<div class="libro">
+
+    <div class="doble activa" id="hoja0">
+        <div class="apertura">
+
+            <div class="pagina izquierda">
+                <h2>CUANDO EL CUERPO PIDIÓ PARAR</h2>
+
+                <p>
+                Después de tantos años corriendo, acostumbrado a entrenar
+                y a participar en carreras, llegó un momento en el que mi
+                cuerpo me obligó a detenerme.
+                </p>
+
+                <p>
+                El atletismo había pasado a formar parte de mi vida.
+                Correr era mucho más que hacer deporte: era una costumbre,
+                una ilusión y una manera de sentirme bien.
+                </p>
+
+                <p>
+                Por eso, tener que parar no fue sencillo. Cuando llevas
+                tantos años mirando hacia delante, aceptar que no puedes
+                continuar al mismo ritmo supone un cambio difícil.
+                </p>
+
+                <p>
+                Sin embargo, aquella sería la primera de varias lecciones
+                que todavía tenía que aprender.
+                </p>
+
+                <div class="numero">1</div>
+            </div>
+
+            <div class="pagina derecha">
+                <h2>LA PRIMERA VEZ QUE TUVE QUE PARAR</h2>
+
+                <p>
+                La fascitis plantar y el espolón en el talón fueron mi
+                primera gran prueba. De repente, algo tan natural para mí
+                como salir a correr se convirtió en una dificultad.
+                </p>
+
+                <p>
+                Tuve que dejar los entrenamientos durante un tiempo y
+                aprender a tener paciencia.
+                </p>
+
+                <p>
+                Lo más duro no era solamente el dolor. También estaba
+                la incertidumbre: no saber cuándo podría volver a correr,
+                ni si recuperaría las sensaciones de antes.
+                </p>
+
+                <p>
+                Con tratamiento, fisioterapia y tiempo, fui recuperándome.
+                Pero aquella experiencia me enseñó algo que entonces me
+                costaba aceptar: no siempre se puede volver de golpe.
+                </p>
+
+                <div class="numero">2</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="doble" id="hoja1">
+        <div class="apertura">
+
+            <div class="pagina izquierda">
+                <h2>APRENDER A ESCUCHAR</h2>
+
+                <p>
+                Había que escuchar al cuerpo y darle tiempo. Las ganas
+                de volver podían ser muchas, pero no bastaban para
+                recuperar de un día para otro todo lo que había dejado
+                atrás.
+                </p>
+
+                <p>
+                Aquella parada me hizo comprender que la recuperación
+                también forma parte del camino de un deportista.
+                </p>
+
+                <p>
+                A veces queremos recuperar enseguida lo que teníamos,
+                pero el cuerpo tiene sus propios tiempos y no siempre
+                coinciden con nuestros deseos.
+                </p>
+
+                <p>
+                Pensaba que, después de superar aquello, todavía me
+                quedaban muchos kilómetros por recorrer.
+                </p>
+
+                <div class="numero">3</div>
+            </div>
+
+            <div class="pagina derecha">
+                <h2>CUANDO LA RODILLA VOLVIÓ A PONERME A PRUEBA</h2>
+
+                <p>
+                Durante uno de mis entrenamientos diarios apareció
+                una pequeña molestia en la rodilla. Al principio parecía
+                algo pasajero.
+                </p>
+
+                <p>
+                Descansaba, mejoraba y volvía a intentarlo. Sin embargo,
+                cada vez que retomaba los entrenamientos, el dolor
+                regresaba con más fuerza.
+                </p>
+
+                <p>
+                Comenzaron las consultas, las exploraciones y las
+                pruebas médicas. La ecografía mostró pérdida de cartílago,
+                una rotura parcial del menisco interno y un pequeño derrame.
+                </p>
+
+                <div class="numero">4</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="doble" id="hoja2">
+        <div class="apertura">
+
+            <div class="pagina izquierda">
+                <h2>LA INCERTIDUMBRE</h2>
+
+                <p>
+                Escuchar aquellos resultados no fue fácil. Después
+                de tantos años haciendo del atletismo una parte
+                fundamental de mi vida, tenía que enfrentarme a la
+                posibilidad de que quizá no pudiera volver a correr
+                como antes.
+                </p>
+
+                <p>
+                Es difícil explicar lo que siente alguien que ha
+                encontrado en el atletismo una forma de vivir cuando
+                de pronto no sabe si podrá volver a practicarlo.
+                </p>
+
+                <p>
+                No se trata solamente de dejar de entrenar. También
+                echas de menos las rutinas, las carreras, los compañeros
+                y esa sensación de libertad que te acompaña cuando
+                corres.
+                </p>
+
+                <div class="numero">5</div>
+            </div>
+
+            <div class="pagina derecha">
+                <h2>APRENDER A SEGUIR DE OTRA MANERA</h2>
+
+                <p>
+                La incertidumbre sigue siendo una de las partes más
+                difíciles. Uno desea volver a calzarse las zapatillas,
+                salir a entrenar y sentir aquella libertad de siempre.
+                </p>
+
+                <p>
+                Mientras tanto, he encontrado en la marcha atlética
+                una manera de continuar relacionado con el deporte.
+                </p>
+
+                <p>
+                No ha sido fácil adaptarme. Es una técnica diferente,
+                todavía estoy aprendiendo y no siento por ella lo mismo
+                que por correr.
+                </p>
+
+                <p>
+                Pero sigo adelante, con la esperanza de que pueda ser
+                un camino para mantenerme activo.
+                </p>
+
+                <div class="numero">6</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="doble" id="hoja3">
+        <div class="apertura">
+
+            <div class="pagina izquierda">
+                <h2>UNA NUEVA FORMA DE ENTENDER EL DEPORTE</h2>
+
+                <p>
+                He aprendido que cumplir años también significa cambiar
+                la manera de entender el deporte. Ya no se trata de
+                entrenar más ni de conseguir mejores marcas.
+                </p>
+
+                <p>
+                Se trata de disfrutar, respetar los límites y valorar
+                cada pequeño avance.
+                </p>
+
+                <p>
+                Quizá algún día pueda volver a correr. No sé cuándo
+                ni en qué condiciones. Lo que sí sé es que no quiero
+                perder aquello que el atletismo me ha dado durante
+                tantos años: amistades, experiencias, ilusión y una
+                forma de entender la vida.
+                </p>
+
+                <div class="numero">7</div>
+            </div>
+
+            <div class="pagina derecha">
+                <h2>SEGUIR ADELANTE</h2>
+
+                <p>
+                Porque correr no ha sido solamente avanzar kilómetros.
+                Ha sido una parte de mi historia.
+                </p>
+
+                <p>
+                Y aunque ahora el camino sea diferente, sigo teniendo
+                las mismas ganas de mirar hacia delante.
+                </p>
+
+                <p class="frase">
+                A veces parar no significa rendirse.
+                Significa aprender a continuar de otra manera.
+                </p>
+
+                <div class="numero">8</div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="controles">
+    <button onclick="anterior()">← PÁGINA ANTERIOR</button>
+    <button onclick="siguiente()">PÁGINA SIGUIENTE →</button>
+</div>
+
+<div class="pie">
+    SIGAMOS CORRIENDO · MI VIDA COMO ATLETA
+</div>
+
+<div id="reproductor" style="display:none;"></div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+let paginaActual = 0;
+const totalPaginas = 4;
+
+function mostrarPagina(numero) {
+    document.querySelectorAll(".doble").forEach(function(pagina) {
+        pagina.classList.remove("activa");
+    });
+
+    document.getElementById("hoja" + numero).classList.add("activa");
+    paginaActual = numero;
+}
+
+function siguiente() {
+    if (paginaActual < totalPaginas - 1) {
+        mostrarPagina(paginaActual + 1);
+    }
+}
+
+function anterior() {
+    if (paginaActual > 0) {
+        mostrarPagina(paginaActual - 1);
+    }
+}
+
+/* MÚSICA DE FONDO */
+
+let reproductor;
+
+function onYouTubeIframeAPIReady() {
+    reproductor = new YT.Player("reproductor", {
+        height: "0",
+        width: "0",
+        videoId: "0o8vszqVL2U",
+        playerVars: {
+            autoplay: 0,
+            controls: 0,
+            loop: 1,
+            playlist: "0o8vszqVL2U"
+        },
+        events: {
+            onReady: function(event) {
+                event.target.setVolume(18);
+            }
+        }
+    });
+}
+
+function iniciarMusica() {
+    if (reproductor && reproductor.playVideo) {
+        reproductor.setVolume(18);
+        reproductor.playVideo();
+    }
+}
+
+/* NARRACIÓN */
+
+let partes = [];
+let indice = 0;
+
+function prepararNarracion() {
+    const contenidoOriginal = document.querySelector(".libro");
+    const texto = contenidoOriginal.innerText;
+    partes = texto.split(/(?<=[.!?])\s+/).filter(t => t.trim().length > 0);
+}
+
+function escuchar() {
+    if (!("speechSynthesis" in window)) {
+        alert("Tu navegador no permite la narración automática.");
+        return;
+    }
+
+    speechSynthesis.cancel();
+    prepararNarracion();
+    indice = 0;
+    iniciarMusica();
+    hablarSiguiente();
+}
+
+function hablarSiguiente() {
+    if (indice >= partes.length) return;
+
+    const frase = partes[indice];
+    const voz = new SpeechSynthesisUtterance(frase);
+    voz.lang = "es-ES";
+    voz.rate = 0.88;
+    voz.pitch = 0.85;
+
+    const voces = speechSynthesis.getVoices();
+    const vozEspanola = voces.find(v =>
+        v.lang.toLowerCase().startsWith("es") &&
+        /male|masculina|jorge|pablo/i.test(v.name)
+    );
+
+    if (vozEspanola) {
+        voz.voice = vozEspanola;
+    }
+
+    voz.onend = function() {
+        indice++;
+        hablarSiguiente();
+    };
+
+    speechSynthesis.speak(voz);
+}
+
+function pausar() {
+    if (speechSynthesis.speaking) {
+        speechSynthesis.pause();
+    }
+    if (reproductor && reproductor.pauseVideo) {
+        reproductor.pauseVideo();
+    }
+}
+
+function continuar() {
+    if (speechSynthesis.paused) {
+        speechSynthesis.resume();
+    } else if (!speechSynthesis.speaking) {
+        hablarSiguiente();
+    }
+
+    iniciarMusica();
+}
+
+function detener() {
+    speechSynthesis.cancel();
+    indice = partes.length;
+
+    if (reproductor && reproductor.pauseVideo) {
+        reproductor.pauseVideo();
+    }
+}
+</script>
+
+</body>
+</html>
