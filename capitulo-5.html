@@ -1,1 +1,554 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capítulo V | Aprender a seguir adelante</title>
+
+<style>
+:root {
+  --negro: #080808;
+  --oro: #d4b574;
+  --marfil: #f3ead8;
+  --texto: #332b20;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--negro);
+  color: var(--marfil);
+  font-family: Georgia, serif;
+}
+
+header {
+  text-align: center;
+  padding: 28px 15px 15px;
+}
+
+header h1 {
+  color: var(--oro);
+  font-size: clamp(23px, 4vw, 36px);
+  letter-spacing: 3px;
+  margin: 8px 0;
+}
+
+header p {
+  color: #c8bda9;
+  font-style: italic;
+  font-size: 15px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 15px;
+  border-top: 1px solid #493d28;
+  border-bottom: 1px solid #493d28;
+}
+
+nav a {
+  color: var(--oro);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 7px 10px;
+}
+
+nav a:hover { color: white; }
+
+.controles-musica {
+  text-align: center;
+  padding: 18px 10px 5px;
+}
+
+button {
+  background: transparent;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 10px 17px;
+  margin: 5px;
+  border-radius: 3px;
+  font-family: Georgia, serif;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--oro);
+  color: var(--negro);
+}
+
+#estadoMusica {
+  color: #b7a98e;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.libro {
+  max-width: 1100px;
+  margin: 25px auto;
+  padding: 0 15px;
+}
+
+.doble-pagina {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #d4c5a9;
+  border: 5px solid #9d8050;
+  box-shadow: 0 10px 35px #000;
+  min-height: 650px;
+}
+
+.pagina {
+  background: var(--marfil);
+  color: var(--texto);
+  padding: 38px 34px;
+  min-width: 0;
+  position: relative;
+}
+
+.pagina:first-child {
+  border-right: 1px solid #d3c4a8;
+}
+
+.pagina h2 {
+  color: #82642e;
+  font-size: 21px;
+  text-align: center;
+  line-height: 1.4;
+  margin: 5px 0 22px;
+}
+
+.pagina h3 {
+  color: #82642e;
+  font-size: 18px;
+  text-align: center;
+  font-weight: normal;
+}
+
+.pagina p {
+  font-size: 15px;
+  line-height: 1.85;
+  text-align: justify;
+}
+
+.foto {
+  margin: 20px auto;
+  text-align: center;
+}
+
+.foto img {
+  display: block;
+  width: 100%;
+  max-height: 290px;
+  object-fit: contain;
+  border: 2px solid var(--oro);
+  padding: 4px;
+  background: #fffaf0;
+}
+
+.pie-foto {
+  font-size: 12px !important;
+  color: #78684e;
+  text-align: center !important;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+.cita {
+  color: #80622e;
+  font-size: 19px !important;
+  font-style: italic;
+  text-align: center !important;
+  line-height: 1.7 !important;
+  margin: 25px 5px;
+}
+
+.numero-pagina {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #9b8969;
+  font-size: 12px;
+}
+
+.navegacion-libro {
+  text-align: center;
+  padding: 18px 5px;
+}
+
+#contador {
+  display: inline-block;
+  color: var(--oro);
+  min-width: 115px;
+  font-size: 14px;
+}
+
+.pagina-escondida { display: none; }
+
+footer {
+  text-align: center;
+  padding: 25px 15px;
+  color: #a99b82;
+  font-size: 13px;
+  border-top: 1px solid #493d28;
+  margin-top: 25px;
+}
+
+@media(max-width: 700px) {
+  .doble-pagina {
+    grid-template-columns: 1fr;
+  }
+  .pagina {
+    padding: 28px 23px 45px;
+    min-height: 500px;
+  }
+  .pagina:first-child {
+    border-right: 0;
+    border-bottom: 2px solid #d3c4a8;
+  }
+  .pagina p { font-size: 14px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <p>MI VIDA COMO ATLETA</p>
+  <h1>CAPÍTULO V</h1>
+  <p>Aprender a seguir adelante</p>
+</header>
+
+<nav>
+  <a href="index.html">PORTADA</a>
+  <a href="index.html">ÍNDICE</a>
+  <a href="capitulo-1.html">CAPÍTULO I</a>
+  <a href="capitulo-2.html">CAPÍTULO II</a>
+  <a href="capitulo-3.html">CAPÍTULO III</a>
+  <a href="capitulo-4.html">CAPÍTULO IV</a>
+  <a href="capitulo-5.html">CAPÍTULO V</a>
+</nav>
+
+<div class="controles-musica">
+  <button onclick="iniciarMusica()">♫ ESCUCHAR MÚSICA</button>
+  <button onclick="pararMusica()">■ DETENER MÚSICA</button>
+  <div id="estadoMusica">La música acompañará la lectura</div>
+  <div id="reproductor" style="width:1px;height:1px;overflow:hidden;"></div>
+</div>
+
+<div class="libro">
+
+<div class="doble-pagina" id="libro">
+
+  <!-- PÁGINA 1 -->
+  <section class="pagina">
+    <h2>APRENDER A SEGUIR ADELANTE</h2>
+    <h3>Una nueva etapa de mi vida</h3>
+
+    <p>
+      Después de tantos años corriendo, compitiendo y compartiendo
+      experiencias, llega un momento en el que uno comprende que
+      el atletismo también consiste en saber adaptarse.
+    </p>
+
+    <p>
+      Durante más de veinticinco años este deporte ha formado
+      parte de mi vida. Ha estado presente en mis alegrías,
+      en mis esfuerzos, en mis ilusiones y también en los momentos
+      difíciles.
+    </p>
+
+    <p>
+      Nunca imaginé que llegaría a mirar el atletismo desde
+      una perspectiva diferente. Pero la vida de un deportista
+      también está llena de cambios, y aprender a aceptarlos
+      es otra forma de superación.
+    </p>
+
+    <div class="numero-pagina">1</div>
+  </section>
+
+  <!-- PÁGINA 2 -->
+  <section class="pagina">
+    <h2>MÁS DE VEINTICINCO AÑOS</h2>
+
+    <p>
+      Cuando miro hacia atrás, recuerdo aquellos primeros
+      entrenamientos, las primeras carreras y aquella ilusión
+      con la que empecé a descubrir un mundo que terminaría
+      convirtiéndose en una parte fundamental de mi existencia.
+    </p>
+
+    <p>
+      He conocido lugares, he compartido kilómetros con otros
+      atletas y he vivido momentos que guardaré siempre.
+      También he conseguido subir a un podio y disfrutar
+      de la satisfacción de alcanzar objetivos que un día
+      parecían muy lejanos.
+    </p>
+
+    <p>
+      Pero con el paso del tiempo he comprendido que los mejores
+      recuerdos no siempre están relacionados con una marca
+      o una clasificación. Muchas veces están en una conversación,
+      en un abrazo o en volver a encontrarte con compañeros
+      a los que hacía tiempo que no veías.
+    </p>
+
+    <div class="numero-pagina">2</div>
+  </section>
+
+  <!-- PÁGINA 3 -->
+  <section class="pagina">
+    <h2>LOS RECUERDOS SIGUEN VIVOS</h2>
+
+    <div class="foto">
+      <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20180311_120705.jpg"
+           alt="Recuerdo de mi trayectoria atlética">
+    </div>
+
+    <p>
+      Cada fotografía guarda una historia. Detrás de cada carrera
+      hay entrenamientos, sacrificios, madrugones y muchas ganas
+      de superarse.
+    </p>
+
+    <p>
+      Cuando vuelvo a mirar estas imágenes, no veo solamente
+      a un corredor. Veo una etapa de mi vida llena de experiencias,
+      de amistades y de momentos que han contribuido a hacerme
+      como soy.
+    </p>
+
+    <div class="numero-pagina">3</div>
+  </section>
+
+  <!-- PÁGINA 4 -->
+  <section class="pagina">
+    <h2>EL DEPORTE TAMBIÉN ENSEÑA</h2>
+
+    <div class="foto">
+      <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20180414_120421.jpg"
+           alt="Otro recuerdo de mi vida deportiva">
+    </div>
+
+    <p>
+      El atletismo me ha enseñado a tener constancia, a respetar
+      a los demás y a no darme por vencido cuando las cosas
+      no salen como uno espera.
+    </p>
+
+    <p>
+      También me ha enseñado que cada persona tiene su propio
+      ritmo y que no es necesario compararse continuamente
+      con los demás.
+    </p>
+
+    <p>
+      Lo importante es seguir encontrando motivos para levantarse,
+      ponerse las zapatillas y disfrutar de aquello que nos hace
+      sentir bien.
+    </p>
+
+    <div class="numero-pagina">4</div>
+  </section>
+
+  <!-- PÁGINA 5 -->
+  <section class="pagina">
+    <h2>ACEPTAR LOS CAMBIOS</h2>
+
+    <div class="foto">
+      <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20181208_144114.jpg"
+           alt="Un recuerdo de mi camino en el atletismo">
+    </div>
+
+    <p>
+      Las lesiones me han obligado a detenerme y a comprender
+      que el cuerpo tiene sus propios límites. No siempre resulta
+      fácil aceptar que ya no podemos hacer las cosas como antes.
+    </p>
+
+    <p>
+      A veces cuesta dejar atrás los ritmos, las distancias
+      y aquellas sensaciones que tanto nos gustaban. Pero también
+      he aprendido que no debemos medir nuestra vida deportiva
+      únicamente por lo que somos capaces de correr.
+    </p>
+
+    <p>
+      Quiero seguir haciendo deporte, escuchar a mi cuerpo
+      y disfrutar de cada paso, sin exigirme lo que ya no tiene
+      sentido exigirme.
+    </p>
+
+    <div class="numero-pagina">5</div>
+  </section>
+
+  <!-- PÁGINA 6 -->
+  <section class="pagina">
+    <h2>MI ILUSIÓN SIGUE ADELANTE</h2>
+
+    <div class="foto">
+      <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20170122_140416.jpg"
+           alt="Un recuerdo más de mi trayectoria atlética">
+    </div>
+
+    <p>
+      Puede que mi manera de vivir el atletismo haya cambiado,
+      pero el cariño por este deporte continúa ahí.
+    </p>
+
+    <p>
+      Seguir adelante significa aceptar el presente sin olvidar
+      todo lo vivido. Significa disfrutar de los compañeros,
+      de las carreras y de cada oportunidad de practicar deporte.
+    </p>
+
+    <p>
+      No sé qué me deparará el futuro, pero sí sé que quiero
+      conservar esa ilusión que me acompañó desde el primer día.
+    </p>
+
+    <p class="cita">
+      «No importa cuántas veces tengamos que cambiar de camino.
+      Lo importante es no perder la ilusión por seguir adelante».
+    </p>
+
+    <div class="numero-pagina">6</div>
+  </section>
+
+</div>
+
+<div class="navegacion-libro">
+  <button onclick="cambiarPagina(-1)">❮ ANTERIOR</button>
+  <span id="contador">Páginas 1 - 2</span>
+  <button onclick="cambiarPagina(1)">SIGUIENTE ❯</button>
+  <br>
+  <button onclick="leerPagina()">🔊 ESCUCHAR NARRACIÓN</button>
+  <button onclick="detenerLectura()">■ DETENER NARRACIÓN</button>
+</div>
+
+</div>
+
+<footer>
+  SIGAMOS CORRIENDO<br>
+  Una historia de esfuerzo, valores y superación
+</footer>
+
+<!-- MÚSICA OCULTA -->
+<script>
+let reproductorYT;
+let apiLista = false;
+
+function onYouTubeIframeAPIReady() {
+  reproductorYT = new YT.Player('reproductor', {
+    height: '1',
+    width: '1',
+    videoId: '0o8vszqVL2U',
+    playerVars: {
+      autoplay: 0,
+      controls: 0,
+      playsinline: 1
+    },
+    events: {
+      onReady: function() {
+        apiLista = true;
+        reproductorYT.setVolume(18);
+        document.getElementById('estadoMusica').textContent =
+          'Música preparada';
+      }
+    }
+  });
+}
+
+function iniciarMusica() {
+  if (apiLista && reproductorYT) {
+    reproductorYT.setVolume(18);
+    reproductorYT.playVideo();
+    document.getElementById('estadoMusica').textContent =
+      'Reproduciendo música';
+  } else {
+    document.getElementById('estadoMusica').textContent =
+      'La música todavía se está preparando. Inténtalo de nuevo en unos segundos.';
+  }
+}
+
+function pararMusica() {
+  if (apiLista && reproductorYT) {
+    reproductorYT.pauseVideo();
+    document.getElementById('estadoMusica').textContent =
+      'Música detenida';
+  }
+}
+</script>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<!-- PASAR LAS PÁGINAS -->
+<script>
+const paginas = Array.from(document.querySelectorAll('.pagina'));
+let paginaActual = 0;
+
+function mostrarPaginas() {
+  paginas.forEach((pagina, indice) => {
+    pagina.classList.toggle(
+      'pagina-escondida',
+      indice < paginaActual || indice > paginaActual + 1
+    );
+  });
+
+  document.getElementById('contador').textContent =
+    'Páginas ' + (paginaActual + 1) + ' - ' +
+    Math.min(paginaActual + 2, paginas.length);
+}
+
+function cambiarPagina(direccion) {
+  detenerLectura();
+
+  paginaActual += direccion * 2;
+
+  if (paginaActual < 0) paginaActual = 0;
+  if (paginaActual >= paginas.length) {
+    paginaActual = paginas.length - 2;
+  }
+
+  mostrarPaginas();
+}
+
+mostrarPaginas();
+</script>
+
+<!-- NARRACIÓN -->
+<script>
+function leerPagina() {
+  detenerLectura();
+
+  const texto = paginas
+    .slice(paginaActual, paginaActual + 2)
+    .map(pagina => pagina.innerText)
+    .join('. ');
+
+  const lectura = new SpeechSynthesisUtterance(texto);
+  lectura.lang = 'es-ES';
+  lectura.rate = 0.88;
+  lectura.pitch = 1;
+
+  speechSynthesis.speak(lectura);
+}
+
+function detenerLectura() {
+  if ('speechSynthesis' in window) {
+    speechSynthesis.cancel();
+  }
+}
+</script>
+
+</body>
+</html>
+
