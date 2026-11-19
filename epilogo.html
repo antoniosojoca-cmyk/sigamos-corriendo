@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Epílogo | SIGAMOS CORRIENDO</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080808;color:#e8e0d1;font-family:Georgia,"Times New Roman",serif;min-height:100vh;line-height:1.65}
+header{text-align:center;padding:30px 15px 18px}
+header h1{color:#d4b574;font-size:clamp(25px,4vw,38px);letter-spacing:4px;font-weight:normal}
+header p{color:#bca982;font-style:italic;margin-top:7px;font-size:14px}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:18px;padding:14px;border-top:1px solid #6e5934;border-bottom:1px solid #6e5934}
+nav a{color:#d4b574;text-decoration:none;font-size:13px}
+nav a:hover{color:white}
+.music-control,.narracion-control{text-align:center;padding:12px 10px}
+#musicButton,.narracion-control button{background:transparent;color:#d4b574;border:1px solid #9b7b42;border-radius:30px;padding:10px 20px;font-family:Georgia,serif;cursor:pointer;margin:4px}
+#musicButton:hover,.narracion-control button:hover{background:#241d10}
+.narracion-control button:disabled{opacity:.35;cursor:not-allowed}
+#narracionEstado{display:block;color:#bca982;font-size:12px;font-style:italic;margin-top:8px;min-height:20px}
+#musicFrame{position:fixed;width:1px;height:1px;left:-10000px;top:0;opacity:0;pointer-events:none}
+.libro-zona{max-width:1250px;margin:20px auto 35px;padding:0 20px}
+.libro{position:relative;display:flex;width:100%;max-width:1100px;margin:auto;perspective:2200px;filter:drop-shadow(0 20px 28px #000)}
+.pagina{position:relative;width:50%;min-height:760px;aspect-ratio:.73;overflow:hidden;padding:45px 42px;color:#29251e;background:linear-gradient(90deg,#d5c8aa 0%,#f4ecd9 5%,#f8f1e2 50%,#eee4cf 100%);box-shadow:inset 0 0 22px #9b8760}
+.pagina.izquierda{border-right:1px solid #c8b895;border-radius:7px 0 0 7px;box-shadow:inset -12px 0 22px rgba(70,50,20,.10)}
+.pagina.derecha{border-radius:0 7px 7px 0;box-shadow:inset 12px 0 22px rgba(70,50,20,.10)}
+.pagina-contenido{height:100%;overflow:hidden;font-size:14px;line-height:1.65}
+.pagina-contenido h3{color:#88652d;font-size:17px;font-weight:normal;font-style:italic;text-align:center;margin:12px 0 13px}
+.pagina-contenido p{text-align:justify;margin-bottom:12px}
+.pagina-contenido .destacado{color:#88652d;font-style:italic;text-align:center;font-size:16px;margin:20px 0}
+.numero-pagina{position:absolute;bottom:15px;left:0;width:100%;text-align:center;color:#9b8358;font-size:12px}
+.pagina-portada{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100%;padding:20px}
+.pagina-portada .numero{color:#9b783d;letter-spacing:5px;font-size:13px;margin-bottom:35px}
+.pagina-portada h2{color:#9b783d;font-size:clamp(25px,4vw,39px);letter-spacing:2px;line-height:1.4;font-weight:normal}
+.pagina-portada .adorno{width:100px;height:1px;background:#a7894f;margin:28px auto}
+.pagina-portada p{color:#796746;font-style:italic;font-size:15px}
+.pagina-vacia{height:100%;display:flex;align-items:center;justify-content:center;color:#b09a70;font-size:15px;font-style:italic;text-align:center;padding:20px}
+.controles{display:flex;align-items:center;justify-content:center;gap:22px;margin:25px auto;flex-wrap:wrap}
+.controles button{background:linear-gradient(135deg,#e2ca91,#a78343);color:#21190c;border:1px solid #e1c27d;padding:12px 25px;font-family:Georgia,serif;letter-spacing:1px;cursor:pointer}
+.controles button:disabled{opacity:.35;cursor:not-allowed}
+#contador{color:#c9b27d;font-size:13px;min-width:110px;text-align:center}
+.hoja-giro{position:absolute;top:0;width:50%;height:100%;z-index:5;transform-style:preserve-3d;pointer-events:none;display:none}
+.hoja-giro.derecha{left:50%;transform-origin:left center}
+.hoja-giro.izquierda{left:0;transform-origin:right center}
+.hoja-giro.animar-adelante{display:block;animation:giroAdelante .85s ease-in-out forwards}
+.hoja-giro.animar-atras{display:block;animation:giroAtras .85s ease-in-out forwards}
+.cara{position:absolute;inset:0;overflow:hidden;padding:40px 32px;background:#f4ecd9;color:#29251e;backface-visibility:hidden;box-shadow:inset 0 0 20px #9b8760}
+.cara.frontal{transform:rotateY(0deg)}
+.cara.trasera{transform:rotateY(180deg)}
+.cara .pagina-contenido{font-size:13px}
+@keyframes giroAdelante{from{transform:rotateY(0deg)}to{transform:rotateY(-180deg)}}
+@keyframes giroAtras{from{transform:rotateY(0deg)}to{transform:rotateY(180deg)}}
+footer{text-align:center;color:#a99572;border-top:1px solid #51432b;padding:25px 10px;font-size:13px}
+.volver{color:#d4b574;text-decoration:none;border:1px solid #9b7b42;padding:10px 20px;display:inline-block;margin:5px}
+#contenidoOriginal{display:none}
+@media(max-width:700px){
+.libro-zona{padding:0 8px}
+.pagina{min-height:570px;padding:22px 15px}
+.pagina-contenido{font-size:11px;line-height:1.5}
+.pagina-contenido h3{font-size:14px}
+.pagina-contenido .destacado{font-size:12px}
+.cara{padding:22px 15px}
+.cara .pagina-contenido{font-size:10px}
+.controles{gap:8px}
+.controles button{padding:10px 13px;font-size:11px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>SIGAMOS CORRIENDO</h1>
+<p>Mi vida, mi pasión y una nueva forma de seguir adelante</p>
+</header>
+
+<nav>
+<a href="index.html#portada">Portada</a>
+<a href="index.html#prologo">Prólogo</a>
+<a href="index.html#indice">Índice del libro</a>
+<a href="capitulo-1.html">Capítulo I</a>
+<a href="capitulo-2.html">Capítulo II</a>
+<a href="capitulo-3.html">Capítulo III</a>
+<a href="capitulo-4.html">Capítulo IV</a>
+<a href="capitulo-5.html">Capítulo V</a>
+<a href="#inicio">Epílogo</a>
+</nav>
+
+<div class="music-control">
+<button id="musicButton" type="button" onclick="controlarMusica()" disabled>CARGANDO MÚSICA...</button>
+</div>
+
+<div class="narracion-control">
+<button id="narrarButton" onclick="iniciarNarracion()">♫ ESCUCHAR MI HISTORIA</button>
+<button id="pausarButton" onclick="pausarNarracion()" disabled>Ⅱ PAUSAR</button>
+<button id="continuarButton" onclick="continuarNarracion()" disabled>▶ CONTINUAR</button>
+<button id="detenerButton" onclick="detenerNarracion()" disabled>■ DETENER</button>
+<span id="narracionEstado">Narración disponible en tu navegador</span>
+</div>
+
+<div id="musicFrame"></div>
+
+<main class="libro-zona" id="inicio">
+
+<div class="libro">
+
+<div class="pagina izquierda">
+<div class="pagina-contenido" id="paginaIzquierda">
+<div class="pagina-vacia">SIGAMOS CORRIENDO</div>
+</div>
+<div class="numero-pagina" id="numeroIzquierda"></div>
+</div>
+
+<div class="pagina derecha">
+<div class="pagina-contenido" id="paginaDerecha">
+<div class="pagina-portada">
+<div class="numero">EPÍLOGO</div>
+<h2>SI VOLVIERA<br>A EMPEZAR</h2>
+<div class="adorno"></div>
+<p>Una vida, una pasión y miles de recuerdos</p>
+</div>
+</div>
+<div class="numero-pagina" id="numeroDerecha"></div>
+</div>
+
+<div class="hoja-giro derecha" id="hojaGiro">
+<div class="cara frontal"><div class="pagina-contenido" id="caraFrontal"></div></div>
+<div class="cara trasera"><div class="pagina-contenido" id="caraTrasera"></div></div>
+</div>
+
+</div>
+
+<div class="controles">
+<button id="anterior" onclick="pasarPagina(-1)" disabled>← ANTERIOR</button>
+<span id="contador">Presentación</span>
+<button id="siguiente" onclick="pasarPagina(1)">SIGUIENTE →</button>
+</div>
+
+<div style="text-align:center;margin:20px 0 35px">
+<a class="volver" href="index.html#indice">← VOLVER AL ÍNDICE DEL LIBRO</a>
+</div>
+
+</main>
+
+<article id="contenidoOriginal">
+
+<p class="destacado">Si volviera a empezar, volvería a elegir el mismo camino. Porque el atletismo no solamente me enseñó a correr: me enseñó a vivir.</p>
+
+<h3>Una vida llena de recuerdos</h3>
+
+<p>Cuando miro hacia atrás y recuerdo todo lo que he vivido durante estos más de veinticinco años de atletismo, me doy cuenta de que esta historia ha sido mucho más que una sucesión de entrenamientos y carreras.</p>
+
+<p>Todo comenzó casi por casualidad, viendo una competición por televisión. Nunca imaginé entonces que aquella afición acabaría convirtiéndose en una parte tan importante de mi vida.</p>
+
+<p>Recuerdo aquellos primeros días, cuando salía a entrenar con cierta vergüenza, buscando un lugar donde pudiera correr sin sentirme observado. Después llegaron las primeras carreras, los nervios de la salida y aquella primera Media Maratón de Jerez, en la que mi único objetivo era llegar a la meta.</p>
+
+<p>Y llegué. Quizá no fui el más rápido, ni el que consiguió el mejor tiempo, pero aquel día descubrí algo que nunca he olvidado: el valor de participar, de intentarlo y de disfrutar del camino.</p>
+
+<h3>Las personas que hicieron grande este camino</h3>
+
+<p>Con el paso del tiempo llegaron los compañeros, los clubes, las amistades y tantas personas que hicieron que cada carrera tuviera un significado especial.</p>
+
+<p>Mi paso por el Club Atletismo Nueva Jarilla ocupa un lugar muy importante en mis recuerdos. Allí encontré algo que iba mucho más allá del deporte: una familia, personas que me acogieron con cariño y que hicieron que me sintiera uno más desde el primer momento.</p>
+
+<p>Siempre recordaré a quienes compartieron conmigo entrenamientos, carreras, conversaciones y tantos momentos. Algunos recuerdos permanecen en la memoria; otros vuelven cada vez que nos encontramos en una competición.</p>
+
+<p>También están los días de podio, las alegrías y la satisfacción de comprobar que el esfuerzo tenía su recompensa. Pero, con los años, he comprendido que los mejores trofeos no siempre son los que se guardan en una vitrina.</p>
+
+<p class="destacado">Los mejores recuerdos no se miden en segundos ni en medallas. Se llevan dentro y tienen nombre de personas.</p>
+
+<h3>Lo que el atletismo me enseñó</h3>
+
+<p>El atletismo me enseñó a ser constante, a levantarme después de los días difíciles y a comprender que cada persona tiene su propio ritmo.</p>
+
+<p>Me enseñó que no siempre se gana, que hay carreras en las que las cosas no salen como uno espera y que también hay que saber aceptar los resultados. Pero, sobre todo, me enseñó que lo importante es no dejar de intentarlo.</p>
+
+<p>Con el tiempo he aprendido que una marca puede quedar atrás, que los años pasan y que el cuerpo no responde siempre de la misma manera. Sin embargo, todo lo vivido permanece.</p>
+
+<h3>Cuando el camino cambia</h3>
+
+<p>También he conocido la parte más difícil del deporte: las lesiones, los descansos obligados y la incertidumbre de no saber si podré volver a hacer aquello que tanto me gusta.</p>
+
+<p>La fascitis plantar, el espolón y, más recientemente, los problemas de rodilla me han obligado a detenerme y a replantearme muchas cosas.</p>
+
+<p>No es fácil aceptar que quizá ya no pueda correr como antes. Después de tantos años, salir a correr era algo más que una costumbre. Formaba parte de mi manera de entender la vida.</p>
+
+<p>Ahora intento encontrar otra forma de seguir adelante. La marcha atlética es una nueva etapa, un camino que todavía estoy aprendiendo a recorrer. No es lo mismo que correr, y no quiero ocultarlo, pero me permite mantenerme cerca del deporte mientras escucho a mi cuerpo.</p>
+
+<p>He comprendido que seguir adelante no siempre significa hacer lo mismo. A veces significa cambiar de dirección sin perder aquello que nos mueve.</p>
+
+<h3>Mi familia, siempre a mi lado</h3>
+
+<p>En esta historia hay personas que han estado a mi lado y que forman parte de todo lo que he conseguido. Mi mujer, mi compañera de camino, y mi hijo han sido parte de esta vida deportiva, compartiendo alegrías, esfuerzos y también los momentos menos fáciles.</p>
+
+<p>Porque detrás de cada entrenamiento y de cada carrera también hay tiempo, comprensión y apoyo de quienes nos quieren.</p>
+
+<p>Este libro es también una manera de dar las gracias. Por estar ahí, por acompañarme y por formar parte de una historia que nunca habría sido igual sin vosotros.</p>
+
+<h3>Si volviera a empezar</h3>
+
+<p>Si pudiera volver a aquel primer día, cuando todavía sentía vergüenza de salir a correr y no sabía todo lo que me esperaba, creo que haría exactamente lo mismo.</p>
+
+<p>Volvería a empezar despacio. Volvería a sentir los nervios de mi primera carrera. Volvería a conocer a aquellas personas que terminaron convirtiéndose en compañeros y amigos. Volvería a disfrutar de cada llegada a meta, de cada entrenamiento y de cada pequeño logro.</p>
+
+<p>También volvería a vivir los momentos difíciles, porque incluso ellos me enseñaron algo. Las lesiones me enseñaron paciencia; los años, humildad; y las personas, el verdadero valor de compartir una pasión.</p>
+
+<p>No cambiaría mi historia por haber conseguido más marcas o más trofeos. Lo que me llevo es mucho más grande que cualquier resultado.</p>
+
+<h3>El atletismo seguirá conmigo</h3>
+
+<p>Puede que ya no vuelva a correr como antes. Puede que mis próximos pasos sean diferentes y que tenga que aprender a disfrutar del deporte de otra manera.</p>
+
+<p>Pero hay algo que no cambia: las ganas de seguir adelante, de mantener la ilusión y de valorar cada oportunidad que tenga para hacer aquello que me gusta.</p>
+
+<p>Porque ser atleta no es solamente correr rápido, entrenar todos los días o conseguir una medalla. También es tener una historia, una pasión, unos valores y la voluntad de continuar a pesar de las dificultades.</p>
+
+<p class="destacado">Dejar de correr no significa dejar de ser atleta.</p>
+
+<h3>Gracias por acompañarme</h3>
+
+<p>A todas las personas que han formado parte de este recorrido, a los compañeros de equipo, a los amigos de las carreras, a quienes me han animado y a quienes han compartido conmigo tantos kilómetros: gracias.</p>
+
+<p>Gracias por cada saludo, cada conversación, cada aplauso y cada recuerdo. Puede que algunos caminos se hayan separado, pero siempre habrá algo que nos una: el amor por el atletismo.</p>
+
+<p>Y gracias también a quienes han llegado hasta estas páginas para conocer mi historia. Espero que estas palabras transmitan que nunca es tarde para empezar, que cada persona tiene su propio ritmo y que lo verdaderamente importante es encontrar aquello que nos hace sentir vivos.</p>
+
+<p class="destacado">La meta de una vida no está en llegar antes que los demás, sino en poder mirar atrás y sentir que el camino ha merecido la pena.</p>
+
+<h3>Sigamos corriendo...</h3>
+
+<p>Hoy cierro estas páginas, pero no quiero pensar que aquí termina mi historia. La vida continúa y todavía quedan momentos por vivir, personas por encontrar y caminos por descubrir.</p>
+
+<p>Quizá mis zapatillas recorran menos kilómetros. Quizá mis entrenamientos sean distintos. Pero mientras conserve la ilusión, seguiré sintiéndome parte de este mundo que tanto me ha dado.</p>
+
+<p>Porque el atletismo me acompañó durante más de veinticinco años y seguirá formando parte de mí, corra, camine o simplemente recuerde.</p>
+
+<p>Y si algo he aprendido durante todo este tiempo es que nunca debemos dejar de mirar hacia delante.</p>
+
+<p class="destacado">SIGAMOS CORRIENDO.<br>Porque lo importante no es cómo llegamos a la meta, sino no perder nunca las ganas de seguir caminando.</p>
+
+<p style="text-align:center;color:#88652d;font-style:italic;margin-top:30px">FIN</p>
+
+</article>
+
+<footer>
+SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
+</footer>
+
+<script>
+const original=document.getElementById("contenidoOriginal");
+
+/* MÚSICA */
+let reproductor;
+let musicaActiva=false;
+const musicButton=document.getElementById("musicButton");
+
+function onYouTubeIframeAPIReady(){
+reproductor=new YT.Player("musicFrame",{
+width:"1",
+height:"1",
+videoId:"0o8vszqVL2U",
+playerVars:{autoplay:0,controls:0,playsinline:1,rel:0,enablejsapi:1},
+events:{
+onReady:function(){
+musicButton.disabled=false;
+musicButton.textContent="♫ ESCUCHAR MÚSICA";
+reproductor.setVolume(18);
+},
+onStateChange:function(event){
+if(event.data===YT.PlayerState.PLAYING){
+musicaActiva=true;
+musicButton.textContent="Ⅱ PAUSAR MÚSICA";
+}
+if(event.data===YT.PlayerState.PAUSED||event.data===YT.PlayerState.ENDED){
+musicaActiva=false;
+musicButton.textContent="♫ ESCUCHAR MÚSICA";
+}
+},
+onError:function(){
+musicButton.disabled=false;
+musicButton.textContent="NO SE PUDO REPRODUCIR";
+}
+}
+});
+}
+
+function controlarMusica(){
+if(!reproductor)return;
+reproductor.setVolume(18);
+if(musicaActiva){reproductor.pauseVideo();}
+else{reproductor.playVideo();}
+}
+
+/* NARRACIÓN */
+const narrarButton=document.getElementById("narrarButton");
+const pausarButton=document.getElementById("pausarButton");
+const continuarButton=document.getElementById("continuarButton");
+const detenerButton=document.getElementById("detenerButton");
+const narracionEstado=document.getElementById("narracionEstado");
+
+let fragmentosNarracion=[];
+let indiceNarracion=0;
+let narracionActiva=false;
+let narracionPausada=false;
+let numeroSesionNarracion=0;
+
+function actualizarControlesNarracion(){
+narrarButton.disabled=narracionActiva;
+pausarButton.disabled=!narracionActiva||narracionPausada;
+continuarButton.disabled=!narracionActiva||!narracionPausada;
+detenerButton.disabled=!narracionActiva;
+}
+
+function dividirTexto(texto,maximo=220){
+const frases=texto.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[texto];
+const resultado=[];
+let bloque="";
+frases.forEach(frase=>{
+frase=frase.trim();
+if(!frase)return;
+if((bloque+" "+frase).trim().length<=maximo){
+bloque=(bloque+" "+frase).trim();
+}else{
+if(bloque)resultado.push(bloque);
+bloque=frase;
+}
+});
+if(bloque)resultado.push(bloque);
+return resultado;
+}
+
+function elegirVozEspanola(){
+const voces=window.speechSynthesis.getVoices();
+const espanolas=voces.filter(v=>v.lang&&v.lang.toLowerCase().startsWith("es"));
+return espanolas.find(v=>v.lang.toLowerCase()==="es-es")||espanolas[0]||null;
+}
+
+function prepararNarracion(){
+fragmentosNarracion=[];
+Array.from(original.children).forEach(elemento=>{
+const texto=elemento.textContent.trim();
+if(texto)fragmentosNarracion.push(...dividirTexto(texto));
+});
+}
+
+function leerSiguienteFragmento(sesion){
+if(sesion!==numeroSesionNarracion||!narracionActiva||narracionPausada)return;
+if(indiceNarracion>=fragmentosNarracion.length){
+narracionActiva=false;
+narracionPausada=false;
+narracionEstado.textContent="La narración ha terminado. Gracias por escuchar tu historia.";
+actualizarControlesNarracion();
+return;
+}
+
+const voz=new SpeechSynthesisUtterance(fragmentosNarracion[indiceNarracion]);
+voz.lang="es-ES";
+voz.rate=.88;
+voz.pitch=.85;
+voz.volume=1;
+const elegida=elegirVozEspanola();
+if(elegida)voz.voice=elegida;
+
+voz.onend=function(){
+if(sesion!==numeroSesionNarracion)return;
+indiceNarracion++;
+narracionEstado.textContent="Leyendo tu historia... "+Math.round(indiceNarracion/fragmentosNarracion.length*100)+"%";
+leerSiguienteFragmento(sesion);
+};
+
+voz.onerror=function(event){
+if(sesion!==numeroSesionNarracion)return;
+if(event.error==="canceled"||event.error==="interrupted")return;
+indiceNarracion++;
+leerSiguienteFragmento(sesion);
+};
+
+window.speechSynthesis.speak(voz);
+}
+
+function iniciarNarracion(){
+if(!("speechSynthesis" in window)){
+narracionEstado.textContent="Este navegador no dispone de narración de voz.";
+return;
+}
+window.speechSynthesis.cancel();
+numeroSesionNarracion++;
+indiceNarracion=0;
+narracionActiva=true;
+narracionPausada=false;
+prepararNarracion();
+actualizarControlesNarracion();
+narracionEstado.textContent="Preparando la voz para leer tu historia...";
+const sesion=numeroSesionNarracion;
+setTimeout(()=>{
+if(sesion!==numeroSesionNarracion)return;
+narracionEstado.textContent="Leyendo tu historia desde el principio...";
+leerSiguienteFragmento(sesion);
+},300);
+}
+
+function pausarNarracion(){
+if(!narracionActiva)return;
+window.speechSynthesis.pause();
+narracionPausada=true;
+narracionEstado.textContent="Narración pausada.";
+actualizarControlesNarracion();
+}
+
+function continuarNarracion(){
+if(!narracionActiva||!narracionPausada)return;
+window.speechSynthesis.resume();
+narracionPausada=false;
+narracionEstado.textContent="Continuando la lectura...";
+actualizarControlesNarracion();
+}
+
+function detenerNarracion(){
+numeroSesionNarracion++;
+window.speechSynthesis.cancel();
+narracionActiva=false;
+narracionPausada=false;
+indiceNarracion=0;
+narracionEstado.textContent="Narración detenida.";
+actualizarControlesNarracion();
+}
+
+if("speechSynthesis" in window){
+window.speechSynthesis.onvoiceschanged=function(){
+window.speechSynthesis.getVoices();
+};
+}else{
+narracionEstado.textContent="Tu navegador no permite la narración de voz.";
+narrarButton.disabled=true;
+}
+actualizarControlesNarracion();
+
+/* DISTRIBUCIÓN DE LAS PÁGINAS */
+const elementos=Array.from(original.children);
+const paginas=[];
+let paginaActual=[];
+let pesoActual=0;
+const limite=650;
+
+elementos.forEach(elemento=>{
+const copia=elemento.cloneNode(true);
+let peso=(elemento.textContent||"").length;
+if(elemento.tagName==="H3")peso+=70;
+if(pesoActual+peso>limite&&paginaActual.length){
+paginas.push(paginaActual);
+paginaActual=[];
+pesoActual=0;
+}
+paginaActual.push(copia);
+pesoActual+=peso;
+});
+
+if(paginaActual.length)paginas.push(paginaActual);
+
+let apertura=0;
+let girando=false;
+
+const izquierda=document.getElementById("paginaIzquierda");
+const derecha=document.getElementById("paginaDerecha");
+const numeroIzq=document.getElementById("numeroIzquierda");
+const numeroDer=document.getElementById("numeroDerecha");
+const hoja=document.getElementById("hojaGiro");
+const caraFrontal=document.getElementById("caraFrontal");
+const caraTrasera=document.getElementById("caraTrasera");
+const contador=document.getElementById("contador");
+const botonAnterior=document.getElementById("anterior");
+const botonSiguiente=document.getElementById("siguiente");
+
+const totalAperturas=1+Math.ceil(paginas.length/2);
+
+function portadaEpílogo(){
+return '<div class="pagina-portada"><div class="numero">EPÍLOGO</div><h2>SI VOLVIERA<br>A EMPEZAR</h2><div class="adorno"></div><p>Una vida, una pasión y miles de recuerdos</p></div>';
+}
+
+function contenidoDePagina(indice){
+if(indice<0||indice>=paginas.length){
+return '<div class="pagina-vacia">SIGAMOS CORRIENDO</div>';
+}
+return paginas[indice].map(el=>el.outerHTML).join("");
+}
+
+function mostrarApertura(){
+if(apertura===0){
+izquierda.innerHTML='<div class="pagina-vacia">SIGAMOS CORRIENDO<br><br>Una historia de esfuerzo, valores y superación</div>';
+derecha.innerHTML=portadaEpílogo();
+numeroIzq.textContent="";
+numeroDer.textContent="";
+contador.textContent="Presentación";
+}else{
+const primero=(apertura-1)*2;
+izquierda.innerHTML=contenidoDePagina(primero);
+derecha.innerHTML=contenidoDePagina(primero+1);
+numeroIzq.textContent=primero+1;
+numeroDer.textContent=primero+2<=paginas.length?primero+2:"";
+contador.textContent="Apertura "+(apertura+1)+" de "+totalAperturas;
+}
+
+botonAnterior.disabled=apertura===0;
+botonSiguiente.disabled=apertura===totalAperturas-1;
+}
+
+function pasarPagina(direccion){
+if(girando)return;
+
+const destino=apertura+direccion;
+if(destino<0||destino>=totalAperturas)return;
+
+girando=true;
+
+if(direccion===1){
+hoja.className="hoja-giro derecha";
+caraFrontal.innerHTML=derecha.innerHTML;
+caraTrasera.innerHTML=contenidoDePagina((destino-1)*2);
+void hoja.offsetWidth;
+hoja.classList.add("animar-adelante");
+}else{
+hoja.className="hoja-giro izquierda";
+caraFrontal.innerHTML=izquierda.innerHTML;
+caraTrasera.innerHTML=destino===0?portadaEpílogo():contenidoDePagina((destino-1)*2+1);
+void hoja.offsetWidth;
+hoja.classList.add("animar-atras");
+}
+
+setTimeout(()=>{
+apertura=destino;
+hoja.className="hoja-giro derecha";
+mostrarApertura();
+girando=false;
+},850);
+}
+
+mostrarApertura();
+</script>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+</body>
+</html>
