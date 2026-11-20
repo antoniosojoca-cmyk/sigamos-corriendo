@@ -1,1 +1,451 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galería | SIGAMOS CORRIENDO</title>
+
+<style>
+:root {
+    --negro: #080808;
+    --dorado: #d4b574;
+    --marfil: #e8e0d1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--negro);
+    color: var(--marfil);
+    font-family: Georgia, serif;
+}
+
+header {
+    text-align: center;
+    padding: 35px 15px 20px;
+    border-bottom: 1px solid rgba(212,181,116,.35);
+}
+
+header h1 {
+    color: var(--dorado);
+    font-size: clamp(25px, 5vw, 40px);
+    letter-spacing: 3px;
+    margin: 10px 0;
+    font-weight: normal;
+}
+
+header p {
+    color: #c9bdab;
+    font-style: italic;
+    font-size: 16px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 22px;
+    padding: 18px 10px;
+    border-bottom: 1px solid rgba(212,181,116,.2);
+}
+
+nav a {
+    color: var(--dorado);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+nav a:hover {
+    color: white;
+}
+
+.intro {
+    max-width: 850px;
+    margin: 45px auto 35px;
+    padding: 0 22px;
+    text-align: center;
+    line-height: 1.9;
+}
+
+.intro h2 {
+    color: var(--dorado);
+    font-size: 25px;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+
+.intro p {
+    color: #d4cabb;
+    font-size: 16px;
+}
+
+.musica {
+    text-align: center;
+    margin: 25px 0 40px;
+}
+
+.musica button {
+    background: transparent;
+    color: var(--dorado);
+    border: 1px solid var(--dorado);
+    padding: 12px 25px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    letter-spacing: 1px;
+    font-size: 13px;
+}
+
+.musica button:hover {
+    background: var(--dorado);
+    color: #080808;
+}
+
+.galeria {
+    width: min(1100px, 94%);
+    margin: 0 auto 65px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 35px 28px;
+}
+
+.foto {
+    background: #111;
+    border: 1px solid rgba(212,181,116,.35);
+    padding: 12px;
+    text-align: center;
+    transition: border-color .3s, transform .3s;
+}
+
+.foto:hover {
+    border-color: var(--dorado);
+    transform: translateY(-4px);
+}
+
+.foto img {
+    display: block;
+    width: 100%;
+    height: 360px;
+    object-fit: contain;
+    background: #050505;
+    cursor: zoom-in;
+}
+
+.foto p {
+    color: var(--dorado);
+    font-style: italic;
+    font-size: 15px;
+    margin: 15px 5px 8px;
+    line-height: 1.5;
+}
+
+.aviso {
+    color: #a99b84;
+    font-size: 12px;
+    text-align: center;
+    margin: -40px auto 55px;
+    padding: 0 15px;
+}
+
+.despedida {
+    max-width: 850px;
+    margin: 70px auto;
+    padding: 45px 25px;
+    text-align: center;
+    border-top: 1px solid rgba(212,181,116,.4);
+    border-bottom: 1px solid rgba(212,181,116,.4);
+}
+
+.despedida h2 {
+    color: var(--dorado);
+    font-size: 25px;
+    font-weight: normal;
+    margin-bottom: 25px;
+}
+
+.despedida p {
+    font-size: 20px;
+    line-height: 1.9;
+    font-style: italic;
+    color: var(--marfil);
+}
+
+.despedida span {
+    display: block;
+    color: var(--dorado);
+    margin-top: 25px;
+    letter-spacing: 2px;
+    font-size: 13px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px 15px 35px;
+    color: #9c907d;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* Ampliación de fotografías */
+
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background: rgba(0,0,0,.96);
+    align-items: center;
+    justify-content: center;
+    padding: 55px 15px;
+}
+
+.lightbox.activo {
+    display: flex;
+}
+
+.lightbox img {
+    max-width: 95%;
+    max-height: 85vh;
+    object-fit: contain;
+    border: 1px solid var(--dorado);
+}
+
+.cerrar {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: var(--dorado);
+    font-size: 38px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+@media (max-width: 650px) {
+    .galeria {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        width: 92%;
+    }
+
+    .foto img {
+        height: 330px;
+    }
+
+    .intro {
+        margin-top: 30px;
+    }
+
+    .despedida p {
+        font-size: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>SIGAMOS CORRIENDO</h1>
+    <p>Mi vida, mi pasión y una nueva forma de seguir adelante</p>
+</header>
+
+<nav>
+    <a href="index.html">PORTADA</a>
+    <a href="index.html#indice">ÍNDICE</a>
+    <a href="capitulo-1.html">CAPÍTULO I</a>
+    <a href="capitulo-2.html">CAPÍTULO II</a>
+    <a href="capitulo-3.html">CAPÍTULO III</a>
+    <a href="capitulo-4.html">CAPÍTULO IV</a>
+    <a href="capitulo-5.html">CAPÍTULO V</a>
+    <a href="epilogo.html">EPÍLOGO</a>
+</nav>
+
+<section class="intro">
+    <h2>Los recuerdos de una vida atlética</h2>
+
+    <p>
+        Hay caminos que nunca se olvidan. Más de veinticinco años
+        de atletismo han dejado carreras, esfuerzos, alegrías,
+        amistades y momentos que siempre llevaré conmigo.
+    </p>
+
+    <p>
+        Esta galería recoge una pequeña parte de esa historia.
+        Cada fotografía guarda un recuerdo, una emoción y una
+        razón para sentirme orgulloso del camino recorrido.
+    </p>
+
+    <p>
+        Porque el atletismo no son solamente kilómetros,
+        tiempos o medallas. También son las personas que
+        encontramos y todo lo que vivimos juntos.
+    </p>
+</section>
+
+<div class="musica">
+    <button id="botonMusica" onclick="alternarMusica()">
+        ♫ ESCUCHAR MÚSICA
+    </button>
+</div>
+
+<section class="galeria">
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/ChatGPT%20Image%2012%20feb%202026,%2014_41_20.png" alt="Recuerdo de mi trayectoria atlética" loading="lazy">
+        <p>El comienzo de una historia</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/ChatGPT%20Image%2019%20feb%202026,%2013_03_41.png" alt="Recuerdo especial del atletismo" loading="lazy">
+        <p>Una pasión que nunca desaparece</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20180909_104841.jpg" alt="Recuerdo de una competición" loading="lazy">
+        <p>Los días de competición</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20250228-WA0016.jpg" alt="Recuerdo de mi vida deportiva" loading="lazy">
+        <p>El atletismo sigue formando parte de mí</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/FB_IMG_1731161542018.jpg" alt="Recuerdo atlético" loading="lazy">
+        <p>Momentos que permanecen</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG_8247.jpg" alt="Recuerdo de mi trayectoria" loading="lazy">
+        <p>Una vida llena de experiencias</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG_5793.jpg" alt="Recuerdo de atletismo" loading="lazy">
+        <p>El orgullo de seguir adelante</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20161113_124315.jpg" alt="Recuerdo de una carrera" loading="lazy">
+        <p>Carreras que dejaron huella</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20161229_195643.jpg" alt="Recuerdo deportivo" loading="lazy">
+        <p>El esfuerzo de cada entrenamiento</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20180304_121522.jpg" alt="Recuerdo de competición" loading="lazy">
+        <p>La emoción de competir</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20170723_103943.jpg" alt="Recuerdo de mi vida atlética" loading="lazy">
+        <p>Muchos kilómetros de recuerdos</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20160910_204324.jpg" alt="Recuerdo de mis comienzos" loading="lazy">
+        <p>Todo comenzó con una ilusión</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/FB_IMG_1568271769865.jpg" alt="Recuerdo con compañeros" loading="lazy">
+        <p>Las personas que hicieron grande el camino</p>
+    </div>
+
+    <div class="foto">
+        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20190228-WA0002.jpg" alt="Recuerdo de mi trayectoria deportiva" loading="lazy">
+        <p>Una historia que siempre llevaré conmigo</p>
+    </div>
+
+</section>
+
+<p class="aviso">Pulsa sobre cualquier fotografía para verla ampliada.</p>
+
+<section class="despedida">
+    <h2>Y el camino continúa...</h2>
+
+    <p>
+        «Porque mientras queden recuerdos, compañeros
+        y ganas de seguir adelante, siempre habrá una
+        razón para seguir corriendo».
+    </p>
+
+    <span>SIGAMOS CORRIENDO</span>
+</section>
+
+<footer>
+    MI VIDA · MI PASIÓN · MIS RECUERDOS
+    <br><br>
+    © SIGAMOS CORRIENDO
+</footer>
+
+<div class="lightbox" id="visor" onclick="cerrarFoto()">
+    <button class="cerrar" aria-label="Cerrar" onclick="cerrarFoto()">×</button>
+    <img id="fotoAmpliada" src="" alt="Fotografía ampliada">
+</div>
+
+<div id="reproductor" style="position:absolute;width:1px;height:1px;overflow:hidden;">
+    <iframe id="musicaYouTube"
+        width="1" height="1"
+        src=""
+        title="Música de fondo"
+        allow="autoplay; encrypted-media">
+    </iframe>
+</div>
+
+<script>
+function abrirFoto(imagen) {
+    const visor = document.getElementById("visor");
+    const ampliada = document.getElementById("fotoAmpliada");
+
+    ampliada.src = imagen.src;
+    visor.classList.add("activo");
+}
+
+function cerrarFoto() {
+    document.getElementById("visor").classList.remove("activo");
+}
+
+document.querySelectorAll(".foto img").forEach(imagen => {
+    imagen.addEventListener("click", function() {
+        abrirFoto(this);
+    });
+});
+
+document.addEventListener("keydown", function(evento) {
+    if (evento.key === "Escape") {
+        cerrarFoto();
+    }
+});
+
+let musicaActiva = false;
+
+function alternarMusica() {
+    const reproductor = document.getElementById("musicaYouTube");
+    const boton = document.getElementById("botonMusica");
+
+    if (!musicaActiva) {
+        reproductor.src =
+            "https://www.youtube.com/embed/0o8vszqVL2U?autoplay=1&loop=1&playlist=0o8vszqVL2U";
+
+        boton.textContent = "♫ DETENER MÚSICA";
+        musicaActiva = true;
+    } else {
+        reproductor.src = "";
+        boton.textContent = "♫ ESCUCHAR MÚSICA";
+        musicaActiva = false;
+    }
+}
+</script>
+
+</body>
+</html>
+
