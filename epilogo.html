@@ -28,6 +28,7 @@ nav a:hover{color:white}
 .pagina.derecha{border-radius:0 7px 7px 0;box-shadow:inset 12px 0 22px rgba(70,50,20,.10)}
 .pagina-contenido{height:100%;overflow:hidden;font-size:14px;line-height:1.65}
 .pagina-contenido h3{color:#88652d;font-size:17px;font-weight:normal;font-style:italic;text-align:center;margin:12px 0 13px}
+.pagina-contenido h2{color:#88652d;font-size:17px;font-weight:normal;text-align:center;margin:12px 0 18px}
 .pagina-contenido p{text-align:justify;margin-bottom:12px}
 .pagina-contenido .destacado{color:#88652d;font-style:italic;text-align:center;font-size:16px;margin:20px 0}
 .numero-pagina{position:absolute;bottom:15px;left:0;width:100%;text-align:center;color:#9b8358;font-size:12px}
@@ -52,6 +53,9 @@ nav a:hover{color:white}
 .cara .pagina-contenido{font-size:13px}
 @keyframes giroAdelante{from{transform:rotateY(0deg)}to{transform:rotateY(-180deg)}}
 @keyframes giroAtras{from{transform:rotateY(0deg)}to{transform:rotateY(180deg)}}
+.foto-epilogo{width:100%;max-width:420px;margin:18px auto;text-align:center}
+.pagina-contenido .foto-epilogo img{width:100%;max-height:290px;object-fit:contain;display:block;margin:0 auto;border:5px solid #d4b574;box-shadow:0 5px 18px rgba(0,0,0,.25)}
+.foto-epilogo figcaption{margin-top:10px;color:#806b43;font-family:Georgia,serif;font-style:italic;font-size:13px;text-align:center}
 footer{text-align:center;color:#a99572;border-top:1px solid #51432b;padding:25px 10px;font-size:13px}
 .volver{color:#d4b574;text-decoration:none;border:1px solid #9b7b42;padding:10px 20px;display:inline-block;margin:5px}
 #contenidoOriginal{display:none}
@@ -59,37 +63,14 @@ footer{text-align:center;color:#a99572;border-top:1px solid #51432b;padding:25px
 .libro-zona{padding:0 8px}
 .pagina{min-height:570px;padding:22px 15px}
 .pagina-contenido{font-size:11px;line-height:1.5}
-.pagina-contenido h3{font-size:14px}
+.pagina-contenido h3,.pagina-contenido h2{font-size:14px}
 .pagina-contenido .destacado{font-size:12px}
 .cara{padding:22px 15px}
 .cara .pagina-contenido{font-size:10px}
 .controles{gap:8px}
 .controles button{padding:10px 13px;font-size:11px}
-}
-  /* FOTOGRAFÍAS DEL EPÍLOGO */
-.foto-epilogo {
-    width: 100%;
-    max-width: 420px;
-    margin: 22px auto;
-    text-align: center;
-}
-
-.foto-epilogo img {
-    width: 100%;
-    max-height: 340px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-    border: 5px solid #d4b574;
-    box-shadow: 0 5px 18px rgba(0,0,0,0.25);
-}
-
-.foto-epilogo figcaption {
-    margin-top: 10px;
-    color: #806b43;
-    font-family: Georgia, serif;
-    font-style: italic;
-    font-size: 14px;
+.pagina-contenido .foto-epilogo img{max-height:230px}
+.foto-epilogo figcaption{font-size:11px}
 }
 </style>
 </head>
@@ -128,7 +109,6 @@ footer{text-align:center;color:#a99572;border-top:1px solid #51432b;padding:25px
 <div id="musicFrame"></div>
 
 <main class="libro-zona" id="inicio">
-
 <div class="libro">
 
 <div class="pagina izquierda">
@@ -166,7 +146,6 @@ footer{text-align:center;color:#a99572;border-top:1px solid #51432b;padding:25px
 <div style="text-align:center;margin:20px 0 35px">
 <a class="volver" href="index.html#indice">← VOLVER AL ÍNDICE DEL LIBRO</a>
 </div>
-
 </main>
 
 <article id="contenidoOriginal">
@@ -265,30 +244,29 @@ footer{text-align:center;color:#a99572;border-top:1px solid #51432b;padding:25px
 
 <p class="destacado">SIGAMOS CORRIENDO.<br>Porque lo importante no es cómo llegamos a la meta, sino no perder nunca las ganas de seguir caminando.</p>
 
-<p style="text-align:center;color:#88652d;font-style:italic;margin-top:30px">FIN</p>
-<section>
-    <h2>RECUERDOS QUE SIEMPRE ME ACOMPAÑARÁN</h2>
+<h2>RECUERDOS QUE SIEMPRE ME ACOMPAÑARÁN</h2>
 
-    <figure class="foto-epilogo">
-        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20190630-WA0006.jpg" alt="Un recuerdo de mi trayectoria atlética">
-        <figcaption>Momentos de una vida dedicada al atletismo.</figcaption>
-    </figure>
+<figure class="foto-epilogo">
+<img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20190630-WA0006.jpg" alt="Un recuerdo de mi trayectoria atlética">
+<figcaption>Momentos de una vida dedicada al atletismo.</figcaption>
+</figure>
 
-    <figure class="foto-epilogo">
-        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20190317_145213.jpg" alt="Un recuerdo de una jornada deportiva">
-        <figcaption>Las carreras y las experiencias que nunca se olvidan.</figcaption>
-    </figure>
+<figure class="foto-epilogo">
+<img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/20190317_145213.jpg" alt="Un recuerdo de una jornada deportiva">
+<figcaption>Las carreras y las experiencias que nunca se olvidan.</figcaption>
+</figure>
 
-    <figure class="foto-epilogo">
-        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/FB_IMG_1571078301924.jpg" alt="Un recuerdo especial de mi vida">
-        <figcaption>Personas y momentos que forman parte de mi historia.</figcaption>
-    </figure>
+<figure class="foto-epilogo">
+<img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/FB_IMG_1571078301924.jpg" alt="Un recuerdo especial de mi vida">
+<figcaption>Personas y momentos que forman parte de mi historia.</figcaption>
+</figure>
 
-    <figure class="foto-epilogo">
-        <img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20241008-WA0013.jpg" alt="Un recuerdo reciente">
-        <figcaption>El camino continúa, acompañado de los recuerdos y los seres queridos.</figcaption>
-    </figure>
-</section>
+<figure class="foto-epilogo">
+<img src="https://raw.githubusercontent.com/antoniosojoca-cmyk/sigamos-corriendo/main/IMG-20241008-WA0013.jpg" alt="Un recuerdo reciente">
+<figcaption>El camino continúa, acompañado de los recuerdos y los seres queridos.</figcaption>
+</figure>
+
+<p class="destacado" style="margin-top:30px">FIN</p>
 </article>
 
 <footer>
@@ -494,14 +472,26 @@ const limite=650;
 elementos.forEach(elemento=>{
 const copia=elemento.cloneNode(true);
 let peso=(elemento.textContent||"").length;
-if(elemento.tagName==="H3")peso+=70;
+
+if(elemento.tagName==="H3"||elemento.tagName==="H2")peso+=70;
+
+/* Cada fotografía ocupa una página propia */
+if(elemento.tagName==="FIGURE")peso=650;
+
 if(pesoActual+peso>limite&&paginaActual.length){
 paginas.push(paginaActual);
 paginaActual=[];
 pesoActual=0;
 }
+
 paginaActual.push(copia);
 pesoActual+=peso;
+
+if(elemento.tagName==="FIGURE"){
+paginas.push(paginaActual);
+paginaActual=[];
+pesoActual=0;
+}
 });
 
 if(paginaActual.length)paginas.push(paginaActual);
@@ -590,3 +580,5 @@ mostrarApertura();
 
 </body>
 </html>
+
+
