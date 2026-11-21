@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,386 +16,158 @@ body{
     line-height:1.65;
 }
 
-header{
-    text-align:center;
-    padding:30px 15px 18px;
-}
-
-header h1{
-    color:#d4b574;
-    font-size:clamp(25px,4vw,38px);
-    letter-spacing:4px;
-    font-weight:normal;
-}
-
-header p{
-    color:#bca982;
-    font-style:italic;
-    margin-top:7px;
-    font-size:14px;
-}
+header{text-align:center;padding:30px 15px 18px}
+header h1{color:#d4b574;font-size:clamp(25px,4vw,38px);letter-spacing:4px;font-weight:normal}
+header p{color:#bca982;font-style:italic;margin-top:7px;font-size:14px}
 
 nav{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:22px;
-    padding:14px;
-    border-top:1px solid #6e5934;
-    border-bottom:1px solid #6e5934;
+    display:flex;justify-content:center;flex-wrap:wrap;gap:22px;
+    padding:14px;border-top:1px solid #6e5934;border-bottom:1px solid #6e5934;
 }
-
-nav a{
-    color:#d4b574;
-    text-decoration:none;
-    font-size:14px;
-}
-
+nav a{color:#d4b574;text-decoration:none;font-size:14px}
 nav a:hover{color:white}
 
-.music-control,
-.narracion-control{
-    text-align:center;
-    padding:12px 10px;
-}
+.music-control,.narracion-control{text-align:center;padding:12px 10px}
 
-#musicButton,
-.narracion-control button{
-    background:transparent;
-    color:#d4b574;
-    border:1px solid #9b7b42;
-    border-radius:30px;
-    padding:10px 20px;
-    font-family:Georgia,serif;
-    cursor:pointer;
-    margin:4px;
-    transition:.25s;
+#musicButton,.narracion-control button{
+    background:transparent;color:#d4b574;border:1px solid #9b7b42;
+    border-radius:30px;padding:10px 20px;font-family:Georgia,serif;
+    cursor:pointer;margin:4px;transition:.25s;
 }
-
-#musicButton:hover,
-.narracion-control button:hover{
-    background:#241d10;
-}
-
-.narracion-control button:disabled{
-    opacity:.35;
-    cursor:not-allowed;
-}
+#musicButton:hover,.narracion-control button:hover{background:#241d10}
+.narracion-control button:disabled{opacity:.35;cursor:not-allowed}
 
 #narracionEstado{
-    display:block;
-    color:#bca982;
-    font-size:12px;
-    font-style:italic;
-    margin-top:8px;
-    min-height:20px;
+    display:block;color:#bca982;font-size:12px;font-style:italic;
+    margin-top:8px;min-height:20px;
 }
 
 #musicFrame{
-    position:fixed;
-    width:1px;
-    height:1px;
-    left:-10000px;
-    top:0;
-    opacity:0;
-    pointer-events:none;
+    position:fixed;width:1px;height:1px;left:-10000px;top:0;
+    opacity:0;pointer-events:none;
 }
 
-.libro-zona{
-    max-width:1250px;
-    margin:20px auto 35px;
-    padding:0 20px;
-}
+.libro-zona{max-width:1250px;margin:20px auto 35px;padding:0 20px}
 
 .libro{
-    position:relative;
-    display:flex;
-    width:100%;
-    max-width:1100px;
-    margin:auto;
-    perspective:2200px;
-    filter:drop-shadow(0 20px 28px #000);
+    position:relative;display:flex;width:100%;max-width:1100px;
+    margin:auto;perspective:2200px;filter:drop-shadow(0 20px 28px #000);
 }
 
 .pagina{
-    position:relative;
-    width:50%;
-    min-height:760px;
-    aspect-ratio:0.73;
-    overflow:hidden;
-    padding:45px 42px;
-    color:#29251e;
-    background:
-        linear-gradient(90deg,#d5c8aa 0%,#f4ecd9 5%,#f8f1e2 50%,#eee4cf 100%);
+    position:relative;width:50%;min-height:760px;aspect-ratio:0.73;
+    overflow:hidden;padding:45px 42px;color:#29251e;
+    background:linear-gradient(90deg,#d5c8aa 0%,#f4ecd9 5%,#f8f1e2 50%,#eee4cf 100%);
     box-shadow:inset 0 0 22px #9b8760;
 }
 
 .pagina.izquierda{
-    border-right:1px solid #c8b895;
-    border-radius:7px 0 0 7px;
+    border-right:1px solid #c8b895;border-radius:7px 0 0 7px;
     box-shadow:inset -12px 0 22px rgba(70,50,20,.10);
 }
-
 .pagina.derecha{
     border-radius:0 7px 7px 0;
     box-shadow:inset 12px 0 22px rgba(70,50,20,.10);
 }
 
-.pagina-contenido{
-    height:100%;
-    overflow:hidden;
-    font-size:14px;
-    line-height:1.65;
-}
-
+.pagina-contenido{height:100%;overflow:hidden;font-size:14px;line-height:1.65}
 .pagina-contenido h2{
-    color:#80602a;
-    font-size:20px;
-    font-weight:normal;
-    text-align:center;
-    margin:8px 0 17px;
-    font-style:italic;
+    color:#80602a;font-size:20px;font-weight:normal;text-align:center;
+    margin:8px 0 17px;font-style:italic;
 }
-
 .pagina-contenido h3{
-    color:#88652d;
-    font-size:17px;
-    font-weight:normal;
-    font-style:italic;
-    text-align:center;
-    margin:12px 0 13px;
+    color:#88652d;font-size:17px;font-weight:normal;font-style:italic;
+    text-align:center;margin:12px 0 13px;
 }
-
-.pagina-contenido p{
-    text-align:justify;
-    margin-bottom:12px;
-}
-
+.pagina-contenido p{text-align:justify;margin-bottom:12px}
 .pagina-contenido .destacado{
-    color:#88652d;
-    font-style:italic;
-    text-align:center;
-    font-size:16px;
-    margin:20px 0;
+    color:#88652d;font-style:italic;text-align:center;font-size:16px;margin:20px 0;
 }
 
 /* FOTOGRAFÍAS */
-.pagina-contenido figure{
-    margin:18px auto;
-    text-align:center;
-    width:100%;
-}
-
+.pagina-contenido figure{margin:18px auto;text-align:center;width:100%}
 .pagina-contenido figure img{
-    display:block;
-    max-width:95%;
-    max-height:430px;
-    width:auto;
-    height:auto;
-    object-fit:contain;
-    margin:auto;
-    border:5px solid #fffaf0;
+    display:block;max-width:95%;max-height:430px;width:auto;height:auto;
+    object-fit:contain;margin:auto;border:5px solid #fffaf0;
     box-shadow:0 3px 15px #8c7955;
 }
-
 .pagina-contenido figcaption{
-    color:#806b48;
-    font-size:11px;
-    font-style:italic;
-    margin-top:7px;
-    text-align:center;
+    color:#806b48;font-size:11px;font-style:italic;margin-top:7px;text-align:center;
 }
 
 .numero-pagina{
-    position:absolute;
-    bottom:15px;
-    left:0;
-    width:100%;
-    text-align:center;
-    color:#9b8358;
-    font-size:12px;
+    position:absolute;bottom:15px;left:0;width:100%;
+    text-align:center;color:#9b8358;font-size:12px;
 }
 
 .pagina-portada{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    height:100%;
-    padding:20px;
+    display:flex;flex-direction:column;justify-content:center;
+    align-items:center;text-align:center;height:100%;padding:20px;
 }
-
-.pagina-portada .numero{
-    color:#9b783d;
-    letter-spacing:5px;
-    font-size:13px;
-    margin-bottom:35px;
-}
-
+.pagina-portada .numero{color:#9b783d;letter-spacing:5px;font-size:13px;margin-bottom:35px}
 .pagina-portada h2{
-    color:#9b783d;
-    font-size:clamp(25px,4vw,39px);
-    letter-spacing:2px;
-    line-height:1.4;
-    font-style:normal;
-    margin:0;
+    color:#9b783d;font-size:clamp(25px,4vw,39px);letter-spacing:2px;
+    line-height:1.4;font-style:normal;margin:0;
 }
-
-.pagina-portada .adorno{
-    width:100px;
-    height:1px;
-    background:#a7894f;
-    margin:28px auto;
-}
-
-.pagina-portada p{
-    color:#796746;
-    font-style:italic;
-    font-size:15px;
-}
+.pagina-portada .adorno{width:100px;height:1px;background:#a7894f;margin:28px auto}
+.pagina-portada p{color:#796746;font-style:italic;font-size:15px}
 
 .pagina-vacia{
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#b09a70;
-    font-size:15px;
-    font-style:italic;
-    text-align:center;
-    padding:20px;
+    height:100%;display:flex;align-items:center;justify-content:center;
+    color:#b09a70;font-size:15px;font-style:italic;text-align:center;padding:20px;
 }
 
 .controles{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:22px;
-    margin:25px auto;
-    flex-wrap:wrap;
+    display:flex;align-items:center;justify-content:center;gap:22px;
+    margin:25px auto;flex-wrap:wrap;
 }
-
 .controles button{
-    background:linear-gradient(135deg,#e2ca91,#a78343);
-    color:#21190c;
-    border:1px solid #e1c27d;
-    padding:12px 25px;
-    font-family:Georgia,serif;
-    letter-spacing:1px;
-    cursor:pointer;
-    transition:.25s;
+    background:linear-gradient(135deg,#e2ca91,#a78343);color:#21190c;
+    border:1px solid #e1c27d;padding:12px 25px;font-family:Georgia,serif;
+    letter-spacing:1px;cursor:pointer;transition:.25s;
 }
+.controles button:hover{background:#f0dcae;transform:translateY(-2px)}
+.controles button:disabled{opacity:.35;cursor:not-allowed;transform:none}
+#contador{color:#c9b27d;font-size:13px;min-width:110px;text-align:center}
 
-.controles button:hover{
-    background:#f0dcae;
-    transform:translateY(-2px);
-}
-
-.controles button:disabled{
-    opacity:.35;
-    cursor:not-allowed;
-    transform:none;
-}
-
-#contador{
-    color:#c9b27d;
-    font-size:13px;
-    min-width:110px;
-    text-align:center;
-}
-
-/* Hoja que gira */
+/* HOJA QUE GIRA */
 .hoja-giro{
-    position:absolute;
-    top:0;
-    width:50%;
-    height:100%;
-    z-index:5;
-    transform-style:preserve-3d;
-    pointer-events:none;
-    display:none;
+    position:absolute;top:0;width:50%;height:100%;z-index:5;
+    transform-style:preserve-3d;pointer-events:none;display:none;
 }
-
-.hoja-giro.derecha{
-    left:50%;
-    transform-origin:left center;
-}
-
-.hoja-giro.izquierda{
-    left:0;
-    transform-origin:right center;
-}
-
-.hoja-giro.animar-adelante{
-    display:block;
-    animation:giroAdelante .85s ease-in-out forwards;
-}
-
-.hoja-giro.animar-atras{
-    display:block;
-    animation:giroAtras .85s ease-in-out forwards;
-}
+.hoja-giro.derecha{left:50%;transform-origin:left center}
+.hoja-giro.izquierda{left:0;transform-origin:right center}
+.hoja-giro.animar-adelante{display:block;animation:giroAdelante .85s ease-in-out forwards}
+.hoja-giro.animar-atras{display:block;animation:giroAtras .85s ease-in-out forwards}
 
 .cara{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-    padding:40px 32px;
-    background:#f4ecd9;
-    color:#29251e;
-    backface-visibility:hidden;
+    position:absolute;inset:0;overflow:hidden;padding:40px 32px;
+    background:#f4ecd9;color:#29251e;backface-visibility:hidden;
     box-shadow:inset 0 0 20px #9b8760;
 }
-
 .cara.frontal{transform:rotateY(0deg)}
 .cara.trasera{transform:rotateY(180deg)}
+.cara .pagina-contenido{font-size:13px}
 
-.cara .pagina-contenido{
-    font-size:13px;
-}
-
-@keyframes giroAdelante{
-    from{transform:rotateY(0deg)}
-    to{transform:rotateY(-180deg)}
-}
-
-@keyframes giroAtras{
-    from{transform:rotateY(0deg)}
-    to{transform:rotateY(180deg)}
-}
+@keyframes giroAdelante{from{transform:rotateY(0deg)}to{transform:rotateY(-180deg)}}
+@keyframes giroAtras{from{transform:rotateY(0deg)}to{transform:rotateY(180deg)}}
 
 footer{
-    text-align:center;
-    color:#a99572;
-    border-top:1px solid #51432b;
-    padding:25px 10px;
-    font-size:13px;
+    text-align:center;color:#a99572;border-top:1px solid #51432b;
+    padding:25px 10px;font-size:13px;
 }
-
 .volver{
-    color:#d4b574;
-    text-decoration:none;
-    border:1px solid #9b7b42;
-    padding:10px 20px;
-    display:inline-block;
-    margin:5px;
+    color:#d4b574;text-decoration:none;border:1px solid #9b7b42;
+    padding:10px 20px;display:inline-block;margin:5px;
 }
-
 .volver:hover{background:#241d10}
 
 #contenidoOriginal{display:none}
 
 @media(max-width:700px){
     .libro-zona{padding:0 8px}
-    .pagina{
-        min-height:570px;
-        padding:22px 15px;
-    }
-    .pagina-contenido{
-        font-size:11px;
-        line-height:1.5;
-    }
+    .pagina{min-height:570px;padding:22px 15px}
+    .pagina-contenido{font-size:11px;line-height:1.5}
     .pagina-contenido h2{font-size:16px}
     .pagina-contenido h3{font-size:14px}
     .pagina-contenido .destacado{font-size:12px}
@@ -406,10 +177,8 @@ footer{
     .numero-pagina{font-size:10px}
     .controles{gap:8px}
     .controles button{padding:10px 13px;font-size:11px}
-    #musicButton,
-    .narracion-control button{font-size:11px;padding:9px 13px}
+    #musicButton,.narracion-control button{font-size:11px;padding:9px 13px}
 }
-
 @media(max-width:430px){
     .pagina{min-height:520px;padding:17px 10px}
     .pagina-contenido{font-size:10px}
@@ -439,24 +208,13 @@ footer{
     </button>
 </div>
 
-<!-- CONTROLES DE NARRACIÓN -->
 <div class="narracion-control">
     <button id="narrarButton" type="button" onclick="iniciarNarracion()">
         ♫ ESCUCHAR MI HISTORIA
     </button>
-
-    <button id="pausarButton" type="button" onclick="pausarNarracion()" disabled>
-        Ⅱ PAUSAR
-    </button>
-
-    <button id="continuarButton" type="button" onclick="continuarNarracion()" disabled>
-        ▶ CONTINUAR
-    </button>
-
-    <button id="detenerButton" type="button" onclick="detenerNarracion()" disabled>
-        ■ DETENER
-    </button>
-
+    <button id="pausarButton" type="button" onclick="pausarNarracion()" disabled>Ⅱ PAUSAR</button>
+    <button id="continuarButton" type="button" onclick="continuarNarracion()" disabled>▶ CONTINUAR</button>
+    <button id="detenerButton" type="button" onclick="detenerNarracion()" disabled>■ DETENER</button>
     <span id="narracionEstado">Narración disponible en tu navegador</span>
 </div>
 
@@ -508,7 +266,7 @@ footer{
 
 </main>
 
-<!-- CONTENIDO ORIGINAL -->
+<!-- CONTENIDO ORIGINAL DEL CAPÍTULO -->
 <article id="contenidoOriginal">
 
 <p class="destacado">A veces, las grandes historias comienzan sin saber hasta dónde nos llevarán.</p>
@@ -665,8 +423,11 @@ SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
 </footer>
 
 <script>
-  const original=document.getElementById("contenidoOriginal");  
-/* MÚSICA DE FONDO */
+const original=document.getElementById("contenidoOriginal");
+
+/* =====================================
+   MÚSICA DE FONDO
+   ===================================== */
 
 let reproductor;
 let musicaActiva=false;
@@ -708,23 +469,18 @@ function onYouTubeIframeAPIReady(){
     });
 }
 
-
-    function controlarMusica(){
+function controlarMusica(){
     if(!reproductor)return;
-
     reproductor.setVolume(18);
-
     if(musicaActiva){
         reproductor.pauseVideo();
     }else{
         reproductor.playVideo();
     }
-
 }
 
-
 /* =====================================
-   NARRACIÓN DEL CAPÍTULO
+   NARRACIÓN SINCRONIZADA CON LAS PÁGINAS
    ===================================== */
 
 const narrarButton=document.getElementById("narrarButton");
@@ -738,6 +494,7 @@ let indiceNarracion=0;
 let narracionActiva=false;
 let narracionPausada=false;
 let numeroSesionNarracion=0;
+let esperandoCambioPagina=false;
 
 function actualizarControlesNarracion(){
     narrarButton.disabled=narracionActiva;
@@ -746,7 +503,6 @@ function actualizarControlesNarracion(){
     detenerButton.disabled=!narracionActiva;
 }
 
-/* Divide los textos largos en fragmentos cómodos para la voz */
 function dividirTexto(texto,maximo=220){
     const frases=texto.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[texto];
     const resultado=[];
@@ -783,7 +539,6 @@ function dividirTexto(texto,maximo=220){
     return resultado;
 }
 
-/* Selecciona una voz española, dando preferencia a nombres masculinos */
 function elegirVozEspanola(){
     const voces=window.speechSynthesis.getVoices();
 
@@ -793,8 +548,7 @@ function elegirVozEspanola(){
 
     const nombresMasculinos=[
         "jorge","alvaro","álvaro","pablo","diego",
-        "enrique","miguel","carlos","antonio",
-        "male","masculino"
+        "enrique","miguel","carlos","antonio","male","masculino"
     ];
 
     const vozMasculina=espanolas.find(voz=>{
@@ -813,46 +567,105 @@ function elegirVozEspanola(){
     return espanolas[0]||null;
 }
 
-/* Prepara todos los textos del capítulo en su orden original */
+/*
+Cada fragmento de narración queda asociado a la página
+en la que aparece el texto. Así sabemos cuándo pasar hoja.
+*/
+
 function prepararNarracion(){
     fragmentosNarracion=[];
 
-    const bloques=Array.from(original.children);
+    paginas.forEach((pagina,indicePagina)=>{
 
-    bloques.forEach(elemento=>{
-        let texto="";
+        pagina.forEach(elemento=>{
 
-        if(elemento.tagName==="FIGURE"){
-            const pie=elemento.querySelector("figcaption");
-            texto=pie ? pie.textContent.trim() : "";
-        }else{
-            texto=elemento.textContent.trim();
-        }
+            let texto="";
 
-        if(!texto)return;
+            if(elemento.tagName==="FIGURE"){
+                const pie=elemento.querySelector("figcaption");
+                texto=pie ? pie.textContent.trim() : "";
+            }else{
+                texto=elemento.textContent.trim();
+            }
 
-        const partes=dividirTexto(texto);
-        fragmentosNarracion.push(...partes);
+            if(!texto)return;
+
+            const partes=dividirTexto(texto);
+
+            partes.forEach(parte=>{
+                fragmentosNarracion.push({
+                    texto:parte,
+                    pagina:indicePagina
+                });
+            });
+        });
     });
 }
 
-/* Lee el siguiente fragmento */
-function leerSiguienteFragmento(sesion){
-    if(sesion!==numeroSesionNarracion)return;
+/*
+Calcula qué apertura contiene la página que toca leer.
+Las páginas 0 y 1 pertenecen a la primera apertura.
+Las páginas 2 y 3 pertenecen a la segunda, y así sucesivamente.
+*/
 
+function aperturaDePagina(indicePagina){
+    return Math.floor(indicePagina/2)+1;
+}
+
+function leerSiguienteFragmento(sesion){
+
+    if(sesion!==numeroSesionNarracion)return;
     if(!narracionActiva || narracionPausada)return;
 
     if(indiceNarracion>=fragmentosNarracion.length){
+
         narracionActiva=false;
         narracionPausada=false;
-        narracionEstado.textContent="La narración ha terminado. Gracias por escuchar tu historia.";
+        esperandoCambioPagina=false;
+
+        narracionEstado.textContent=
+            "La narración ha terminado. Gracias por escuchar tu historia.";
+
         actualizarControlesNarracion();
         return;
     }
 
-    const texto=fragmentosNarracion[indiceNarracion];
+    const fragmento=fragmentosNarracion[indiceNarracion];
+    const aperturaNecesaria=aperturaDePagina(fragmento.pagina);
 
-    const voz=new SpeechSynthesisUtterance(texto);
+    /*
+    Si el texto siguiente está en una apertura posterior,
+    pasamos la página antes de continuar hablando.
+    */
+
+    if(apertura<aperturaNecesaria){
+
+        if(!esperandoCambioPagina){
+            esperandoCambioPagina=true;
+
+            narracionEstado.textContent=
+                "Pasando las páginas de tu historia...";
+
+            pasarPagina(1);
+
+            setTimeout(()=>{
+
+                if(sesion!==numeroSesionNarracion)return;
+
+                esperandoCambioPagina=false;
+
+                if(!narracionActiva || narracionPausada)return;
+
+                leerSiguienteFragmento(sesion);
+
+            },1000);
+        }
+
+        return;
+    }
+
+    const voz=new SpeechSynthesisUtterance(fragmento.texto);
+
     voz.lang="es-ES";
     voz.rate=0.88;
     voz.pitch=0.85;
@@ -861,22 +674,24 @@ function leerSiguienteFragmento(sesion){
     const vozElegida=elegirVozEspanola();
     if(vozElegida)voz.voice=vozElegida;
 
+    const porcentaje=Math.round(
+        (indiceNarracion+1)/fragmentosNarracion.length*100
+    );
+
+    narracionEstado.textContent=
+        "Leyendo tu historia... "+porcentaje+"%";
+
     voz.onend=function(){
+
         if(sesion!==numeroSesionNarracion)return;
 
         indiceNarracion++;
-
-        const porcentaje=Math.round(
-            indiceNarracion/fragmentosNarracion.length*100
-        );
-
-        narracionEstado.textContent=
-            "Leyendo tu historia... "+porcentaje+"%";
 
         leerSiguienteFragmento(sesion);
     };
 
     voz.onerror=function(event){
+
         if(sesion!==numeroSesionNarracion)return;
 
         if(event.error==="canceled" || event.error==="interrupted")return;
@@ -889,6 +704,7 @@ function leerSiguienteFragmento(sesion){
 }
 
 function iniciarNarracion(){
+
     if(!("speechSynthesis" in window)){
         narracionEstado.textContent=
             "Este navegador no dispone de narración de voz.";
@@ -898,56 +714,105 @@ function iniciarNarracion(){
     window.speechSynthesis.cancel();
 
     numeroSesionNarracion++;
+    const sesion=numeroSesionNarracion;
+
     indiceNarracion=0;
     narracionActiva=true;
     narracionPausada=false;
+    esperandoCambioPagina=false;
 
     prepararNarracion();
+
+    /*
+    Cada vez que se inicia desde el principio,
+    volvemos a la presentación del capítulo.
+    */
+
+    apertura=0;
+    mostrarApertura();
+
     actualizarControlesNarracion();
 
-    narracionEstado.textContent="Preparando la voz para leer tu historia...";
+    narracionEstado.textContent=
+        "Preparando la narración y abriendo el libro...";
 
-    const sesion=numeroSesionNarracion;
+    /*
+    Abrimos el libro en la primera apertura de lectura
+    antes de comenzar a escuchar la voz.
+    */
 
     setTimeout(()=>{
+
         if(sesion!==numeroSesionNarracion)return;
 
-        narracionEstado.textContent="Leyendo tu historia desde el principio...";
-        leerSiguienteFragmento(sesion);
-    },300);
+        if(apertura===0){
+            pasarPagina(1);
+        }
+
+        setTimeout(()=>{
+
+            if(sesion!==numeroSesionNarracion)return;
+            if(!narracionActiva || narracionPausada)return;
+
+            narracionEstado.textContent="Comienza la lectura...";
+            leerSiguienteFragmento(sesion);
+
+        },1000);
+
+    },250);
 }
 
 function pausarNarracion(){
+
     if(!narracionActiva)return;
 
     window.speechSynthesis.pause();
+
     narracionPausada=true;
     narracionEstado.textContent="Narración pausada.";
+
     actualizarControlesNarracion();
 }
 
 function continuarNarracion(){
+
     if(!narracionActiva || !narracionPausada)return;
 
-    window.speechSynthesis.resume();
     narracionPausada=false;
+
+    window.speechSynthesis.resume();
+
     narracionEstado.textContent="Continuando la lectura...";
+
     actualizarControlesNarracion();
+
+    /*
+    Si la narración estaba esperando a que terminara
+    un cambio de página, la lectura vuelve a ponerse en marcha.
+    */
+
+    if(!window.speechSynthesis.speaking &&
+       !esperandoCambioPagina){
+        leerSiguienteFragmento(numeroSesionNarracion);
+    }
 }
 
 function detenerNarracion(){
+
     numeroSesionNarracion++;
+
     window.speechSynthesis.cancel();
 
     narracionActiva=false;
     narracionPausada=false;
+    esperandoCambioPagina=false;
     indiceNarracion=0;
 
     narracionEstado.textContent="Narración detenida.";
+
     actualizarControlesNarracion();
 }
 
-/* Carga de voces del navegador */
 if("speechSynthesis" in window){
     window.speechSynthesis.onvoiceschanged=function(){
         window.speechSynthesis.getVoices();
@@ -960,9 +825,8 @@ if("speechSynthesis" in window){
 
 actualizarControlesNarracion();
 
-
 /* =====================================
-   DISTRIBUCIÓN AUTOMÁTICA DEL TEXTO
+   DISTRIBUCIÓN DEL TEXTO EN LAS PÁGINAS
    ===================================== */
 
 const elementos=Array.from(original.children);
@@ -972,6 +836,7 @@ let pesoActual=0;
 const limite=650;
 
 elementos.forEach(elemento=>{
+
     const copia=elemento.cloneNode(true);
     let peso=(elemento.textContent||"").length;
 
@@ -1010,12 +875,17 @@ function contenidoDePagina(indice){
     if(indice<0 || indice>=paginas.length){
         return '<div class="pagina-vacia">SIGAMOS CORRIENDO</div>';
     }
+
     return paginas[indice].map(el=>el.outerHTML).join("");
 }
 
 function mostrarApertura(){
+
     if(apertura===0){
-        izquierda.innerHTML='<div class="pagina-vacia">SIGAMOS CORRIENDO<br><br>Una historia de esfuerzo, valores y superación</div>';
+
+        izquierda.innerHTML=
+            '<div class="pagina-vacia">SIGAMOS CORRIENDO<br><br>Una historia de esfuerzo, valores y superación</div>';
+
         derecha.innerHTML=`
             <div class="pagina-portada">
                 <div class="numero">CAPÍTULO I</div>
@@ -1023,16 +893,24 @@ function mostrarApertura(){
                 <div class="adorno"></div>
                 <p>Una vida entre carreras, recuerdos y superación</p>
             </div>`;
+
         numeroIzq.textContent="";
         numeroDer.textContent="";
         contador.textContent="Presentación";
+
     }else{
+
         const primero=(apertura-1)*2;
+
         izquierda.innerHTML=contenidoDePagina(primero);
         derecha.innerHTML=contenidoDePagina(primero+1);
+
         numeroIzq.textContent=primero+1;
-        numeroDer.textContent=primero+2<=paginas.length?primero+2:"";
-        contador.textContent="Apertura "+(apertura+1)+" de "+totalAperturas;
+        numeroDer.textContent=
+            primero+2<=paginas.length ? primero+2 : "";
+
+        contador.textContent=
+            "Apertura "+(apertura+1)+" de "+totalAperturas;
     }
 
     botonAnterior.disabled=apertura===0;
@@ -1040,36 +918,54 @@ function mostrarApertura(){
 }
 
 function pasarPagina(direccion){
+
     if(girando)return;
 
     const destino=apertura+direccion;
+
     if(destino<0 || destino>=totalAperturas)return;
 
     girando=true;
 
     if(direccion===1){
+
         hoja.className="hoja-giro derecha";
+
         caraFrontal.innerHTML=derecha.innerHTML;
+
         caraTrasera.innerHTML=destino===0
             ? derecha.innerHTML
             : contenidoDePagina((destino-1)*2);
+
         void hoja.offsetWidth;
+
         hoja.classList.add("animar-adelante");
+
     }else{
+
         hoja.className="hoja-giro izquierda";
+
         caraFrontal.innerHTML=izquierda.innerHTML;
+
         caraTrasera.innerHTML=destino===0
             ? '<div class="pagina-portada"><div class="numero">CAPÍTULO I</div><h2>CUANDO<br>EMPEZÓ TODO</h2><div class="adorno"></div><p>Una vida entre carreras, recuerdos y superación</p></div>'
             : contenidoDePagina((destino-1)*2+1);
+
         void hoja.offsetWidth;
+
         hoja.classList.add("animar-atras");
     }
 
     setTimeout(()=>{
+
         apertura=destino;
+
         hoja.className="hoja-giro derecha";
+
         mostrarApertura();
+
         girando=false;
+
     },850);
 }
 
@@ -1080,6 +976,7 @@ mostrarApertura();
 
 </body>
 </html>
+
 
 
 
