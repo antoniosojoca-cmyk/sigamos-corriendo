@@ -488,7 +488,6 @@ footer{
     </div>
 </main>
 
-<!-- TEXTO ORIGINAL DEL CAPÍTULO II -->
 <article id="contenidoOriginal">
 
 <p class="destacado">
@@ -618,13 +617,17 @@ SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
 </footer>
 
 <script>
+
 /* REFERENCIA AL TEXTO ORIGINAL */
+
 const original=document.getElementById("contenidoOriginal");
+
 
 /* MÚSICA DE FONDO */
 
 let reproductor;
 let musicaActiva=false;
+
 const musicButton=document.getElementById("musicButton");
 
 function onYouTubeIframeAPIReady(){
@@ -650,6 +653,7 @@ function onYouTubeIframeAPIReady(){
                     musicaActiva=true;
                     musicButton.textContent="Ⅱ PAUSAR MÚSICA";
                 }
+
                 if(event.data===YT.PlayerState.PAUSED ||
                    event.data===YT.PlayerState.ENDED){
                     musicaActiva=false;
@@ -677,7 +681,7 @@ function controlarMusica(){
 }
 
 
-/* NARRACIÓN DEL CAPÍTULO */
+/* NARRACIÓN SINCRONIZADA CON LAS PÁGINAS */
 
 const narrarButton=document.getElementById("narrarButton");
 const pausarButton=document.getElementById("pausarButton");
@@ -685,11 +689,14 @@ const continuarButton=document.getElementById("continuarButton");
 const detenerButton=document.getElementById("detenerButton");
 const narracionEstado=document.getElementById("narracionEstado");
 
-let fragmentosNarracion=[];
-let indiceNarracion=0;
+let fragmentosPorPagina=[];
+let paginaNarracion=0;
+let indiceFragmentoPagina=0;
+
 let narracionActiva=false;
 let narracionPausada=false;
 let numeroSesionNarracion=0;
+let esperandoGiro=false;
 
 function actualizarControlesNarracion(){
     narrarButton.disabled=narracionActiva;
@@ -700,6 +707,7 @@ function actualizarControlesNarracion(){
 
 function dividirTexto(texto,maximo=220){
     const frases=texto.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[texto];
+
     const resultado=[];
     let bloque="";
 
@@ -731,11 +739,13 @@ function dividirTexto(texto,maximo=220){
     });
 
     if(bloque)resultado.push(bloque);
+
     return resultado;
 }
 
 function elegirVozEspanola(){
     const voces=window.speechSynthesis.getVoices();
+
     const espanolas=voces.filter(voz=>
         voz.lang && voz.lang.toLowerCase().startsWith("es")
     );
@@ -748,6 +758,7 @@ function elegirVozEspanola(){
 
     const vozMasculina=espanolas.find(voz=>{
         const nombre=voz.name.toLowerCase();
+
         return nombresMasculinos.some(p=>nombre.includes(p));
     });
 
@@ -761,23 +772,18 @@ function elegirVozEspanola(){
 }
 
 function prepararNarracion(){
-    fragmentosNarracion=[];
+    fragmentosPorPagina=[];
 
-    const bloques=Array.from(original.children);
+    paginas.forEach(pagina=>{
+        let textoPagina="";
 
-    bloques.forEach(elemento=>{
-        let texto="";
+        pagina.forEach(elemento=>{
+            textoPagina+=" "+elemento.textoNarracion;
+        });
 
-        if(elemento.tagName==="FIGURE"){
-            const pie=elemento.querySelector("figcaption");
-            texto=pie ? pie.textContent.trim() : "";
-        }else{
-            texto=elemento.textContent.trim();
-        }
-
-        if(texto){
-            fragmentosNarracion.push(...dividirTexto(texto));
-        }
+        fragmentosPorPagina.push(
+            dividirTexto(textoPagina.trim())
+        );
     });
 }
 
@@ -785,16 +791,15 @@ function leerSiguienteFragmento(sesion){
     if(sesion!==numeroSesionNarracion)return;
     if(!narracionActiva || narracionPausada)return;
 
-    if(indiceNarracion>=fragmentosNarracion.length){
-        narracionActiva=false;
-        narracionPausada=false;
-        narracionEstado.textContent="La narración ha terminado. Gracias por escuchar tu historia.";
-        actualizarControlesNarracion();
+    const fragmentos=fragmentosPorPagina[paginaNarracion] || [];
+
+    if(indiceFragmentoPagina>=fragmentos.length){
+        terminarLecturaPagina(sesion);
         return;
     }
 
     const voz=new SpeechSynthesisUtterance(
-        fragmentosNarracion[indiceNarracion]
+        fragmentos[indiceFragmentoPagina]
     );
 
     voz.lang="es-ES";
@@ -803,90 +808,215 @@ function leerSiguienteFragmento(sesion){
     voz.volume=1;
 
     const vozElegida=elegirVozEspanola();
+
     if(vozElegida)voz.voice=vozElegida;
 
     voz.onend=function(){
         if(sesion!==numeroSesionNarracion)return;
 
-        indiceNarracion++;
+        indiceFragmentoPagina++;
+
+        const totalFragmentos=fragmentos.length;
 
         const porcentaje=Math.round(
-            indiceNarracion/fragmentosNarracion.length*100
+            indiceFragmentoPagina/totalFragmentos*100
         );
 
         narracionEstado.textContent=
-            "Leyendo tu historia... "+porcentaje+"%";
+            "Leyendo página "+(paginaNarracion+1)+
+            " de "+paginas.length+"... "+porcentaje+"%";
 
         leerSiguienteFragmento(sesion);
     };
 
     voz.onerror=function(event){
         if(sesion!==numeroSesionNarracion)return;
-        if(event.error==="canceled" || event.error==="interrupted")return;
 
-        narracionEstado.textContent="Se ha producido un problema con la voz del navegador.";
+        if(event.error==="canceled" ||
+           event.error==="interrupted")return;
+
+        narracionEstado.textContent=
+            "Se ha producido un problema con la voz del navegador.";
+
         narracionActiva=false;
+        narracionPausada=false;
+
         actualizarControlesNarracion();
     };
 
     window.speechSynthesis.speak(voz);
 }
 
+
+/* AL TERMINAR UNA PÁGINA */
+
+function terminarLecturaPagina(sesion){
+    if(sesion!==numeroSesionNarracion)return;
+
+    if(!narracionActiva || narracionPausada)return;
+
+    const ultimaPagina=paginaNarracion===paginas.length-1;
+
+    /*
+       La página izquierda y la derecha se leen
+       seguidas. Al terminar la derecha, el libro
+       pasa automáticamente a la siguiente apertura.
+    */
+
+    const terminaApertura=
+        paginaNarracion%2===1 || ultimaPagina;
+
+    if(ultimaPagina){
+        finalizarNarracion();
+        return;
+    }
+
+    if(terminaApertura){
+        esperandoGiro=true;
+
+        narracionEstado.textContent=
+            "Pasando la página...";
+
+        pasarPagina(1);
+
+        setTimeout(()=>{
+            if(sesion!==numeroSesionNarracion)return;
+
+            if(!narracionActiva || narracionPausada)return;
+
+            esperandoGiro=false;
+            paginaNarracion++;
+            indiceFragmentoPagina=0;
+
+            leerSiguienteFragmento(sesion);
+
+        },950);
+
+    }else{
+        paginaNarracion++;
+        indiceFragmentoPagina=0;
+
+        leerSiguienteFragmento(sesion);
+    }
+}
+
+function finalizarNarracion(){
+    narracionActiva=false;
+    narracionPausada=false;
+    esperandoGiro=false;
+
+    narracionEstado.textContent=
+        "La narración ha terminado. Gracias por escuchar tu historia.";
+
+    actualizarControlesNarracion();
+}
+
+
+/* INICIAR */
+
 function iniciarNarracion(){
     if(!("speechSynthesis" in window)){
-        narracionEstado.textContent="Este navegador no dispone de narración de voz.";
+        narracionEstado.textContent=
+            "Este navegador no dispone de narración de voz.";
         return;
     }
 
     window.speechSynthesis.cancel();
 
     numeroSesionNarracion++;
-    indiceNarracion=0;
+
+    paginaNarracion=0;
+    indiceFragmentoPagina=0;
+
     narracionActiva=true;
     narracionPausada=false;
+    esperandoGiro=false;
 
     prepararNarracion();
+
+    /*
+       La narración siempre comienza desde
+       la primera página del capítulo.
+    */
+
+    apertura=1;
+    mostrarApertura();
+
     actualizarControlesNarracion();
 
-    narracionEstado.textContent="Preparando la voz para leer tu historia...";
+    narracionEstado.textContent=
+        "Preparando la voz para leer tu historia...";
 
     const sesion=numeroSesionNarracion;
 
     setTimeout(()=>{
         if(sesion!==numeroSesionNarracion)return;
 
-        narracionEstado.textContent="Leyendo tu historia desde el principio...";
+        narracionEstado.textContent=
+            "Comienza la lectura de tu historia...";
+
         leerSiguienteFragmento(sesion);
-    },400);
+
+    },500);
 }
+
+
+/* PAUSAR */
 
 function pausarNarracion(){
     if(!narracionActiva)return;
 
     window.speechSynthesis.pause();
+
     narracionPausada=true;
+
     narracionEstado.textContent="Narración pausada.";
+
     actualizarControlesNarracion();
 }
+
+
+/* CONTINUAR */
 
 function continuarNarracion(){
     if(!narracionActiva || !narracionPausada)return;
 
     window.speechSynthesis.resume();
+
     narracionPausada=false;
-    narracionEstado.textContent="Continuando la lectura...";
+
+    narracionEstado.textContent=
+        "Continuando la lectura...";
+
+    actualizarControlesNarracion();
+
+    /*
+       Si la lectura había terminado una página
+       justo antes de la pausa, continuamos el proceso.
+    */
+
+    if(esperandoGiro)return;
+
     actualizarControlesNarracion();
 }
 
+
+/* DETENER */
+
 function detenerNarracion(){
     numeroSesionNarracion++;
+
     window.speechSynthesis.cancel();
 
     narracionActiva=false;
     narracionPausada=false;
-    indiceNarracion=0;
+    esperandoGiro=false;
+
+    paginaNarracion=0;
+    indiceFragmentoPagina=0;
 
     narracionEstado.textContent="Narración detenida.";
+
     actualizarControlesNarracion();
 }
 
@@ -895,7 +1025,9 @@ if("speechSynthesis" in window){
         window.speechSynthesis.getVoices();
     };
 }else{
-    narracionEstado.textContent="Tu navegador no permite la narración de voz.";
+    narracionEstado.textContent=
+        "Tu navegador no permite la narración de voz.";
+
     narrarButton.disabled=true;
 }
 
@@ -905,57 +1037,97 @@ actualizarControlesNarracion();
 /* DISTRIBUCIÓN AUTOMÁTICA DEL TEXTO EN PÁGINAS */
 
 const elementos=Array.from(original.children);
+
 const paginas=[];
+
 let paginaActual=[];
+let textoPaginaActual=[];
 let pesoActual=0;
+
 const limite=650;
 
 elementos.forEach(elemento=>{
     const copia=elemento.cloneNode(true);
+
     let peso=(elemento.textContent||"").length;
 
     if(elemento.tagName==="FIGURE")peso+=220;
     if(elemento.tagName==="H3")peso+=70;
 
+    let textoNarracion="";
+
+    if(elemento.tagName==="FIGURE"){
+        const pie=elemento.querySelector("figcaption");
+
+        textoNarracion=pie ? pie.textContent.trim() : "";
+    }else{
+        textoNarracion=elemento.textContent.trim();
+    }
+
+    copia.textoNarracion=textoNarracion;
+
     if(pesoActual+peso>limite && paginaActual.length){
         paginas.push(paginaActual);
+
         paginaActual=[];
         pesoActual=0;
     }
 
-    paginaActual.push(copia);
+    paginaActual.push({
+        html:copia.outerHTML,
+        textoNarracion:textoNarracion
+    });
+
     pesoActual+=peso;
 });
 
-if(paginaActual.length)paginas.push(paginaActual);
+if(paginaActual.length){
+    paginas.push(paginaActual);
+}
+
+
+/* ELEMENTOS DEL LIBRO */
 
 let apertura=0;
 let girando=false;
 
 const izquierda=document.getElementById("paginaIzquierda");
 const derecha=document.getElementById("paginaDerecha");
+
 const numeroIzq=document.getElementById("numeroIzquierda");
 const numeroDer=document.getElementById("numeroDerecha");
+
 const hoja=document.getElementById("hojaGiro");
+
 const caraFrontal=document.getElementById("caraFrontal");
 const caraTrasera=document.getElementById("caraTrasera");
+
 const contador=document.getElementById("contador");
+
 const botonAnterior=document.getElementById("anterior");
 const botonSiguiente=document.getElementById("siguiente");
 
 const totalAperturas=1+Math.ceil(paginas.length/2);
+
+
+/* CONTENIDO DE CADA PÁGINA */
 
 function contenidoDePagina(indice){
     if(indice<0 || indice>=paginas.length){
         return '<div class="pagina-vacia">SIGAMOS CORRIENDO</div>';
     }
 
-    return paginas[indice].map(el=>el.outerHTML).join("");
+    return paginas[indice].map(el=>el.html).join("");
 }
+
+
+/* MOSTRAR APERTURA */
 
 function mostrarApertura(){
     if(apertura===0){
-        izquierda.innerHTML='<div class="pagina-vacia">SIGAMOS CORRIENDO<br><br>Una historia de esfuerzo, valores y superación</div>';
+
+        izquierda.innerHTML=
+            '<div class="pagina-vacia">SIGAMOS CORRIENDO<br><br>Una historia de esfuerzo, valores y superación</div>';
 
         derecha.innerHTML=`
             <div class="pagina-portada">
@@ -967,22 +1139,33 @@ function mostrarApertura(){
 
         numeroIzq.textContent="";
         numeroDer.textContent="";
+
         contador.textContent="Presentación";
+
     }else{
+
         const primero=(apertura-1)*2;
 
         izquierda.innerHTML=contenidoDePagina(primero);
         derecha.innerHTML=contenidoDePagina(primero+1);
 
         numeroIzq.textContent=primero+1;
-        numeroDer.textContent=primero+2<=paginas.length?primero+2:"";
 
-        contador.textContent="Apertura "+(apertura+1)+" de "+totalAperturas;
+        numeroDer.textContent=
+            primero+2<=paginas.length?primero+2:"";
+
+        contador.textContent=
+            "Apertura "+(apertura+1)+" de "+totalAperturas;
     }
 
     botonAnterior.disabled=apertura===0;
-    botonSiguiente.disabled=apertura===totalAperturas-1;
+
+    botonSiguiente.disabled=
+        apertura===totalAperturas-1;
 }
+
+
+/* PASAR PÁGINAS MANUAL O AUTOMÁTICAMENTE */
 
 function pasarPagina(direccion){
     if(girando)return;
@@ -994,7 +1177,9 @@ function pasarPagina(direccion){
     girando=true;
 
     if(direccion===1){
+
         hoja.className="hoja-giro derecha";
+
         caraFrontal.innerHTML=derecha.innerHTML;
 
         caraTrasera.innerHTML=contenidoDePagina(
@@ -1002,9 +1187,13 @@ function pasarPagina(direccion){
         );
 
         void hoja.offsetWidth;
+
         hoja.classList.add("animar-adelante");
+
     }else{
+
         hoja.className="hoja-giro izquierda";
+
         caraFrontal.innerHTML=izquierda.innerHTML;
 
         caraTrasera.innerHTML=destino===0
@@ -1012,22 +1201,32 @@ function pasarPagina(direccion){
             : contenidoDePagina((destino-1)*2+1);
 
         void hoja.offsetWidth;
+
         hoja.classList.add("animar-atras");
     }
 
     setTimeout(()=>{
         apertura=destino;
+
         hoja.className="hoja-giro derecha";
+
         mostrarApertura();
+
         girando=false;
+
     },850);
 }
 
+
+/* INICIO DEL LIBRO */
+
 mostrarApertura();
+
 </script>
 
 <script src="https://www.youtube.com/iframe_api"></script>
 
 </body>
 </html>
+
 
