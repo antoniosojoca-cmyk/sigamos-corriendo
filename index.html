@@ -94,59 +94,20 @@ body {
     box-shadow:inset 0 0 0 7px rgba(212,181,116,.17),inset 0 0 35px rgba(0,0,0,.75);
 }
 
-
-    .tapa img {
+.tapa img {
     width:100%;
     height:100%;
     object-fit:cover;
     opacity:.85;
     filter:sepia(.20) brightness(.90);
 }
+
 .marco-tapa {
     position:absolute;
     inset:15px;
     border:1px solid #d4b574;
     box-shadow:inset 0 0 0 4px rgba(212,181,116,.12);
     pointer-events:none;
-}
-
-.texto-tapa {
-    position:absolute;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    padding:25px;
-    text-shadow:2px 3px 7px #000;
-}
-
-.texto-tapa small {
-    color:#e3c98e;
-    letter-spacing:4px;
-    font-size:11px;
-    margin-bottom:22px;
-}
-
-.texto-tapa h2 {
-    color:#f0d49a;
-    font-size:clamp(25px,5vw,39px);
-    line-height:1.3;
-    font-weight:normal;
-    letter-spacing:2px;
-}
-
-.linea-dorada {
-    width:65%;
-    height:1px;
-    background:#d4b574;
-    margin:22px auto;
-}
-
-.texto-tapa p {
-    color:#f0dfbd;
-    font-style:italic;
-    font-size:14px;
 }
 
 .abrir {
@@ -568,29 +529,18 @@ body.abierto .interior { display:block; }
     </p>
 
     <div class="libro-cerrado">
+
         <div class="lomo"></div>
         <div class="cantos"></div>
 
         <div class="tapa">
             <img
                 src="Sigamos%20corriendo_%20historia%20de%20superaci%C3%B3n.png"
-                alt="Diseño de la portada del libro">
+                alt="Portada del libro Sigamos Corriendo">
 
             <div class="marco-tapa"></div>
-
-       
-            <div class="texto-tapa">
-    <small>MI HISTORIA COMO ATLETA</small>
-
-    <h2>SIGAMOS<br>CORRIENDO</h2>
-
-    <div class="linea-dorada"></div>
-
-    <p>Antonio Sojo Cánovas</p>
-
-    <p>Una historia de esfuerzo,<br>valores y superación</p>
-</div>
         </div>
+
     </div>
 
     <button class="abrir" onclick="abrirLibro()">
@@ -789,27 +739,25 @@ body.abierto .interior { display:block; }
 
                 <div class="indice">
 
-              
                     <a class="capitulo" href="capitulo-1.html">
-    <strong>CAPÍTULO I</strong>
-    <span>Cuando empezó todo</span>
-</a>
+                        <strong>CAPÍTULO I</strong>
+                        <span>Cuando empezó todo</span>
+                    </a>
 
-<a class="capitulo" href="capitulo-2.html">
-    <strong>CAPÍTULO II</strong>
-    <span>Una familia llamada Nueva Jarilla</span>
-</a>
+                    <a class="capitulo" href="capitulo-2.html">
+                        <strong>CAPÍTULO II</strong>
+                        <span>Una familia llamada Nueva Jarilla</span>
+                    </a>
 
-<a class="capitulo" href="capitulo-3.html">
-    <strong>CAPÍTULO III</strong>
-    <span>Entre carreras, amistades y podios</span>
-</a>
-                    
-                 
+                    <a class="capitulo" href="capitulo-3.html">
+                        <strong>CAPÍTULO III</strong>
+                        <span>Entre carreras, amistades y podios</span>
+                    </a>
+
                     <a class="capitulo" href="capitulo-4.html">
-    <strong>CAPÍTULO IV</strong>
-    <span>Cuando el cuerpo pidió parar</span>
-</a>
+                        <strong>CAPÍTULO IV</strong>
+                        <span>Cuando el cuerpo pidió parar</span>
+                    </a>
 
                     <a class="capitulo" href="capitulo-5.html">
                         <strong>CAPÍTULO V</strong>
