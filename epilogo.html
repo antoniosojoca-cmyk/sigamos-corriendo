@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -101,17 +100,20 @@ padding:45px 42px;
 color:#29251e;
 background:linear-gradient(90deg,#d5c8aa 0%,#f4ecd9 5%,#f8f1e2 50%,#eee4cf 100%);
 box-shadow:inset 0 0 22px #9b8760;
+transition:transform 1.8s ease-in-out,opacity 1.5s ease-in-out;
 }
 
 .pagina.izquierda{
 border-right:1px solid #c8b895;
 border-radius:7px 0 0 7px;
 box-shadow:inset -12px 0 22px rgba(70,50,20,.10);
+transform-origin:right center;
 }
 
 .pagina.derecha{
 border-radius:0 7px 7px 0;
 box-shadow:inset 12px 0 22px rgba(70,50,20,.10);
+transform-origin:left center;
 }
 
 .pagina-contenido{
@@ -303,6 +305,123 @@ margin:5px;
 
 #contenidoOriginal{display:none}
 
+/* =====================================
+   CONTRAPORTADA Y CIERRE DEL LIBRO
+===================================== */
+
+.contraportada{
+position:absolute;
+inset:0;
+z-index:10;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:35px;
+text-align:center;
+opacity:0;
+transform:scaleX(.025);
+transform-origin:center;
+pointer-events:none;
+transition:
+opacity 1.5s ease-in-out,
+transform 1.8s cubic-bezier(.22,.75,.25,1);
+background:
+linear-gradient(90deg,
+#080808 0%,
+#17130c 3%,
+#090909 10%,
+#090909 90%,
+#17130c 97%,
+#080808 100%);
+border:2px solid #9b7b42;
+border-radius:7px;
+box-shadow:
+inset 0 0 35px rgba(212,181,116,.12),
+0 15px 35px rgba(0,0,0,.8);
+}
+
+.contraportada::before{
+content:"";
+position:absolute;
+inset:13px;
+border:1px solid rgba(212,181,116,.55);
+pointer-events:none;
+}
+
+.contraportada-contenido{
+position:relative;
+z-index:1;
+max-width:760px;
+padding:25px;
+}
+
+.contraportada h2{
+color:#d4b574;
+font-size:clamp(22px,4vw,36px);
+font-weight:normal;
+letter-spacing:5px;
+margin-bottom:28px;
+}
+
+.contraportada .linea{
+width:110px;
+height:1px;
+background:#a7894f;
+margin:25px auto;
+}
+
+.contraportada .frase{
+color:#e8e0d1;
+font-size:clamp(17px,2.5vw,25px);
+font-style:italic;
+line-height:1.8;
+}
+
+.contraportada .frase-final{
+color:#d4b574;
+font-size:clamp(14px,2vw,19px);
+font-style:italic;
+letter-spacing:1px;
+}
+
+.contraportada .ornamento{
+color:#a7894f;
+font-size:25px;
+letter-spacing:12px;
+margin-top:28px;
+}
+
+.libro.cerrando .pagina{
+opacity:0;
+}
+
+.libro.cerrando .pagina.izquierda{
+transform:perspective(1200px) rotateY(12deg) scaleX(.025);
+}
+
+.libro.cerrando .pagina.derecha{
+transform:perspective(1200px) rotateY(-12deg) scaleX(.025);
+}
+
+.libro.cerrando .hoja-giro{
+opacity:0;
+}
+
+.libro.cerrando .contraportada{
+opacity:1;
+transform:scaleX(1);
+}
+
+body.libro-cerrado nav,
+body.libro-cerrado .music-control,
+body.libro-cerrado .narracion-control,
+body.libro-cerrado .controles,
+body.libro-cerrado .volver{
+opacity:0;
+pointer-events:none;
+transition:opacity 1s ease;
+}
+
 @media(max-width:700px){
 .libro-zona{padding:0 8px}
 .pagina{min-height:570px;padding:22px 15px}
@@ -316,6 +435,31 @@ margin:5px;
 .foto-epilogo{margin:20px auto}
 .foto-epilogo img{max-height:350px}
 .foto-epilogo figcaption{font-size:12px}
+
+.contraportada{
+padding:14px;
+}
+
+.contraportada-contenido{
+padding:15px 10px;
+}
+
+.contraportada h2{
+letter-spacing:3px;
+margin-bottom:18px;
+}
+
+.contraportada .frase{
+line-height:1.6;
+}
+
+.contraportada .linea{
+margin:16px auto;
+}
+
+.contraportada .ornamento{
+margin-top:15px;
+}
 }
 </style>
 </head>
@@ -357,7 +501,7 @@ CARGANDO MÚSICA...
 
 <main class="libro-zona" id="inicio">
 
-<div class="libro">
+<div class="libro" id="libro">
 
 <div class="pagina izquierda">
 <div class="pagina-contenido" id="paginaIzquierda">
@@ -384,6 +528,32 @@ CARGANDO MÚSICA...
 </div>
 <div class="cara trasera">
 <div class="pagina-contenido" id="caraTrasera"></div>
+</div>
+</div>
+
+<!-- CONTRAPORTADA DEL LIBRO -->
+
+<div class="contraportada" id="contraportada">
+<div class="contraportada-contenido">
+
+<h2>SIGAMOS CORRIENDO</h2>
+
+<div class="linea"></div>
+
+<p class="frase">
+«Mientras el cuerpo me lo permita, seguiré buscando caminos.
+Porque correr nunca fue solamente llegar a una meta,
+sino disfrutar de cada paso del camino».
+</p>
+
+<div class="linea"></div>
+
+<p class="frase-final">
+Una vida. Una pasión. Una historia que continúa.
+</p>
+
+<div class="ornamento">✦ ✦ ✦</div>
+
 </div>
 </div>
 
@@ -737,6 +907,9 @@ guardarPagina();
 
 let apertura=0;
 let girando=false;
+let libroCerrado=false;
+
+const libro=document.getElementById("libro");
 
 const izquierda=document.getElementById("paginaIzquierda");
 const derecha=document.getElementById("paginaDerecha");
@@ -818,7 +991,7 @@ actualizarControlesNarracion();
 
 function pasarPagina(direccion,alTerminar=null){
 
-if(girando)return;
+if(girando||libroCerrado)return;
 
 if(narracionActiva&&!alTerminar)return;
 
@@ -876,6 +1049,43 @@ alTerminar();
 
 
 /* =====================================
+   CERRAR EL LIBRO Y MOSTRAR CONTRAPORTADA
+===================================== */
+
+function cerrarLibro(){
+
+if(libroCerrado)return;
+
+libroCerrado=true;
+
+narracionEstado.textContent=
+"La historia ha terminado. Cerrando el libro...";
+
+actualizarControlesNarracion();
+
+setTimeout(()=>{
+
+libro.classList.add("cerrando");
+
+contador.textContent="";
+
+botonAnterior.disabled=true;
+botonSiguiente.disabled=true;
+
+},900);
+
+setTimeout(()=>{
+
+document.body.classList.add("libro-cerrado");
+
+narracionEstado.textContent=
+"SIGAMOS CORRIENDO · Una historia que continúa.";
+
+},2800);
+}
+
+
+/* =====================================
    NARRACIÓN SINCRONIZADA CON LAS PÁGINAS
 ===================================== */
 
@@ -899,7 +1109,7 @@ let giroPendiente=false;
 
 function actualizarControlesNarracion(){
 
-narrarButton.disabled=narracionActiva;
+narrarButton.disabled=narracionActiva||libroCerrado;
 
 pausarButton.disabled=
 !narracionActiva||narracionPausada;
@@ -910,10 +1120,10 @@ continuarButton.disabled=
 detenerButton.disabled=!narracionActiva;
 
 botonAnterior.disabled=
-narracionActiva||girando||apertura===0;
+narracionActiva||girando||apertura===0||libroCerrado;
 
 botonSiguiente.disabled=
-narracionActiva||girando||apertura===totalAperturas-1;
+narracionActiva||girando||apertura===totalAperturas-1||libroCerrado;
 }
 
 function elegirVozEspanola(){
@@ -951,9 +1161,11 @@ lecturaPendiente=false;
 giroPendiente=false;
 
 narracionEstado.textContent=
-"La narración ha terminado. Gracias por escuchar tu historia.";
+"La narración ha terminado. Cerrando el libro...";
 
 actualizarControlesNarracion();
+
+cerrarLibro();
 }
 
 function leerPaginaActual(sesion){
@@ -1057,7 +1269,6 @@ if(!narracionActiva||narracionPausada)return;
 const siguientePagina=paginaNarracionActual+1;
 
 // Se lee la página izquierda y después la derecha.
-// Todavía no es necesario girar la hoja.
 
 if(
 siguientePagina<narracionPorPagina.length&&
@@ -1108,6 +1319,8 @@ finalizarNarracion();
 }
 
 function iniciarNarracion(){
+
+if(libroCerrado)return;
 
 if(!("speechSynthesis" in window)){
 
@@ -1225,9 +1438,6 @@ actualizarControlesNarracion();
 
 const sesion=numeroSesionNarracion;
 
-// Si la lectura estaba esperando a que terminara el giro,
-// ahora puede continuar con la nueva página.
-
 if(lecturaPendiente){
 
 lecturaPendiente=false;
@@ -1236,9 +1446,6 @@ leerPaginaActual(sesion);
 
 return;
 }
-
-// Si estaba pasando la hoja, el giro terminará
-// y continuará la narración automáticamente.
 
 if(giroPendiente){
 
@@ -1301,6 +1508,7 @@ actualizarControlesNarracion();
 
 </body>
 </html>
+
 
 
 
