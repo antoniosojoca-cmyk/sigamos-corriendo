@@ -24,6 +24,19 @@ body {
     font-family: Georgia, serif;
 }
 
+/* CONTENIDO DE LA GALERÍA */
+
+.contenido-galeria {
+    opacity: 1;
+    transition: opacity .8s ease, transform .8s ease;
+}
+
+.contenido-galeria.desvanecer {
+    opacity: 0;
+    transform: scale(.97);
+    pointer-events: none;
+}
+
 header {
     text-align: center;
     padding: 35px 15px 20px;
@@ -190,7 +203,199 @@ footer {
     letter-spacing: 1px;
 }
 
-/* Ampliación de fotografías */
+/* BOTÓN PARA CERRAR EL LIBRO */
+
+.final-libro {
+    text-align: center;
+    padding: 10px 20px 75px;
+}
+
+.boton-cerrar-libro {
+    color: #080808;
+    background: linear-gradient(135deg,#e5cb91,#a98243);
+    border: 1px solid #f0d69e;
+    padding: 15px 35px;
+    font-family: Georgia,serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 5px 18px rgba(0,0,0,.5);
+}
+
+.boton-cerrar-libro:hover {
+    transform: translateY(-3px);
+    background: #f0d69e;
+}
+
+.final-libro p {
+    color: #b9a47e;
+    font-style: italic;
+    font-size: 13px;
+    margin-top: 18px;
+}
+
+/* CONTRAPORTADA DEL LIBRO */
+
+.pantalla-contraportada {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 45px 20px;
+    text-align: center;
+    background:
+        radial-gradient(ellipse at center,#30271c 0%,#100e0b 55%,#050505 100%);
+    opacity: 0;
+    animation: aparecerContraportada 1.2s ease forwards;
+}
+
+body.libro-cerrado .contenido-galeria {
+    display: none;
+}
+
+body.libro-cerrado .pantalla-contraportada {
+    display: flex;
+}
+
+@keyframes aparecerContraportada {
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.libro-trasero {
+    position: relative;
+    width: min(78vw,430px);
+    aspect-ratio: .72;
+    margin: 0 auto 38px;
+    filter: drop-shadow(20px 25px 22px rgba(0,0,0,.75));
+}
+
+.lomo-trasero {
+    position: absolute;
+    left: -27px;
+    top: 8px;
+    bottom: 8px;
+    width: 30px;
+    background: linear-gradient(90deg,#24180d,#80602e,#34200e);
+    border: 1px solid #b18b4d;
+    border-right: 0;
+    border-radius: 5px 0 0 5px;
+    box-shadow: inset 4px 0 8px rgba(0,0,0,.7);
+}
+
+.cantos-traseros {
+    position: absolute;
+    top: 7px;
+    bottom: -10px;
+    right: -14px;
+    width: 16px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #e6d6b5 0px,
+        #9e8963 2px,
+        #f0e5cf 4px
+    );
+    border-radius: 0 4px 4px 0;
+    transform: skewY(2deg);
+    box-shadow: 5px 5px 9px rgba(0,0,0,.7);
+}
+
+.tapa-trasera {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border: 3px solid #b38c4c;
+    border-radius: 4px 9px 9px 4px;
+    background:
+        radial-gradient(ellipse at center,#302315 0%,#17110b 65%,#0b0907 100%);
+    box-shadow:
+        inset 0 0 0 7px rgba(212,181,116,.17),
+        inset 0 0 35px rgba(0,0,0,.75);
+}
+
+.marco-trasero {
+    position: absolute;
+    inset: 15px;
+    border: 1px solid #d4b574;
+    box-shadow: inset 0 0 0 4px rgba(212,181,116,.12);
+    pointer-events: none;
+}
+
+.texto-contraportada {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    text-shadow: 2px 3px 7px #000;
+}
+
+.texto-contraportada small {
+    color: #e3c98e;
+    letter-spacing: 4px;
+    font-size: 11px;
+    margin-bottom: 25px;
+}
+
+.texto-contraportada h2 {
+    color: #f0d49a;
+    font-size: clamp(22px,4.5vw,32px);
+    line-height: 1.4;
+    font-weight: normal;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.linea-contraportada {
+    width: 65%;
+    height: 1px;
+    background: #d4b574;
+    margin: 25px auto;
+}
+
+.texto-contraportada p {
+    color: #f0dfbd;
+    font-style: italic;
+    font-size: clamp(13px,2.8vw,16px);
+    line-height: 1.9;
+    margin: 0;
+}
+
+.texto-contraportada .cierre-final {
+    color: #e3c98e;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    font-style: normal;
+    line-height: 1.8;
+}
+
+.boton-reabrir {
+    color: #d4b574;
+    background: transparent;
+    border: 1px solid #a88750;
+    padding: 11px 25px;
+    font-family: Georgia,serif;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.boton-reabrir:hover {
+    background: #241d10;
+    border-color: #e1c58b;
+}
+
+/* AMPLIACIÓN DE FOTOGRAFÍAS */
 
 .lightbox {
     display: none;
@@ -243,11 +448,36 @@ footer {
     .despedida p {
         font-size: 18px;
     }
+
+    .texto-contraportada {
+        padding: 23px;
+    }
+
+    .texto-contraportada small {
+        font-size: 9px;
+        letter-spacing: 2px;
+        margin-bottom: 18px;
+    }
+
+    .texto-contraportada h2 {
+        font-size: 22px;
+    }
+
+    .texto-contraportada p {
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .texto-contraportada .cierre-final {
+        font-size: 10px;
+    }
 }
 </style>
 </head>
 
 <body>
+
+<div class="contenido-galeria" id="contenidoGaleria">
 
 <header>
     <h1>SIGAMOS CORRIENDO</h1>
@@ -382,16 +612,81 @@ footer {
     <span>SIGAMOS CORRIENDO</span>
 </section>
 
+<!-- CIERRE DEFINITIVO DEL LIBRO -->
+
+<section class="final-libro">
+    <button class="boton-cerrar-libro" onclick="cerrarLibro()">
+        CERRAR EL LIBRO
+    </button>
+
+    <p>
+        Has llegado al final de estas páginas.<br>
+        Gracias por acompañarme en este camino.
+    </p>
+</section>
+
 <footer>
     MI VIDA · MI PASIÓN · MIS RECUERDOS
     <br><br>
     © SIGAMOS CORRIENDO
 </footer>
 
+</div>
+
+<!-- CONTRAPORTADA -->
+
+<section class="pantalla-contraportada" id="contraportada">
+
+    <div class="libro-trasero">
+
+        <div class="lomo-trasero"></div>
+        <div class="cantos-traseros"></div>
+
+        <div class="tapa-trasera">
+
+            <div class="marco-trasero"></div>
+
+            <div class="texto-contraportada">
+
+                <small>EL FINAL DE UN LIBRO, NO DEL CAMINO</small>
+
+                <h2>SIGAMOS<br>CORRIENDO</h2>
+
+                <div class="linea-contraportada"></div>
+
+                <p>
+                    «Mientras el cuerpo me lo permita,
+                    seguiré buscando caminos. Porque correr
+                    nunca fue solamente llegar a una meta,
+                    sino disfrutar de cada paso del camino».
+                </p>
+
+                <div class="linea-contraportada"></div>
+
+                <p class="cierre-final">
+                    UNA VIDA. UNA PASIÓN.<br>
+                    UNA HISTORIA QUE CONTINÚA.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+
+    <button class="boton-reabrir" onclick="reabrirLibro()">
+        VOLVER A LA GALERÍA
+    </button>
+
+</section>
+
+<!-- AMPLIACIÓN DE FOTOGRAFÍAS -->
+
 <div class="lightbox" id="visor" onclick="cerrarFoto()">
     <button class="cerrar" aria-label="Cerrar" onclick="cerrarFoto()">×</button>
     <img id="fotoAmpliada" src="" alt="Fotografía ampliada">
 </div>
+
+<!-- REPRODUCTOR DE MÚSICA -->
 
 <div id="reproductor" style="position:absolute;width:1px;height:1px;overflow:hidden;">
     <iframe id="musicaYouTube"
@@ -403,6 +698,9 @@ footer {
 </div>
 
 <script>
+
+/* AMPLIACIÓN DE FOTOGRAFÍAS */
+
 function abrirFoto(imagen) {
     const visor = document.getElementById("visor");
     const ampliada = document.getElementById("fotoAmpliada");
@@ -427,6 +725,8 @@ document.addEventListener("keydown", function(evento) {
     }
 });
 
+/* MÚSICA */
+
 let musicaActiva = false;
 
 function alternarMusica() {
@@ -439,14 +739,54 @@ function alternarMusica() {
 
         boton.textContent = "♫ DETENER MÚSICA";
         musicaActiva = true;
+
     } else {
         reproductor.src = "";
         boton.textContent = "♫ ESCUCHAR MÚSICA";
         musicaActiva = false;
     }
 }
+
+/* CERRAR EL LIBRO Y MOSTRAR LA CONTRAPORTADA */
+
+function cerrarLibro() {
+
+    if (musicaActiva) {
+        document.getElementById("musicaYouTube").src = "";
+        musicaActiva = false;
+    }
+
+    document.getElementById("botonMusica").textContent =
+        "♫ ESCUCHAR MÚSICA";
+
+    cerrarFoto();
+
+    const contenido = document.getElementById("contenidoGaleria");
+
+    contenido.classList.add("desvanecer");
+
+    setTimeout(() => {
+        document.body.classList.add("libro-cerrado");
+        window.scrollTo({top: 0, behavior: "instant"});
+    }, 800);
+}
+
+/* VOLVER A ABRIR EL LIBRO */
+
+function reabrirLibro() {
+
+    document.body.classList.remove("libro-cerrado");
+
+    const contenido = document.getElementById("contenidoGaleria");
+
+    contenido.classList.remove("desvanecer");
+
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
 </script>
 
 </body>
 </html>
+
 
