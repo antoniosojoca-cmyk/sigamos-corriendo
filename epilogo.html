@@ -52,8 +52,13 @@ cursor:pointer;
 margin:4px;
 transition:background .3s,color .3s;
 }
+
 #musicButton:hover,.narracion-control button:hover{background:#241d10}
-.narracion-control button:disabled{opacity:.35;cursor:not-allowed}
+
+#musicButton:disabled,.narracion-control button:disabled{
+opacity:.35;
+cursor:not-allowed;
+}
 
 #narracionEstado{
 display:block;
@@ -335,7 +340,9 @@ margin:5px;
 </nav>
 
 <div class="music-control">
-<button id="musicButton" type="button" onclick="controlarMusica()" disabled>CARGANDO MÚSICA...</button>
+<button id="musicButton" type="button" onclick="controlarMusica()" disabled>
+CARGANDO MÚSICA...
+</button>
 </div>
 
 <div class="narracion-control">
@@ -519,36 +526,63 @@ SIGAMOS CORRIENDO · Mi vida, mi pasión y una nueva forma de seguir adelante
 </footer>
 
 <script>
+
 const original=document.getElementById("contenidoOriginal");
 
-/* MÚSICA */
+/* =====================================
+   MÚSICA DE FONDO
+===================================== */
+
 let reproductor;
 let musicaActiva=false;
+
 const musicButton=document.getElementById("musicButton");
 
 function onYouTubeIframeAPIReady(){
+
 reproductor=new YT.Player("musicFrame",{
 width:"1",
 height:"1",
 videoId:"0o8vszqVL2U",
-playerVars:{autoplay:0,controls:0,playsinline:1,rel:0,enablejsapi:1},
+
+playerVars:{
+autoplay:0,
+controls:0,
+playsinline:1,
+rel:0,
+enablejsapi:1
+},
+
 events:{
+
 onReady:function(){
+
 musicButton.disabled=false;
 musicButton.textContent="♫ ESCUCHAR MÚSICA";
+
 reproductor.setVolume(18);
 },
+
 onStateChange:function(event){
+
 if(event.data===YT.PlayerState.PLAYING){
+
 musicaActiva=true;
 musicButton.textContent="Ⅱ PAUSAR MÚSICA";
 }
-if(event.data===YT.PlayerState.PAUSED||event.data===YT.PlayerState.ENDED){
+
+if(
+event.data===YT.PlayerState.PAUSED ||
+event.data===YT.PlayerState.ENDED
+){
+
 musicaActiva=false;
 musicButton.textContent="♫ ESCUCHAR MÚSICA";
 }
 },
+
 onError:function(){
+
 musicButton.disabled=false;
 musicButton.textContent="NO SE PUDO REPRODUCIR";
 }
@@ -557,278 +591,710 @@ musicButton.textContent="NO SE PUDO REPRODUCIR";
 }
 
 function controlarMusica(){
+
 if(!reproductor)return;
+
 reproductor.setVolume(18);
-if(musicaActiva){reproductor.pauseVideo();}
-else{reproductor.playVideo();}
+
+if(musicaActiva){
+reproductor.pauseVideo();
+}else{
+reproductor.playVideo();
+}
 }
 
-/* NARRACIÓN */
-const narrarButton=document.getElementById("narrarButton");
-const pausarButton=document.getElementById("pausarButton");
-const continuarButton=document.getElementById("continuarButton");
-const detenerButton=document.getElementById("detenerButton");
-const narracionEstado=document.getElementById("narracionEstado");
 
-let fragmentosNarracion=[];
-let indiceNarracion=0;
-let narracionActiva=false;
-let narracionPausada=false;
-let numeroSesionNarracion=0;
+/* =====================================
+   PREPARAR LAS PÁGINAS DEL LIBRO
+===================================== */
 
-function actualizarControlesNarracion(){
-narrarButton.disabled=narracionActiva;
-pausarButton.disabled=!narracionActiva||narracionPausada;
-continuarButton.disabled=!narracionActiva||!narracionPausada;
-detenerButton.disabled=!narracionActiva;
-}
+const elementos=Array.from(original.children);
+
+const paginas=[];
+const narracionPorPagina=[];
+
+let paginaActual=[];
+let textosPagina=[];
+let pesoActual=0;
+
+const limite=650;
 
 function dividirTexto(texto,maximo=220){
+
 const frases=texto.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[texto];
+
 const resultado=[];
 let bloque="";
 
 frases.forEach(frase=>{
+
 frase=frase.trim();
+
 if(!frase)return;
 
 if((bloque+" "+frase).trim().length<=maximo){
+
 bloque=(bloque+" "+frase).trim();
+
 }else{
+
 if(bloque)resultado.push(bloque);
+
+if(frase.length<=maximo){
+
 bloque=frase;
+
+}else{
+
+const palabras=frase.split(/\s+/);
+bloque="";
+
+palabras.forEach(palabra=>{
+
+if((bloque+" "+palabra).trim().length>maximo){
+
+if(bloque)resultado.push(bloque);
+
+bloque=palabra;
+
+}else{
+
+bloque=(bloque+" "+palabra).trim();
+}
+});
+}
 }
 });
 
 if(bloque)resultado.push(bloque);
+
 return resultado;
 }
 
-function elegirVozEspanola(){
-const voces=window.speechSynthesis.getVoices();
-const espanolas=voces.filter(v=>v.lang&&v.lang.toLowerCase().startsWith("es"));
-return espanolas.find(v=>v.lang.toLowerCase()==="es-es")||espanolas[0]||null;
-}
-
-function prepararNarracion(){
-fragmentosNarracion=[];
-Array.from(original.children).forEach(elemento=>{
-const texto=elemento.textContent.trim();
-if(texto)fragmentosNarracion.push(...dividirTexto(texto));
-});
-}
-
-function leerSiguienteFragmento(sesion){
-if(sesion!==numeroSesionNarracion||!narracionActiva||narracionPausada)return;
-
-if(indiceNarracion>=fragmentosNarracion.length){
-narracionActiva=false;
-narracionPausada=false;
-narracionEstado.textContent="La narración ha terminado. Gracias por escuchar tu historia.";
-actualizarControlesNarracion();
-return;
-}
-
-const voz=new SpeechSynthesisUtterance(fragmentosNarracion[indiceNarracion]);
-voz.lang="es-ES";
-voz.rate=.88;
-voz.pitch=.85;
-voz.volume=1;
-
-const elegida=elegirVozEspanola();
-if(elegida)voz.voice=elegida;
-
-voz.onend=function(){
-if(sesion!==numeroSesionNarracion)return;
-indiceNarracion++;
-narracionEstado.textContent="Leyendo tu historia... "+Math.round(indiceNarracion/fragmentosNarracion.length*100)+"%";
-leerSiguienteFragmento(sesion);
-};
-
-voz.onerror=function(event){
-if(sesion!==numeroSesionNarracion)return;
-if(event.error==="canceled"||event.error==="interrupted")return;
-indiceNarracion++;
-leerSiguienteFragmento(sesion);
-};
-
-window.speechSynthesis.speak(voz);
-}
-
-function iniciarNarracion(){
-if(!("speechSynthesis" in window)){
-narracionEstado.textContent="Este navegador no dispone de narración de voz.";
-return;
-}
-
-window.speechSynthesis.cancel();
-numeroSesionNarracion++;
-indiceNarracion=0;
-narracionActiva=true;
-narracionPausada=false;
-prepararNarracion();
-actualizarControlesNarracion();
-narracionEstado.textContent="Preparando la voz para leer tu historia...";
-
-const sesion=numeroSesionNarracion;
-
-setTimeout(()=>{
-if(sesion!==numeroSesionNarracion)return;
-narracionEstado.textContent="Leyendo tu historia desde el principio...";
-leerSiguienteFragmento(sesion);
-},300);
-}
-
-function pausarNarracion(){
-if(!narracionActiva)return;
-window.speechSynthesis.pause();
-narracionPausada=true;
-narracionEstado.textContent="Narración pausada.";
-actualizarControlesNarracion();
-}
-
-function continuarNarracion(){
-if(!narracionActiva||!narracionPausada)return;
-window.speechSynthesis.resume();
-narracionPausada=false;
-narracionEstado.textContent="Continuando la lectura...";
-actualizarControlesNarracion();
-}
-
-function detenerNarracion(){
-numeroSesionNarracion++;
-window.speechSynthesis.cancel();
-narracionActiva=false;
-narracionPausada=false;
-indiceNarracion=0;
-narracionEstado.textContent="Narración detenida.";
-actualizarControlesNarracion();
-}
-
-if("speechSynthesis" in window){
-window.speechSynthesis.onvoiceschanged=function(){
-window.speechSynthesis.getVoices();
-};
-}else{
-narracionEstado.textContent="Tu navegador no permite la narración de voz.";
-narrarButton.disabled=true;
-}
-
-actualizarControlesNarracion();
-
-/* DISTRIBUCIÓN DE LAS PÁGINAS */
-const elementos=Array.from(original.children);
-const paginas=[];
-let paginaActual=[];
-let pesoActual=0;
-const limite=650;
-
-elementos.forEach(elemento=>{
-const copia=elemento.cloneNode(true);
+function textoParaNarrar(elemento){
 
 if(elemento.tagName==="FIGURE"){
-if(paginaActual.length){
-paginas.push(paginaActual);
-paginaActual=[];
-pesoActual=0;
-}
-paginas.push([copia]);
-return;
+
+const pie=elemento.querySelector("figcaption");
+
+return pie?pie.textContent.trim():"";
 }
 
+return elemento.textContent.trim();
+}
+
+function guardarPagina(){
+
+if(!paginaActual.length)return;
+
+paginas.push(paginaActual);
+narracionPorPagina.push(textosPagina);
+
+paginaActual=[];
+textosPagina=[];
+pesoActual=0;
+}
+
+elementos.forEach(elemento=>{
+
+if(elemento.tagName==="STYLE")return;
+
+const copia=elemento.cloneNode(true);
+
 let peso=(elemento.textContent||"").length;
+
+if(elemento.tagName==="FIGURE")peso+=220;
+
+if(elemento.tagName==="DIV"&&elemento.classList.contains("foto-epilogo")){
+peso+=220;
+}
+
 if(elemento.tagName==="H3")peso+=70;
 
 if(pesoActual+peso>limite&&paginaActual.length){
-paginas.push(paginaActual);
-paginaActual=[];
-pesoActual=0;
+
+guardarPagina();
 }
 
 paginaActual.push(copia);
+
+const texto=textoParaNarrar(elemento);
+
+if(texto){
+
+textosPagina.push(...dividirTexto(texto));
+}
+
 pesoActual+=peso;
 });
 
-if(paginaActual.length)paginas.push(paginaActual);
+guardarPagina();
+
+
+/* =====================================
+   CONTROL DE PÁGINAS Y GIRO
+===================================== */
 
 let apertura=0;
 let girando=false;
 
 const izquierda=document.getElementById("paginaIzquierda");
 const derecha=document.getElementById("paginaDerecha");
+
 const numeroIzq=document.getElementById("numeroIzquierda");
 const numeroDer=document.getElementById("numeroDerecha");
+
 const hoja=document.getElementById("hojaGiro");
+
 const caraFrontal=document.getElementById("caraFrontal");
 const caraTrasera=document.getElementById("caraTrasera");
+
 const contador=document.getElementById("contador");
+
 const botonAnterior=document.getElementById("anterior");
 const botonSiguiente=document.getElementById("siguiente");
 
 const totalAperturas=1+Math.ceil(paginas.length/2);
 
 function portadaEpilogo(){
-return '<div class="pagina-portada"><div class="numero">EPÍLOGO</div><h2>SI VOLVIERA<br>A EMPEZAR</h2><div class="adorno"></div><p>Una vida, una pasión y miles de recuerdos</p></div>';
+
+return `
+<div class="pagina-portada">
+<div class="numero">EPÍLOGO</div>
+<h2>SI VOLVIERA<br>A EMPEZAR</h2>
+<div class="adorno"></div>
+<p>Una vida, una pasión y miles de recuerdos</p>
+</div>
+`;
 }
 
 function contenidoDePagina(indice){
+
 if(indice<0||indice>=paginas.length){
+
 return '<div class="pagina-vacia">SIGAMOS CORRIENDO</div>';
 }
+
 return paginas[indice].map(el=>el.outerHTML).join("");
 }
 
 function mostrarApertura(){
+
 if(apertura===0){
-izquierda.innerHTML='<div class="pagina-vacia">SIGAMOS CORRIENDO<br><br>Una historia de esfuerzo, valores y superación</div>';
+
+izquierda.innerHTML=`
+<div class="pagina-vacia">
+SIGAMOS CORRIENDO
+<br><br>
+Una historia de esfuerzo, valores y superación
+</div>
+`;
+
 derecha.innerHTML=portadaEpilogo();
+
 numeroIzq.textContent="";
 numeroDer.textContent="";
+
 contador.textContent="Presentación";
+
 }else{
+
 const primero=(apertura-1)*2;
+
 izquierda.innerHTML=contenidoDePagina(primero);
 derecha.innerHTML=contenidoDePagina(primero+1);
+
 numeroIzq.textContent=primero+1;
-numeroDer.textContent=primero+2<=paginas.length?primero+2:"";
-contador.textContent="Apertura "+(apertura+1)+" de "+totalAperturas;
+
+numeroDer.textContent=
+primero+2<=paginas.length?primero+2:"";
+
+contador.textContent=
+"Apertura "+(apertura+1)+" de "+totalAperturas;
 }
 
-botonAnterior.disabled=apertura===0;
-botonSiguiente.disabled=apertura===totalAperturas-1;
+actualizarControlesNarracion();
 }
 
-function pasarPagina(direccion){
+function pasarPagina(direccion,alTerminar=null){
+
 if(girando)return;
 
+if(narracionActiva&&!alTerminar)return;
+
 const destino=apertura+direccion;
+
 if(destino<0||destino>=totalAperturas)return;
 
 girando=true;
 
 if(direccion===1){
+
 hoja.className="hoja-giro derecha";
+
 caraFrontal.innerHTML=derecha.innerHTML;
-caraTrasera.innerHTML=contenidoDePagina((destino-1)*2);
+
+caraTrasera.innerHTML=
+contenidoDePagina((destino-1)*2);
+
 void hoja.offsetWidth;
+
 hoja.classList.add("animar-adelante");
+
 }else{
+
 hoja.className="hoja-giro izquierda";
+
 caraFrontal.innerHTML=izquierda.innerHTML;
-caraTrasera.innerHTML=destino===0?portadaEpilogo():contenidoDePagina((destino-1)*2+1);
+
+caraTrasera.innerHTML=
+destino===0
+?portadaEpilogo()
+:contenidoDePagina((destino-1)*2+1);
+
 void hoja.offsetWidth;
+
 hoja.classList.add("animar-atras");
 }
 
 setTimeout(()=>{
+
 apertura=destino;
+
 hoja.className="hoja-giro derecha";
+
 mostrarApertura();
+
 girando=false;
+
+if(typeof alTerminar==="function"){
+alTerminar();
+}
+
 },850);
 }
 
+
+/* =====================================
+   NARRACIÓN SINCRONIZADA CON LAS PÁGINAS
+===================================== */
+
+const narrarButton=document.getElementById("narrarButton");
+const pausarButton=document.getElementById("pausarButton");
+const continuarButton=document.getElementById("continuarButton");
+const detenerButton=document.getElementById("detenerButton");
+
+const narracionEstado=document.getElementById("narracionEstado");
+
+let indiceNarracion=0;
+let paginaNarracionActual=0;
+
+let narracionActiva=false;
+let narracionPausada=false;
+
+let numeroSesionNarracion=0;
+
+let lecturaPendiente=false;
+let giroPendiente=false;
+
+function actualizarControlesNarracion(){
+
+narrarButton.disabled=narracionActiva;
+
+pausarButton.disabled=
+!narracionActiva||narracionPausada;
+
+continuarButton.disabled=
+!narracionActiva||!narracionPausada;
+
+detenerButton.disabled=!narracionActiva;
+
+botonAnterior.disabled=
+narracionActiva||girando||apertura===0;
+
+botonSiguiente.disabled=
+narracionActiva||girando||apertura===totalAperturas-1;
+}
+
+function elegirVozEspanola(){
+
+const voces=window.speechSynthesis.getVoices();
+
+const espanolas=voces.filter(voz=>
+voz.lang&&voz.lang.toLowerCase().startsWith("es")
+);
+
+const nombres=[
+"jorge","alvaro","álvaro","pablo","diego",
+"enrique","miguel","carlos","antonio"
+];
+
+const vozPreferida=espanolas.find(voz=>
+nombres.some(nombre=>
+voz.name.toLowerCase().includes(nombre)
+)
+);
+
+if(vozPreferida)return vozPreferida;
+
+return espanolas.find(voz=>
+voz.lang.toLowerCase()==="es-es"
+)||espanolas[0]||null;
+}
+
+function finalizarNarracion(){
+
+narracionActiva=false;
+narracionPausada=false;
+
+lecturaPendiente=false;
+giroPendiente=false;
+
+narracionEstado.textContent=
+"La narración ha terminado. Gracias por escuchar tu historia.";
+
+actualizarControlesNarracion();
+}
+
+function leerPaginaActual(sesion){
+
+if(sesion!==numeroSesionNarracion)return;
+
+if(!narracionActiva||narracionPausada)return;
+
+if(paginaNarracionActual>=narracionPorPagina.length){
+
+finalizarNarracion();
+return;
+}
+
+const fragmentos=narracionPorPagina[paginaNarracionActual];
+
+indiceNarracion=0;
+
+if(!fragmentos||fragmentos.length===0){
+
+terminarPaginaNarrada(sesion);
+return;
+}
+
+leerSiguienteFragmento(sesion);
+}
+
+function leerSiguienteFragmento(sesion){
+
+if(sesion!==numeroSesionNarracion)return;
+
+if(!narracionActiva||narracionPausada)return;
+
+const fragmentos=narracionPorPagina[paginaNarracionActual];
+
+if(!fragmentos||indiceNarracion>=fragmentos.length){
+
+terminarPaginaNarrada(sesion);
+return;
+}
+
+const texto=fragmentos[indiceNarracion];
+
+const voz=new SpeechSynthesisUtterance(texto);
+
+voz.lang="es-ES";
+voz.rate=.88;
+voz.pitch=.85;
+voz.volume=1;
+
+const elegida=elegirVozEspanola();
+
+if(elegida)voz.voice=elegida;
+
+voz.onend=function(){
+
+if(sesion!==numeroSesionNarracion)return;
+
+if(narracionPausada)return;
+
+indiceNarracion++;
+
+const porcentaje=Math.round(
+indiceNarracion/fragmentos.length*100
+);
+
+narracionEstado.textContent=
+"Leyendo página "+(paginaNarracionActual+1)+
+" · "+porcentaje+"%";
+
+leerSiguienteFragmento(sesion);
+};
+
+voz.onerror=function(event){
+
+if(sesion!==numeroSesionNarracion)return;
+
+if(
+event.error==="canceled"||
+event.error==="interrupted"
+){
+return;
+}
+
+if(narracionPausada)return;
+
+indiceNarracion++;
+
+leerSiguienteFragmento(sesion);
+};
+
+window.speechSynthesis.speak(voz);
+}
+
+function terminarPaginaNarrada(sesion){
+
+if(sesion!==numeroSesionNarracion)return;
+
+if(!narracionActiva||narracionPausada)return;
+
+const siguientePagina=paginaNarracionActual+1;
+
+// Se lee la página izquierda y después la derecha.
+// Todavía no es necesario girar la hoja.
+
+if(
+siguientePagina<narracionPorPagina.length&&
+paginaNarracionActual%2===0
+){
+
+paginaNarracionActual++;
+
+leerPaginaActual(sesion);
+
+return;
+}
+
+// Al terminar la página derecha, se pasa la hoja.
+
+if(siguientePagina<narracionPorPagina.length){
+
+narracionEstado.textContent="Pasando la página...";
+
+giroPendiente=true;
+
+pasarPagina(1,function(){
+
+if(sesion!==numeroSesionNarracion)return;
+
+giroPendiente=false;
+
+if(!narracionActiva)return;
+
+if(narracionPausada){
+
+lecturaPendiente=true;
+
+narracionEstado.textContent="Narración pausada.";
+
+return;
+}
+
+paginaNarracionActual++;
+
+leerPaginaActual(sesion);
+});
+
+return;
+}
+
+finalizarNarracion();
+}
+
+function iniciarNarracion(){
+
+if(!("speechSynthesis" in window)){
+
+narracionEstado.textContent=
+"Este navegador no dispone de narración de voz.";
+
+return;
+}
+
+if(girando){
+
+narracionEstado.textContent=
+"Espera un momento a que termine de pasar la página.";
+
+return;
+}
+
+window.speechSynthesis.cancel();
+
+numeroSesionNarracion++;
+
+const sesion=numeroSesionNarracion;
+
+indiceNarracion=0;
+paginaNarracionActual=0;
+
+narracionActiva=true;
+narracionPausada=false;
+
+lecturaPendiente=false;
+giroPendiente=false;
+
+actualizarControlesNarracion();
+
+narracionEstado.textContent=
+"Preparando la voz para leer tu historia...";
+
+// La lectura comienza siempre desde la primera página.
+
+if(apertura!==1){
+
+if(apertura===0){
+
+pasarPagina(1,function(){
+
+if(sesion!==numeroSesionNarracion)return;
+
+if(narracionPausada){
+
+lecturaPendiente=true;
+return;
+}
+
+leerPaginaActual(sesion);
+});
+
+}else{
+
+apertura=1;
 mostrarApertura();
+
+setTimeout(()=>{
+
+if(sesion!==numeroSesionNarracion)return;
+
+if(narracionPausada){
+
+lecturaPendiente=true;
+return;
+}
+
+leerPaginaActual(sesion);
+
+},300);
+}
+
+}else{
+
+setTimeout(()=>{
+
+if(sesion!==numeroSesionNarracion)return;
+
+if(narracionPausada){
+
+lecturaPendiente=true;
+return;
+}
+
+leerPaginaActual(sesion);
+
+},300);
+}
+}
+
+function pausarNarracion(){
+
+if(!narracionActiva||narracionPausada)return;
+
+narracionPausada=true;
+
+window.speechSynthesis.pause();
+
+narracionEstado.textContent="Narración pausada.";
+
+actualizarControlesNarracion();
+}
+
+function continuarNarracion(){
+
+if(!narracionActiva||!narracionPausada)return;
+
+narracionPausada=false;
+
+actualizarControlesNarracion();
+
+const sesion=numeroSesionNarracion;
+
+// Si la lectura estaba esperando a que terminara el giro,
+// ahora puede continuar con la nueva página.
+
+if(lecturaPendiente){
+
+lecturaPendiente=false;
+
+leerPaginaActual(sesion);
+
+return;
+}
+
+// Si estaba pasando la hoja, el giro terminará
+// y continuará la narración automáticamente.
+
+if(giroPendiente){
+
+narracionEstado.textContent=
+"Terminando de pasar la página...";
+
+return;
+}
+
+window.speechSynthesis.resume();
+
+narracionEstado.textContent="Continuando la lectura...";
+}
+
+function detenerNarracion(){
+
+numeroSesionNarracion++;
+
+window.speechSynthesis.cancel();
+
+narracionActiva=false;
+narracionPausada=false;
+
+lecturaPendiente=false;
+giroPendiente=false;
+
+indiceNarracion=0;
+paginaNarracionActual=0;
+
+narracionEstado.textContent="Narración detenida.";
+
+actualizarControlesNarracion();
+}
+
+if("speechSynthesis" in window){
+
+window.speechSynthesis.onvoiceschanged=function(){
+window.speechSynthesis.getVoices();
+};
+
+}else{
+
+narracionEstado.textContent=
+"Tu navegador no permite la narración de voz.";
+
+narrarButton.disabled=true;
+}
+
+
+/* =====================================
+   INICIO DEL EPÍLOGO
+===================================== */
+
+mostrarApertura();
+actualizarControlesNarracion();
+
 </script>
 
 <script src="https://www.youtube.com/iframe_api"></script>
